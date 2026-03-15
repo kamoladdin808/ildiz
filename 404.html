@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — ILDIZ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/moret" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #FAA954;
+            --ink: #2E1A0E;
+            --ink2: #3A2215;
+            --warm: #F5EAD8;
+            --muted: rgba(237, 224, 212, 0.55);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--ink);
+            color: var(--warm);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bg-grain {
+            position: fixed;
+            inset: 0;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 200px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(250, 169, 84, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+
+        .card {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 60px 48px;
+            max-width: 480px;
+            width: 100%;
+            background: linear-gradient(160deg, rgba(58, 34, 21, 0.6) 0%, rgba(46, 26, 14, 0.3) 100%);
+            border: 1px solid rgba(250, 169, 84, 0.08);
+            border-radius: 24px;
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+        }
+
+        .code-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 28px;
+        }
+
+        .code {
+            font-family: 'Moret', serif;
+            font-size: clamp(72px, 18vw, 140px);
+            font-weight: 300;
+            letter-spacing: 8px;
+            color: transparent;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--gold) 0%, #e09540 40%, var(--warm) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            opacity: 0;
+            animation: codeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+        }
+
+        .code-shadow {
+            position: absolute;
+            inset: 0;
+            font-family: 'Moret', serif;
+            font-size: clamp(72px, 18vw, 140px);
+            font-weight: 300;
+            letter-spacing: 8px;
+            line-height: 1;
+            color: rgba(250, 169, 84, 0.06);
+            filter: blur(16px);
+            z-index: -1;
+            opacity: 0;
+            animation: codeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+        }
+
+        @keyframes codeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .sep {
+            width: 48px;
+            height: 1px;
+            margin: 0 auto 24px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            animation: sepIn 0.6s ease 0.8s forwards;
+        }
+
+        @keyframes sepIn {
+            to {
+                opacity: 0.6;
+            }
+        }
+
+        .msg {
+            font-size: clamp(9px, 2.2vw, 12px);
+            letter-spacing: clamp(3px, 1vw, 5px);
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 36px;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 1s forwards;
+        }
+
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--ink);
+            background: linear-gradient(135deg, var(--gold) 0%, #e09540 100%);
+            padding: 15px 34px;
+            border-radius: 50px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 20px rgba(250, 169, 84, 0.2);
+            opacity: 0;
+            animation: fadeUp 0.7s ease 1.2s forwards;
+        }
+
+        .back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(250, 169, 84, 0.3);
+        }
+
+        .back svg {
+            transition: transform 0.3s;
+        }
+
+        .back:hover svg {
+            transform: translateX(-4px);
+        }
+
+        .lang-bar {
+            margin-top: 28px;
+            display: flex;
+            justify-content: center;
+            gap: 2px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 1.4s forwards;
+        }
+
+        .lb {
+            background: none;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: var(--muted);
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: color 0.3s, background 0.3s;
+        }
+
+        .lb:hover {
+            color: var(--warm);
+            background: rgba(250, 169, 84, 0.06);
+        }
+
+        .lb.on {
+            color: var(--gold);
+            background: rgba(250, 169, 84, 0.1);
+        }
+
+        [data-l] {
+            display: none;
+        }
+
+        [data-l].on {
+            display: inline;
+        }
+
+        .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.6s forwards;
+        }
+
+        .corner--tl {
+            top: -1px;
+            left: -1px;
+            border-top: 1px solid rgba(250, 169, 84, 0.2);
+            border-left: 1px solid rgba(250, 169, 84, 0.2);
+            border-radius: 24px 0 0 0;
+        }
+
+        .corner--tr {
+            top: -1px;
+            right: -1px;
+            border-top: 1px solid rgba(250, 169, 84, 0.2);
+            border-right: 1px solid rgba(250, 169, 84, 0.2);
+            border-radius: 0 24px 0 0;
+        }
+
+        .corner--bl {
+            bottom: -1px;
+            left: -1px;
+            border-bottom: 1px solid rgba(250, 169, 84, 0.2);
+            border-left: 1px solid rgba(250, 169, 84, 0.2);
+            border-radius: 0 0 0 24px;
+        }
+
+        .corner--br {
+            bottom: -1px;
+            right: -1px;
+            border-bottom: 1px solid rgba(250, 169, 84, 0.2);
+            border-right: 1px solid rgba(250, 169, 84, 0.2);
+            border-radius: 0 0 24px 0;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 48px 28px;
+                border-radius: 20px;
+                margin: 16px;
+            }
+
+            .msg {
+                margin-bottom: 28px;
+            }
+
+            .back {
+                padding: 14px 28px;
+                font-size: 8px;
+                letter-spacing: 3px;
+            }
+
+            .bg-glow {
+                width: 300px;
+                height: 300px;
+            }
+
+            .corner {
+                width: 14px;
+                height: 14px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .card {
+                padding: 40px 22px;
+                border-radius: 18px;
+            }
+
+            .code {
+                letter-spacing: 4px;
+            }
+
+            .code-shadow {
+                letter-spacing: 4px;
+            }
+
+            .msg {
+                letter-spacing: 3px;
+                margin-bottom: 24px;
+            }
+
+            .back {
+                padding: 13px 24px;
+                letter-spacing: 2.5px;
+            }
+
+            .lang-bar {
+                margin-top: 22px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .card {
+                padding: 32px 18px;
+                border-radius: 16px;
+            }
+
+            .msg {
+                font-size: 8px;
+                letter-spacing: 2px;
+                margin-bottom: 20px;
+            }
+
+            .back {
+                padding: 12px 20px;
+                font-size: 7px;
+                letter-spacing: 2px;
+                gap: 6px;
+            }
+
+            .lb {
+                font-size: 8px;
+                letter-spacing: 1.5px;
+                padding: 6px 8px;
+            }
+
+            .sep {
+                width: 36px;
+                margin-bottom: 18px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-grain"></div>
+    <div class="bg-glow"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="card">
+        <div class="corner corner--tl"></div>
+        <div class="corner corner--tr"></div>
+        <div class="corner corner--bl"></div>
+        <div class="corner corner--br"></div>
+
+        <div class="code-wrap">
+            <div class="code">404</div>
+            <div class="code-shadow" aria-hidden="true">404</div>
+        </div>
+
+        <div class="sep"></div>
+
+        <p class="msg">
+            <span data-l="uz" class="on">Sahifa topilmadi</span>
+            <span data-l="ru">Страница не найдена</span>
+            <span data-l="en">Page not found</span>
+        </p>
+
+        <a href="index.html" class="back">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M12 7H2M6 3l-4 4 4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+            <span data-l="uz" class="on">Bosh Sahifa</span>
+            <span data-l="ru">Главная</span>
+            <span data-l="en">Homepage</span>
+        </a>
+
+        <div class="lang-bar">
+            <button class="lb on" onclick="sL('uz')">UZ</button>
+            <button class="lb" onclick="sL('ru')">RU</button>
+            <button class="lb" onclick="sL('en')">EN</button>
+        </div>
+    </div>
+
+    <script>
+        function sL(l) {
+            localStorage.setItem('ildiz-lang', l);
+            document.querySelectorAll('[data-l]').forEach(el =>
+                el.classList.toggle('on', el.dataset.l === l)
+            );
+            document.querySelectorAll('.lb').forEach((b, i) =>
+                b.classList.toggle('on', ['uz', 'ru', 'en'][i] === l)
+            );
+        }
+        const saved = localStorage.getItem('ildiz-lang');
+        if (saved && saved !== 'uz') sL(saved);
+
+        (function initParticles() {
+            const container = document.getElementById('particles');
+            const count = 12;
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                const size = 1 + Math.random() * 2;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.animation = `particleFloat ${6 + Math.random() * 8}s ease-in-out ${Math.random() * 4}s infinite`;
+                container.appendChild(p);
+            }
+
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes particleFloat {
+                    0%, 100% { opacity: 0; transform: translateY(0); }
+                    20% { opacity: 0.15; }
+                    50% { opacity: 0.08; transform: translateY(-40px); }
+                    80% { opacity: 0.15; }
+                }
+            `;
+            document.head.appendChild(style);
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,3199 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ILDIZ — Milliy Taomlari</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Pacifico&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/moret" rel="stylesheet">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bigUp {
+            from {
+                opacity: 0;
+                transform: translateY(70px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* NAV — page-specific */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 36px 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: padding 0.5s, background 0.5s, border-color 0.5s;
+            border-bottom: 1px solid transparent;
+        }
+
+        nav.stuck {
+            padding: 18px 64px;
+            background: rgba(46, 26, 14, 0.94);
+            -webkit-backdrop-filter: blur(24px);
+            backdrop-filter: blur(24px);
+            border-bottom-color: rgba(250, 169, 84, 0.13);
+        }
+
+        .nav-logo {
+            gap: 16px;
+        }
+
+        .nav-mid {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 52px;
+            list-style: none;
+        }
+
+        .nav-mid a {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-mid a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+            transform-origin: left;
+        }
+
+        .nav-mid a:hover {
+            color: var(--warm);
+        }
+
+        .nav-mid a:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* HERO */
+        #hero {
+            position: relative;
+            height: 100vh;
+            min-height: 680px;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+        }
+
+        .h-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 70% at 60% 40%, rgba(127, 85, 57, 0.38) 0%, transparent 70%), linear-gradient(175deg, #2E1A0E 0%, #3E2510 55%, #2E1A0E 100%);
+        }
+
+        .h-img {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .h-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.16;
+            filter: sepia(0.25) contrast(1.1);
+            transform: scale(1.06);
+            animation: hzoom 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes hzoom {
+            to {
+                transform: scale(1.0);
+            }
+        }
+
+        .h-vig {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(46, 26, 14, 0.94) 0%, rgba(46, 26, 14, 0.25) 55%, rgba(46, 26, 14, 0.65) 100%), linear-gradient(to top, rgba(46, 26, 14, 0.99) 0%, transparent 55%);
+        }
+
+        .h-vline {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent 8%, rgba(250, 169, 84, 0.18) 50%, transparent 92%);
+        }
+
+        .h-vline.l {
+            left: 64px;
+        }
+
+        .h-vline.r {
+            right: 64px;
+        }
+
+        .h-cont {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            height: 100%;
+            padding: 0 64px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .h-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .h-meta {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 2.4s forwards;
+        }
+
+        .h-meta-line {
+            width: 36px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .h-meta-txt {
+            font-size: 9px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .h-tree {
+            height: clamp(90px, 8vw, 120px);
+            width: auto;
+            max-width: 100%;
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 2.6s forwards;
+        }
+
+        .h-title {
+            opacity: 0;
+            animation: bigUp 1s cubic-bezier(0.76, 0, 0.24, 1) 2.8s forwards;
+        }
+
+        .h-title img {
+            height: clamp(70px, 12vw, 140px);
+            width: auto;
+            max-width: 100%;
+        }
+
+        .h-title em {
+            color: var(--gold);
+            font-style: normal;
+        }
+
+        .h-sub {
+            margin-top: 30px;
+            font-size: 11px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--warm);
+            opacity: 0;
+            animation: fadeUp 0.7s ease 3.2s forwards;
+        }
+
+        .h-btns {
+            margin-top: 52px;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 3.4s forwards;
+        }
+
+        .btn-g {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 38px;
+            background: var(--gold);
+            color: var(--ink);
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-g:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 16px 48px rgba(250, 169, 84, 0.35);
+        }
+
+        .btn-o {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 38px;
+            border: 1px solid rgba(250, 169, 84, 0.32);
+            color: var(--warm);
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-o:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .h-right {
+            text-align: right;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 3.5s forwards;
+            padding-bottom: 8px;
+        }
+
+        .h-info {
+            margin-bottom: 28px;
+        }
+
+        .h-info:last-child {
+            margin-bottom: 0;
+        }
+
+        .h-info-l {
+            font-size: 8px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
+        .h-info-v {
+            font-family: 'Moret', serif;
+            font-size: 15px;
+            font-weight: 300;
+            color: var(--warm);
+            letter-spacing: 1px;
+        }
+
+        .h-scroll {
+            position: absolute;
+            bottom: 48px;
+            right: 64px;
+            z-index: 4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: fadeIn 1s ease 3.8s forwards;
+        }
+
+        .h-scroll span {
+            font-size: 8px;
+            letter-spacing: 4px;
+            color: var(--muted2);
+            writing-mode: vertical-rl;
+        }
+
+        .h-scrollbar {
+            width: 1px;
+            height: 72px;
+            background: rgba(250, 169, 84, 0.12);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .h-scrollbar::after {
+            content: '';
+            position: absolute;
+            top: -72px;
+            left: 0;
+            width: 100%;
+            height: 72px;
+            background: var(--gold);
+            animation: stk 2.2s ease-in-out 3.8s infinite;
+        }
+
+        @keyframes stk {
+            to {
+                top: 72px;
+            }
+        }
+
+        /* MARQUEE */
+        .mqw {
+            background: var(--ink2);
+            border-top: 1px solid rgba(250, 169, 84, 0.1);
+            border-bottom: 1px solid rgba(250, 169, 84, 0.1);
+            padding: 20px 0;
+            overflow: hidden;
+        }
+
+        .mqt {
+            display: flex;
+            gap: 72px;
+            white-space: nowrap;
+            animation: mq 28s linear infinite;
+            width: max-content;
+        }
+
+        @keyframes mq {
+            from {
+                transform: translateX(0)
+            }
+
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        .mqi {
+            font-family: 'Moret', serif;
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: rgba(250, 169, 84, 0.45);
+            font-style: italic;
+            flex-shrink: 0;
+        }
+
+        .mqd {
+            color: var(--gold);
+            font-size: 6px;
+            vertical-align: middle;
+            margin: 0 -36px;
+        }
+
+        /* STORY */
+        #story {
+            position: relative;
+            background: var(--ink);
+            padding: 180px 0 0;
+            overflow: hidden;
+        }
+
+        .s-noise {
+            position: absolute;
+            inset: 0;
+            opacity: 0.022;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 256px;
+            pointer-events: none;
+        }
+
+        .s-num {
+            position: absolute;
+            right: -0.04em;
+            top: -0.15em;
+            font-family: 'Moret', serif;
+            font-size: clamp(220px, 30vw, 420px);
+            font-weight: 300;
+            color: rgba(250, 169, 84, 0.035);
+            line-height: 1;
+            pointer-events: none;
+            -webkit-user-select: none;
+            user-select: none;
+            letter-spacing: -0.05em;
+        }
+
+        .s-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 64px;
+            display: grid;
+            grid-template-columns: 1fr 500px;
+            gap: 110px;
+            align-items: start;
+        }
+
+        .eyebrow {
+            font-size: 9px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .s-h2 {
+            font-family: 'Moret', serif;
+            font-size: clamp(52px, 7vw, 96px);
+            font-weight: 300;
+            line-height: 0.97;
+            color: var(--warm);
+        }
+
+        .s-h2 em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .s-body {
+            margin-top: 52px;
+            border-left: 1px solid rgba(250, 169, 84, 0.18);
+            padding-left: 36px;
+        }
+
+        .s-body p {
+            font-size: 15px;
+            line-height: 1.95;
+            color: var(--warm);
+            font-weight: 300;
+            margin-bottom: 22px;
+        }
+
+        .s-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .s-pull {
+            margin: 48px 0;
+            font-family: 'Moret', serif;
+            font-size: clamp(22px, 2.5vw, 30px);
+            font-style: italic;
+            font-weight: 300;
+            color: var(--warm);
+            line-height: 1.45;
+        }
+
+        .s-pull::before {
+            content: '';
+            display: block;
+            width: 44px;
+            height: 1px;
+            background: var(--gold);
+            margin-bottom: 22px;
+        }
+
+        .s-right {
+            padding-top: 6px;
+        }
+
+        .s-stack {
+            position: relative;
+        }
+
+        .s-big {
+            width: 100%;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+        }
+
+        .s-big img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(0.12) contrast(1.05) brightness(0.86);
+            transition: transform 0.8s, filter 0.4s;
+        }
+
+        .s-big:hover img {
+            transform: scale(1.04);
+            filter: sepia(0) brightness(0.94);
+        }
+
+        .s-small {
+            position: absolute;
+            bottom: -55px;
+            left: -55px;
+            width: 55%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border: 4px solid var(--ink);
+            box-shadow: 0 24px 72px rgba(0, 0, 0, 0.5);
+        }
+
+        .s-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(0.08);
+        }
+
+        .s-yr {
+            position: absolute;
+            top: 36px;
+            right: -36px;
+            background: var(--gold);
+            color: var(--ink);
+            padding: 18px 22px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .s-yr-n {
+            font-family: 'Moret', serif;
+            font-size: 38px;
+            font-weight: 500;
+            line-height: 1;
+            display: block;
+        }
+
+        .s-yr-l {
+            font-size: 8px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .s-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: rgba(250, 169, 84, 0.1);
+            margin-top: 130px;
+        }
+
+        .stat {
+            background: var(--ink);
+            padding: 52px 36px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.4s;
+        }
+
+        .stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transition: transform 0.5s;
+            transform-origin: left;
+        }
+
+        .stat:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat:hover {
+            background: rgba(250, 169, 84, 0.04);
+        }
+
+        .stat-n {
+            font-family: 'Moret', serif;
+            font-size: 68px;
+            font-weight: 300;
+            color: var(--warm);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-n span {
+            font-size: 34px;
+            color: var(--gold);
+        }
+
+        .stat-d {
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--warm);
+        }
+
+        /* TIMELINE */
+        #tl {
+            background: var(--ink2);
+            padding: 180px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tl-head {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 64px;
+            margin-bottom: 100px;
+        }
+
+        .tl-h2 {
+            font-family: 'Moret', serif;
+            font-size: clamp(48px, 7vw, 88px);
+            font-weight: 300;
+            color: var(--warm);
+            line-height: 1;
+        }
+
+        .tl-h2 em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .tl-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 64px;
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+        }
+
+        .tl-ax {
+            background: linear-gradient(to bottom, transparent, rgba(250, 169, 84, 0.28) 10%, rgba(250, 169, 84, 0.28) 90%, transparent);
+        }
+
+        .tl-col {
+            padding: 0 72px;
+        }
+
+        .tl-col.r {
+            padding-top: 110px;
+        }
+
+        .tl-e {
+            margin-bottom: 90px;
+            opacity: 0;
+            transform: translateY(36px);
+            transition: all 0.7s ease;
+        }
+
+        .tl-e.vis {
+            opacity: 1;
+            transform: none;
+        }
+
+        .tl-ey {
+            font-family: 'Moret', serif;
+            font-size: 80px;
+            font-weight: 300;
+            color: rgba(250, 169, 84, 0.13);
+            line-height: 1;
+            margin-bottom: -22px;
+        }
+
+        .tl-et {
+            font-family: 'Moret', serif;
+            font-size: 26px;
+            font-weight: 400;
+            color: var(--warm);
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .tl-ep {
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--warm);
+            font-weight: 300;
+        }
+
+        .tl-tag {
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 8px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(250, 169, 84, 0.28);
+            padding: 5px 12px;
+        }
+
+        .tl-tag.now {
+            background: var(--gold);
+            color: var(--ink);
+            border-color: var(--gold);
+        }
+
+        /* VALUES */
+        #vals {
+            background: var(--ink);
+            padding: 180px 0;
+        }
+
+        .vals-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 64px;
+        }
+
+        .vals-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: end;
+            margin-bottom: 110px;
+        }
+
+        .vals-h2 {
+            font-family: 'Moret', serif;
+            font-size: clamp(52px, 7vw, 96px);
+            font-weight: 300;
+            color: var(--warm);
+            line-height: 1;
+        }
+
+        .vals-h2 em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .vals-intro {
+            font-size: 15px;
+            line-height: 1.9;
+            color: var(--warm);
+            font-weight: 300;
+            padding-top: 14px;
+        }
+
+        .vals-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid rgba(250, 169, 84, 0.1);
+        }
+
+        .val {
+            padding: 60px 44px;
+            border-right: 1px solid rgba(250, 169, 84, 0.1);
+            transition: background 0.4s;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.6s, transform 0.6s, background 0.4s;
+        }
+
+        .val.vis {
+            opacity: 1;
+            transform: none;
+        }
+
+        .val:last-child {
+            border-right: none;
+        }
+
+        .val:hover {
+            background: rgba(250, 169, 84, 0.03);
+        }
+
+        .val-n {
+            font-family: 'Moret', serif;
+            font-size: 110px;
+            font-weight: 300;
+            color: rgba(250, 169, 84, 0.07);
+            line-height: 1;
+            margin-bottom: -28px;
+            display: block;
+        }
+
+        .val-ico {
+            margin-bottom: 22px;
+        }
+
+        .val-t {
+            font-family: 'Moret', serif;
+            font-size: 26px;
+            font-weight: 400;
+            color: var(--warm);
+            margin-bottom: 14px;
+            line-height: 1.2;
+        }
+
+        .val-p {
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--warm);
+            font-weight: 300;
+        }
+
+        /* GALLERY */
+        .gal-section {
+            background: var(--ink2);
+        }
+
+        .gal-section+.gal-section {
+            background: var(--ink);
+            border-top: 1px solid rgba(250, 169, 84, 0.08);
+        }
+
+        .gal-head {
+            padding: 120px 64px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .gal-h2 {
+            font-family: 'Moret', serif;
+            font-size: clamp(48px, 6vw, 80px);
+            font-weight: 300;
+            color: var(--warm);
+            line-height: 1;
+        }
+
+        .gal-h2 em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .gal-sub {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--muted2);
+            padding-bottom: 8px;
+        }
+
+        .gg {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: 480px 320px;
+            gap: 3px;
+        }
+
+        .gi {
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gi:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1/3;
+        }
+
+        .gi:nth-child(2) {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .gi:nth-child(3) {
+            grid-column: 3;
+            grid-row: 1;
+        }
+
+        .gi:nth-child(4) {
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        .gi:nth-child(5) {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        .gi img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s;
+            filter: brightness(0.72) saturate(0.82);
+        }
+
+        .gi:hover img {
+            transform: scale(1.08);
+            filter: brightness(0.88) saturate(1.05);
+        }
+
+        .gi::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(46, 26, 14, 0.6) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* LIGHTBOX */
+        .lbox {
+            position: fixed;
+            inset: 0;
+            z-index: 9500;
+            background: rgba(14, 8, 4, 0.94);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s, visibility 0.4s;
+            cursor: none;
+        }
+
+        .lbox.on {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lbox-img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 2px;
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+        }
+
+        .lbox.on .lbox-img {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .lbox-x {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            background: none;
+            border: 1px solid rgba(250, 169, 84, 0.3);
+            color: var(--warm);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+            transition: border-color 0.3s, background 0.3s;
+            z-index: 2;
+        }
+
+        .lbox-x:hover {
+            border-color: var(--gold);
+            background: rgba(250, 169, 84, 0.1);
+        }
+
+        .lbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: 1px solid rgba(250, 169, 84, 0.25);
+            color: var(--warm);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .lbox-nav:hover {
+            border-color: var(--gold);
+            background: rgba(250, 169, 84, 0.1);
+        }
+
+        .lbox-prev {
+            left: 24px;
+        }
+
+        .lbox-next {
+            right: 24px;
+        }
+
+        .lbox-counter {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--muted);
+        }
+
+        @media(max-width:600px) {
+            .lbox-img {
+                max-width: 96vw;
+                max-height: 75vh;
+            }
+
+            .lbox-x {
+                top: 12px;
+                right: 12px;
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .lbox-nav {
+                top: auto;
+                bottom: 20px;
+                transform: none;
+                width: 44px;
+                height: 44px;
+            }
+
+            .lbox-prev {
+                left: calc(50% - 80px);
+            }
+
+            .lbox-next {
+                right: calc(50% - 80px);
+            }
+
+            .lbox-counter {
+                bottom: 72px;
+                font-size: 10px;
+            }
+        }
+
+        @media(max-width:375px) {
+            .lbox-img {
+                max-width: 98vw;
+                max-height: 70vh;
+            }
+
+            .lbox-x {
+                top: 8px;
+                right: 8px;
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+        }
+
+        /* CONTACT */
+        #contact {
+            background: var(--ink);
+        }
+
+        .con-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 88vh;
+        }
+
+        .con-l {
+            background: var(--gold);
+            padding: 120px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .con-l-bg {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 80% 80%, rgba(255, 255, 255, 0.07) 0%, transparent 60%);
+        }
+
+        .con-ey {
+            font-size: 9px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: rgba(46, 26, 14, 0.45);
+            position: relative;
+            z-index: 1;
+        }
+
+        .con-h2 {
+            font-family: 'Moret', serif;
+            font-size: clamp(64px, 9vw, 120px);
+            font-weight: 300;
+            line-height: 0.9;
+            color: var(--ink);
+            position: relative;
+            z-index: 1;
+        }
+
+        .con-h2 em {
+            font-style: italic;
+        }
+
+        .con-phone {
+            font-family: 'Moret', serif;
+            font-size: clamp(26px, 3.2vw, 42px);
+            font-weight: 400;
+            color: var(--ink);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            transition: opacity 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .con-phone:hover {
+            opacity: 0.65;
+        }
+
+        .con-addr {
+            font-size: 11px;
+            color: rgba(46, 26, 14, 0.55);
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .con-r {
+            background: var(--ink3);
+            padding: 120px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .con-r h3 {
+            font-family: 'Moret', serif;
+            font-size: clamp(30px, 3.5vw, 48px);
+            font-weight: 300;
+            color: var(--warm);
+            margin-bottom: 40px;
+            line-height: 1.2;
+        }
+
+        .con-r h3 em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .con-items {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+        }
+
+        .ci {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+
+        .ci-ic {
+            width: 38px;
+            height: 38px;
+            border: 1px solid rgba(250, 169, 84, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .ci-l {
+            font-size: 8px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .ci-v {
+            font-family: 'Moret', serif;
+            font-size: 19px;
+            font-weight: 300;
+            color: var(--warm);
+        }
+
+        .ci-v a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .ci-v a:hover {
+            color: var(--gold);
+        }
+
+        .con-bot {
+            margin-top: 72px;
+        }
+
+        .con-bot a {
+            color: var(--gold);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .cta-bar {
+            background: var(--ink);
+            padding: 80px 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(250, 169, 84, 0.1);
+        }
+
+        .cta-bar-txt {
+            font-family: 'Moret', serif;
+            font-size: clamp(30px, 4vw, 52px);
+            font-weight: 300;
+            color: var(--warm);
+        }
+
+        .cta-bar-txt em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        footer {
+            background: var(--ink);
+            border-top: 1px solid rgba(250, 169, 84, 0.1);
+            padding: 48px 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ft-logo {
+            font-family: 'Moret', serif;
+            font-size: 17px;
+            font-weight: 300;
+            letter-spacing: 9px;
+            color: rgba(251, 248, 243, 0.22);
+            text-decoration: none;
+        }
+
+        .ft-copy {
+            font-size: 10px;
+            color: rgba(251, 248, 243, 0.18);
+            letter-spacing: 2px;
+        }
+
+        .ft-lnk {
+            display: flex;
+            gap: 26px;
+        }
+
+        .ft-lnk a {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: rgba(251, 248, 243, 0.28);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .ft-lnk a:hover {
+            color: var(--gold);
+        }
+
+        .nav-tree {
+            height: 30px;
+            width: 30px;
+            object-fit: contain;
+        }
+
+        .s-stats-wrap {
+            max-width: 1400px;
+            margin: 150px auto 0;
+            padding: 0 64px;
+        }
+
+        .s-spacer {
+            padding-bottom: 180px;
+        }
+
+        .tl-eyebrow {
+            margin-bottom: 20px;
+        }
+
+        .cta-bar .btn-g {
+            flex-shrink: 0;
+        }
+
+        /* REVEAL */
+        .r {
+            opacity: 0;
+            transform: translateY(38px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+
+        .r.vis {
+            opacity: 1;
+            transform: none;
+        }
+
+        .r.d1 {
+            transition-delay: 0.12s;
+        }
+
+        .r.d2 {
+            transition-delay: 0.24s;
+        }
+
+        .r.d3 {
+            transition-delay: 0.36s;
+        }
+
+        /* page-specific touch cursors */
+        @media (pointer: coarse) {
+
+            .btn-g,
+            .btn-o,
+            .lb,
+            .stat,
+            .val,
+            .gi {
+                cursor: pointer !important;
+            }
+        }
+
+        /* ── LANDSCAPE MOBILE ── */
+        @media (max-height: 480px) and (orientation: landscape) {
+            #hero {
+                min-height: 0;
+                height: auto;
+                padding: 120px 0 64px;
+            }
+
+            .h-btns {
+                margin-top: 28px;
+            }
+
+            .h-meta {
+                margin-bottom: 16px;
+            }
+
+            .h-sub {
+                margin-top: 16px;
+            }
+        }
+
+        /* ══ 1100px ══ */
+        @media(max-width:1100px) {
+            .s-inner {
+                grid-template-columns: 1fr;
+                gap: 80px
+            }
+
+            .s-right {
+                max-width: 520px
+            }
+
+            .s-small {
+                left: -30px;
+                bottom: -30px
+            }
+
+            .s-yr {
+                right: -20px
+            }
+
+            .s-stats {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .vals-top {
+                grid-template-columns: 1fr;
+                gap: 40px
+            }
+
+            .vals-grid {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .con-split {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* ══ 800px ══ */
+        @media(max-width:800px) {
+            nav {
+                padding: 18px 24px
+            }
+
+            nav.stuck {
+                padding: 13px 24px
+            }
+
+            .nav-mid {
+                position: static;
+                transform: none;
+                gap: 24px
+            }
+
+            .nav-mid a {
+                font-size: 8px;
+                letter-spacing: 2px
+            }
+
+            .nav-mid a::after {
+                display: none
+            }
+
+            .h-cont {
+                padding: 0 24px
+            }
+
+            .h-right {
+                display: none
+            }
+
+            .h-vline {
+                display: none
+            }
+
+            .s-small {
+                left: -16px;
+                bottom: -20px;
+                width: 50%
+            }
+
+            .s-yr {
+                right: -12px
+            }
+
+            .s-inner,
+            .tl-grid,
+            .vals-inner,
+            .gal-head,
+            .s-stats-wrap {
+                padding: 0 24px
+            }
+
+            .s-stats-wrap {
+                margin-top: 100px
+            }
+
+            .s-spacer {
+                padding-bottom: 120px
+            }
+
+            .nav-tree {
+                height: 24px;
+                width: 24px
+            }
+
+            .tl-head {
+                padding: 0 24px
+            }
+
+            .tl-grid {
+                grid-template-columns: 1fr
+            }
+
+            .tl-ax {
+                display: none
+            }
+
+            .tl-col,
+            .tl-col.r {
+                padding: 0;
+                padding-top: 0
+            }
+
+            .vals-grid {
+                grid-template-columns: 1fr
+            }
+
+            .gg {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 220px 220px 220px
+            }
+
+            .gi:nth-child(1) {
+                grid-column: 1/3;
+                grid-row: 1
+            }
+
+            .gi:nth-child(2) {
+                grid-column: 1;
+                grid-row: 2
+            }
+
+            .gi:nth-child(3) {
+                grid-column: 2;
+                grid-row: 2
+            }
+
+            .gi:nth-child(4) {
+                grid-column: 1;
+                grid-row: 3
+            }
+
+            .gi:nth-child(5) {
+                grid-column: 2;
+                grid-row: 3
+            }
+
+            .con-split {
+                min-height: 0
+            }
+
+            .con-l,
+            .con-r {
+                padding: 80px 24px
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 18px;
+                text-align: center;
+                padding: 40px 24px
+            }
+
+            .cta-bar {
+                flex-direction: column;
+                gap: 28px;
+                text-align: center;
+                padding: 60px 24px
+            }
+
+            .s-stats {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        /* ══ 768px ══ */
+        @media(max-width:768px) {
+
+            #story,
+            #tl,
+            #vals {
+                padding-top: 108px
+            }
+
+            .s-inner,
+            .tl-head,
+            .tl-grid,
+            .vals-inner,
+            .gal-head,
+            .s-stats-wrap {
+                padding-left: 22px;
+                padding-right: 22px
+            }
+
+            .gal-head {
+                padding-top: 72px;
+                padding-bottom: 48px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px
+            }
+
+            .tl-head {
+                margin-bottom: 72px
+            }
+
+            .tl-col {
+                padding: 0 22px
+            }
+
+            .val {
+                padding: 44px 28px
+            }
+
+            .gg {
+                grid-template-rows: 200px 200px 200px
+            }
+
+            .con-l,
+            .con-r {
+                padding: 72px 22px
+            }
+
+            .s-stats {
+                margin-top: 88px
+            }
+
+            .h-scroll {
+                right: 22px
+            }
+
+            .s-body {
+                padding-left: 22px
+            }
+
+            .cta-bar {
+                padding: 56px 22px
+            }
+
+            footer {
+                padding: 36px 22px
+            }
+        }
+
+        /* ══ 600px ══ */
+        @media(max-width:600px) {
+            .nav-mid {
+                gap: 16px
+            }
+
+            .nav-mid a {
+                font-size: 7px;
+                letter-spacing: 1.5px
+            }
+
+            #hero {
+                min-height: 580px
+            }
+
+            .h-tree {
+                height: clamp(60px, 8vw, 80px);
+                margin-bottom: 12px
+            }
+
+            .h-title img {
+                height: clamp(50px, 12vw, 80px)
+            }
+
+            .h-meta {
+                margin-bottom: 22px;
+                gap: 14px
+            }
+
+            .h-meta-line {
+                width: 24px
+            }
+
+            .h-sub {
+                font-size: 9px;
+                letter-spacing: 3px;
+                margin-top: 20px
+            }
+
+            .h-btns {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+                margin-top: 40px
+            }
+
+            .btn-g,
+            .btn-o {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+                padding: 16px 28px
+            }
+
+            .h-scroll {
+                display: none
+            }
+
+            #story,
+            #tl,
+            #vals {
+                padding-top: 92px
+            }
+
+            .s-inner,
+            .tl-head,
+            .tl-grid,
+            .vals-inner,
+            .gal-head,
+            .s-stats-wrap {
+                padding-left: 20px;
+                padding-right: 20px
+            }
+
+            .s-stats-wrap {
+                margin-top: 88px
+            }
+
+            .s-spacer {
+                padding-bottom: 92px
+            }
+
+            .s-inner {
+                gap: 48px
+            }
+
+            .s-h2 {
+                font-size: clamp(44px, 12vw, 72px)
+            }
+
+            .s-body {
+                border-left: none;
+                border-top: 1px solid rgba(250, 169, 84, .18);
+                padding-left: 0;
+                padding-top: 26px;
+                margin-top: 40px
+            }
+
+            .s-body p {
+                font-size: 14px;
+                line-height: 1.85
+            }
+
+            .s-small {
+                left: -10px;
+                bottom: -18px;
+                width: 48%
+            }
+
+            .s-yr {
+                right: -10px;
+                padding: 13px 16px
+            }
+
+            .s-yr-n {
+                font-size: 32px
+            }
+
+            .s-stats {
+                grid-template-columns: 1fr 1fr;
+                margin-top: 80px
+            }
+
+            .stat {
+                padding: 34px 20px
+            }
+
+            .stat-n {
+                font-size: 54px
+            }
+
+            .stat-n span {
+                font-size: 28px
+            }
+
+            .tl-h2 {
+                font-size: clamp(42px, 11vw, 72px)
+            }
+
+            .tl-head {
+                margin-bottom: 60px
+            }
+
+            .tl-col {
+                padding: 0 16px
+            }
+
+            .tl-ey {
+                font-size: 68px;
+                margin-bottom: -20px
+            }
+
+            .tl-et {
+                font-size: 24px
+            }
+
+            .tl-ep {
+                font-size: 13px
+            }
+
+            .tl-e {
+                margin-bottom: 60px
+            }
+
+            .vals-h2 {
+                font-size: clamp(44px, 12vw, 72px)
+            }
+
+            .vals-top {
+                margin-bottom: 80px;
+                gap: 28px
+            }
+
+            .val {
+                padding: 34px 22px
+            }
+
+            .val-n {
+                font-size: 88px;
+                margin-bottom: -22px
+            }
+
+            .val-t {
+                font-size: 24px
+            }
+
+            .val-p {
+                font-size: 13px
+            }
+
+            .gg {
+                grid-template-rows: 180px 180px 180px
+            }
+
+            .con-h2 {
+                font-size: clamp(52px, 14vw, 88px)
+            }
+
+            .con-phone {
+                font-size: clamp(22px, 6vw, 36px)
+            }
+
+            .con-l,
+            .con-r {
+                padding: 60px 20px
+            }
+
+            .cta-bar-txt {
+                font-size: clamp(26px, 7vw, 44px)
+            }
+
+            .cta-bar {
+                padding: 52px 20px
+            }
+        }
+
+        /* ══ 480px ══ */
+        @media(max-width:480px) {
+            .nav-mid {
+                display: none
+            }
+
+            .lb {
+                font-size: 9px;
+                letter-spacing: 1px;
+                padding: 5px 8px;
+                min-width: 36px;
+                min-height: 36px
+            }
+
+            .h-tree {
+                height: clamp(52px, 7vw, 68px);
+                margin-bottom: 10px
+            }
+
+            .h-title img {
+                height: clamp(44px, 11vw, 70px)
+            }
+
+            .h-meta {
+                gap: 10px;
+                margin-bottom: 18px
+            }
+
+            .h-btns {
+                margin-top: 30px;
+                gap: 10px
+            }
+
+            .btn-g,
+            .btn-o {
+                padding: 15px 24px;
+                font-size: 8px;
+                letter-spacing: 3px
+            }
+
+            #story,
+            #tl,
+            #vals {
+                padding-top: 84px
+            }
+
+            .s-inner,
+            .tl-head,
+            .tl-grid,
+            .vals-inner,
+            .gal-head,
+            .s-stats-wrap {
+                padding-left: 18px;
+                padding-right: 18px
+            }
+
+            .s-inner {
+                gap: 40px
+            }
+
+            .s-h2 {
+                font-size: clamp(38px, 12.5vw, 62px)
+            }
+
+            .s-small {
+                left: -8px;
+                bottom: -14px;
+                width: 44%
+            }
+
+            .s-yr {
+                right: -6px;
+                padding: 11px 13px
+            }
+
+            .s-yr-n {
+                font-size: 28px
+            }
+
+            .s-stats {
+                grid-template-columns: 1fr 1fr;
+                margin-top: 68px
+            }
+
+            .stat {
+                padding: 30px 16px
+            }
+
+            .stat-n {
+                font-size: 46px
+            }
+
+            .stat-n span {
+                font-size: 24px
+            }
+
+            .stat-d {
+                font-size: 8px;
+                letter-spacing: 2px
+            }
+
+            .tl-head {
+                margin-bottom: 50px
+            }
+
+            .tl-col {
+                padding: 0 12px
+            }
+
+            .tl-ey {
+                font-size: 58px;
+                margin-bottom: -16px
+            }
+
+            .tl-et {
+                font-size: 21px
+            }
+
+            .tl-ep {
+                font-size: 12px
+            }
+
+            .tl-e {
+                margin-bottom: 50px
+            }
+
+            .vals-top {
+                margin-bottom: 64px;
+                gap: 22px
+            }
+
+            .val {
+                padding: 30px 18px
+            }
+
+            .val-n {
+                font-size: 72px;
+                margin-bottom: -18px
+            }
+
+            .val-t {
+                font-size: 22px
+            }
+
+            .val-p {
+                font-size: 12px
+            }
+
+            .gg {
+                grid-template-rows: 168px 168px 168px
+            }
+
+            .con-l,
+            .con-r {
+                padding: 54px 18px
+            }
+
+            .cta-bar {
+                padding: 46px 18px;
+                gap: 22px
+            }
+
+            footer {
+                padding: 30px 18px
+            }
+
+            .ft-lnk {
+                flex-direction: column;
+                gap: 12px;
+                align-items: center
+            }
+        }
+
+        /* ══ 425px ══ */
+        @media(max-width:425px) {
+            nav {
+                padding: 14px 16px
+            }
+
+            nav.stuck {
+                padding: 11px 16px
+            }
+
+            .nav-logo-txt img {
+                height: 22px
+            }
+
+            .h-cont {
+                padding: 0 16px
+            }
+
+            .h-title img {
+                height: clamp(40px, 10vw, 60px)
+            }
+
+            .h-meta-txt {
+                font-size: 8px;
+                letter-spacing: 4px
+            }
+
+            .s-inner,
+            .tl-head,
+            .tl-grid,
+            .vals-inner,
+            .gal-head,
+            .s-stats-wrap {
+                padding-left: 16px;
+                padding-right: 16px
+            }
+
+            .s-h2 {
+                font-size: clamp(36px, 12vw, 58px)
+            }
+
+            .s-stats {
+                margin-top: 60px
+            }
+
+            .stat {
+                padding: 26px 14px
+            }
+
+            .stat-n {
+                font-size: 42px
+            }
+
+            .tl-col {
+                padding: 0 10px
+            }
+
+            .tl-ey {
+                font-size: 52px
+            }
+
+            .val {
+                padding: 26px 16px
+            }
+
+            .val-n {
+                font-size: 64px
+            }
+
+            .gg {
+                grid-template-rows: 152px 152px 152px
+            }
+
+            .con-l,
+            .con-r {
+                padding: 48px 16px
+            }
+
+            .cta-bar {
+                padding: 42px 16px
+            }
+
+            footer {
+                padding: 28px 16px
+            }
+
+        }
+
+        /* ══ 375px ══ */
+        @media(max-width:375px) {
+            nav {
+                padding: 14px 16px
+            }
+
+            nav.stuck {
+                padding: 11px 16px
+            }
+
+            .nav-logo-txt img {
+                height: 22px
+            }
+
+            .lb {
+                font-size: 9px;
+                letter-spacing: 1px;
+                padding: 4px 7px;
+                min-width: 32px;
+                min-height: 32px
+            }
+
+            .h-cont {
+                padding: 0 20px
+            }
+
+            .h-tree {
+                height: 64px;
+                margin-bottom: 10px
+            }
+
+            .h-title img {
+                height: 52px
+            }
+
+            .h-meta-txt {
+                font-size: 8px;
+                letter-spacing: 4px
+            }
+
+            .h-btns {
+                margin-top: 32px;
+                gap: 10px
+            }
+
+            .btn-g,
+            .btn-o {
+                padding: 16px 28px;
+                font-size: 9px;
+                letter-spacing: 3px
+            }
+
+            .h-sub {
+                font-size: 8px;
+                letter-spacing: 2.5px;
+                margin-top: 16px
+            }
+
+            #story,
+            #tl,
+            #vals {
+                padding-top: 78px
+            }
+
+            .s-inner,
+            .tl-head,
+            .tl-grid,
+            .vals-inner,
+            .gal-head,
+            .s-stats-wrap {
+                padding-left: 14px;
+                padding-right: 14px
+            }
+
+            .s-h2 {
+                font-size: clamp(32px, 11vw, 52px)
+            }
+
+            .s-stats {
+                grid-template-columns: 1fr 1fr;
+                margin-top: 56px
+            }
+
+            .stat {
+                padding: 22px 12px
+            }
+
+            .stat-n {
+                font-size: 38px
+            }
+
+            .stat-n span {
+                font-size: 20px
+            }
+
+            .tl-head {
+                margin-bottom: 44px
+            }
+
+            .tl-ey {
+                font-size: 48px;
+                margin-bottom: -14px
+            }
+
+            .tl-et {
+                font-size: 20px
+            }
+
+            .tl-ep {
+                font-size: 12px;
+                line-height: 1.7
+            }
+
+            .tl-e {
+                margin-bottom: 44px
+            }
+
+            .vals-top {
+                margin-bottom: 52px;
+                gap: 20px
+            }
+
+            .val {
+                padding: 22px 14px
+            }
+
+            .val-n {
+                font-size: 58px;
+                margin-bottom: -14px
+            }
+
+            .val-t {
+                font-size: 20px
+            }
+
+            .val-p {
+                font-size: 12px
+            }
+
+            .gal-head {
+                padding-top: 48px;
+                padding-bottom: 32px
+            }
+
+            .gg {
+                grid-template-rows: 138px 138px 138px
+            }
+
+            .con-l,
+            .con-r {
+                padding: 44px 14px
+            }
+
+            .cta-bar {
+                padding: 36px 14px;
+                gap: 18px
+            }
+
+            .cta-bar-txt {
+                font-size: clamp(22px, 7.5vw, 36px)
+            }
+
+            footer {
+                padding: 24px 14px
+            }
+
+        }
+
+        /* ══ 320px ══ */
+        @media(max-width:320px) {
+            nav {
+                padding: 12px 14px
+            }
+
+            nav.stuck {
+                padding: 10px 14px
+            }
+
+            .nav-logo-txt img {
+                height: 20px
+            }
+
+            .lb {
+                font-size: 8px;
+                letter-spacing: 1px;
+                padding: 4px 6px;
+                min-width: 28px;
+                min-height: 28px
+            }
+
+            .h-cont {
+                padding: 0 16px
+            }
+
+            .h-tree {
+                height: 56px;
+                margin-bottom: 8px
+            }
+
+            .h-title img {
+                height: 46px
+            }
+
+            .h-meta-txt {
+                font-size: 7.5px;
+                letter-spacing: 3px
+            }
+
+            .h-meta-line {
+                width: 20px
+            }
+
+            .h-sub {
+                font-size: 7px;
+                letter-spacing: 2px;
+                margin-top: 14px
+            }
+
+            .h-btns {
+                margin-top: 24px;
+                gap: 9px
+            }
+
+            .btn-g,
+            .btn-o {
+                padding: 15px 24px;
+                font-size: 8.5px;
+                letter-spacing: 2.5px
+            }
+
+            #story,
+            #tl,
+            #vals {
+                padding-top: 70px
+            }
+
+            .s-inner,
+            .tl-head,
+            .tl-grid,
+            .vals-inner,
+            .gal-head,
+            .s-stats-wrap {
+                padding-left: 12px;
+                padding-right: 12px
+            }
+
+            .s-stats-wrap {
+                margin-top: 56px
+            }
+
+            .s-spacer {
+                padding-bottom: 70px
+            }
+
+            .nav-tree {
+                height: 20px;
+                width: 20px
+            }
+
+            .s-h2 {
+                font-size: clamp(28px, 10.5vw, 46px)
+            }
+
+            .s-small {
+                display: none
+            }
+
+            .s-yr {
+                right: -4px;
+                top: 16px;
+                padding: 10px 11px
+            }
+
+            .s-yr-n {
+                font-size: 24px
+            }
+
+            .s-yr-l {
+                font-size: 7px;
+                letter-spacing: 2px
+            }
+
+            .s-body p {
+                font-size: 12px
+            }
+
+            .s-stats {
+                grid-template-columns: 1fr 1fr;
+                margin-top: 48px
+            }
+
+            .stat {
+                padding: 18px 10px
+            }
+
+            .stat-n {
+                font-size: 32px
+            }
+
+            .stat-n span {
+                font-size: 17px
+            }
+
+            .stat-d {
+                font-size: 7px;
+                letter-spacing: 1px
+            }
+
+            .tl-head {
+                margin-bottom: 34px
+            }
+
+            .tl-h2 {
+                font-size: clamp(30px, 10vw, 50px)
+            }
+
+            .tl-col {
+                padding: 0 6px
+            }
+
+            .tl-ey {
+                font-size: 40px;
+                margin-bottom: -12px
+            }
+
+            .tl-et {
+                font-size: 18px
+            }
+
+            .tl-ep {
+                font-size: 11px;
+                line-height: 1.65
+            }
+
+            .tl-e {
+                margin-bottom: 34px
+            }
+
+            .tl-tag {
+                font-size: 7px;
+                letter-spacing: 2px;
+                padding: 4px 8px
+            }
+
+            .vals-h2 {
+                font-size: clamp(28px, 10vw, 48px)
+            }
+
+            .vals-top {
+                margin-bottom: 40px
+            }
+
+            .vals-intro {
+                font-size: 13px
+            }
+
+            .val {
+                padding: 18px 10px
+            }
+
+            .val-n {
+                font-size: 50px;
+                margin-bottom: -12px
+            }
+
+            .val-t {
+                font-size: 18px
+            }
+
+            .val-p {
+                font-size: 11px
+            }
+
+            .gal-head {
+                padding-top: 38px;
+                padding-bottom: 24px
+            }
+
+            .gal-h2 {
+                font-size: clamp(30px, 10vw, 50px)
+            }
+
+            .gg {
+                grid-template-columns: 1fr;
+                grid-template-rows: 190px 140px 140px 140px 140px
+            }
+
+            .gi:nth-child(1) {
+                grid-column: 1;
+                grid-row: 1
+            }
+
+            .gi:nth-child(2) {
+                grid-column: 1;
+                grid-row: 2
+            }
+
+            .gi:nth-child(3) {
+                grid-column: 1;
+                grid-row: 3
+            }
+
+            .gi:nth-child(4) {
+                grid-column: 1;
+                grid-row: 4
+            }
+
+            .gi:nth-child(5) {
+                grid-column: 1;
+                grid-row: 5
+            }
+
+            .con-l,
+            .con-r {
+                padding: 38px 12px
+            }
+
+            .con-h2 {
+                font-size: clamp(42px, 15vw, 64px)
+            }
+
+            .cta-bar {
+                padding: 30px 12px;
+                gap: 16px
+            }
+
+            .cta-bar-txt {
+                font-size: clamp(20px, 8vw, 32px)
+            }
+
+            footer {
+                padding: 20px 12px
+            }
+
+            .ft-copy {
+                font-size: 8px;
+                letter-spacing: 1px
+            }
+
+            .ft-lnk a {
+                font-size: 9px
+            }
+
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(250, 169, 84, 0.12);
+            border: 1px solid rgba(250, 169, 84, 0.35);
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+            z-index: 900;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(12px);
+            transition: opacity 0.4s, visibility 0.4s, transform 0.4s, background 0.3s;
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+        }
+
+        .scroll-top.vis {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .scroll-top:hover {
+            background: rgba(250, 169, 84, 0.25);
+            border-color: var(--gold);
+        }
+
+        @media(max-width:480px) {
+            .scroll-top {
+                bottom: 18px;
+                right: 18px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <!-- LOADER -->
+    <div id="loader">
+        <div class="ld-half ld-half--top"></div>
+        <div class="ld-half ld-half--bot"></div>
+        <div class="ld-wrap">
+            <div class="ld-glow"></div>
+            <img src="ildiz-tree.png" alt="" class="ld-tree">
+            <div class="ld-clip"><span class="ld-big"><img src="ildiz_logo.png" alt="ildiz"></span></div>
+            <div class="ld-small"><span data-l="uz" class="on">Milliy Taomlari · Urganch</span><span data-l="ru">Национальная Кухня · Ургенч</span><span data-l="en">National Cuisine · Urgench</span></div>
+            <div class="ld-bar"><div class="ld-bar-fill" id="ldFill"></div></div>
+            <div class="ld-pct" id="ldPct">0%</div>
+        </div>
+    </div>
+
+    <!-- NAV -->
+    <nav id="nav">
+        <a href="index.html" class="nav-logo">
+            <img src="ildiz-tree.png" alt="" class="nav-tree">
+            <span class="nav-logo-txt"><img src="ildiz_logo.png" alt="ildiz"></span>
+        </a>
+        <ul class="nav-mid">
+            <li><a href="#story"><span data-l="uz" class="on">Tarix</span><span data-l="ru">История</span><span
+                        data-l="en">History</span></a></li>
+            <li><a href="#gallery"><span data-l="uz" class="on">Galereya</span><span data-l="ru">Галерея</span><span
+                        data-l="en">Gallery</span></a></li>
+            <li><a href="menu.html"><span data-l="uz" class="on">Menyu</span><span data-l="ru">Меню</span><span
+                        data-l="en">Menu</span></a></li>
+            <li><a href="#contact"><span data-l="uz" class="on">Aloqa</span><span data-l="ru">Контакты</span><span
+                        data-l="en">Contact</span></a></li>
+        </ul>
+        <div class="nav-r">
+            <button class="lb on" onclick="sL('uz')">UZ</button>
+            <button class="lb" onclick="sL('ru')">RU</button>
+            <button class="lb" onclick="sL('en')">EN</button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="h-bg"></div>
+        <div class="h-img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1800&q=85" alt=""
+                fetchpriority="high" decoding="async">
+        </div>
+        <div class="h-vig"></div>
+
+        <div class="h-cont">
+            <div class="h-left">
+                <div class="h-meta">
+                    <div class="h-meta-line"></div>
+                    <span class="h-meta-txt"><span data-l="uz" class="on">Urganch · 2014-yildan beri</span><span
+                            data-l="ru">Ургенч · С 2014 года</span><span data-l="en">Urgench · Est. 2014</span></span>
+                </div>
+                <img src="ildiz-tree.png" alt="" class="h-tree">
+                <h1 class="h-title"><img src="ildiz_logo.png" alt="ildiz"></h1>
+                <p class="h-sub"><span data-l="uz" class="on">Milliy Taomlari · Oilaviy Restoran</span><span
+                        data-l="ru">Национальная Кухня · Семейный Ресторан</span><span data-l="en">National Cuisine ·
+                        Family Restaurant</span></p>
+                <div class="h-btns">
+                    <a href="menu.html" class="btn-g"><span data-l="uz" class="on">Menyuni Ko'rish</span><span
+                            data-l="ru">Открыть Меню</span><span data-l="en">View Menu</span> <svg width="14"
+                            height="14" viewBox="0 0 14 14" fill="none">
+                            <path d="M2 7H12M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3"
+                                stroke-linecap="round" />
+                        </svg></a>
+                    <a href="#story" class="btn-o"><span data-l="uz" class="on">Bizning Tarix</span><span
+                            data-l="ru">Наша История</span><span data-l="en">Our Story</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="mqw">
+        <div class="mqt">
+            <span class="mqi">Milliy Taomlari</span><span class="mqd">◆</span>
+            <span class="mqi">Национальная Кухня</span><span class="mqd">◆</span>
+            <span class="mqi">National Cuisine</span><span class="mqd">◆</span>
+            <span class="mqi">Urganch · Uzbekiston</span><span class="mqd">◆</span>
+            <span class="mqi">Since 2014</span><span class="mqd">◆</span>
+            <span class="mqi">Oilaviy Restoran</span><span class="mqd">◆</span>
+            <span class="mqi">Authentic Recipes</span><span class="mqd">◆</span>
+            <span class="mqi">Milliy Taomlari</span><span class="mqd">◆</span>
+            <span class="mqi">Национальная Кухня</span><span class="mqd">◆</span>
+            <span class="mqi">National Cuisine</span><span class="mqd">◆</span>
+            <span class="mqi">Urganch · Uzbekiston</span><span class="mqd">◆</span>
+            <span class="mqi">Since 2014</span><span class="mqd">◆</span>
+            <span class="mqi">Oilaviy Restoran</span><span class="mqd">◆</span>
+            <span class="mqi">Authentic Recipes</span><span class="mqd">◆</span>
+        </div>
+    </div>
+
+    <!-- STORY -->
+    <section id="story">
+        <div class="s-noise"></div>
+        <div class="s-num">01</div>
+        <div class="s-inner">
+            <div>
+                <div class="eyebrow r"><span data-l="uz" class="on">Bizning Tarix</span><span data-l="ru">Наша
+                        История</span><span data-l="en">Our Story</span></div>
+                <h2 class="s-h2 r d1"><span data-l="uz" class="on">Ildizdan<br><em>Buyuklikka</em></span><span
+                        data-l="ru">От Корней<br><em>К Величию</em></span><span data-l="en">From Roots<br><em>To
+                            Greatness</em></span></h2>
+                <div class="s-body r d2">
+                    <div data-l="uz" class="on">
+                        <p>ILDIZ milliy taomlari o'z faoliyatini 2014-yilda «Bellissimo» restorani sifatida boshladi.
+                            Yillar davomida doimiy mehmonlarini topib, muhabbat va sadoqat bilan xizmat ko'rsatdi.</p>
+                        <div class="s-pull">«Har bir taom — milliy merosimizning bir sahifasi. Biz ildizlarimizni
+                            unutmaymiz.»</div>
+                        <p>Bugun yangi nom — ILDIZ bilan yangi sahifa ochilyapti. ILDIZ so'zi «ildiz» degan ma'noni
+                            anglatadi — taomlarimizning asosi, an'analarimizning poydevori, kelajagimizning ildizi.</p>
+                        <p>Oilaviy atmosfera, authentic milliy taomlar va issiq mehmon qabuli — mana bu ILDIZ falsafasi.
+                        </p>
+                    </div>
+                    <div data-l="ru">
+                        <p>ILDIZ Milliy Taomlari начал путь в 2014 году как ресторан «Bellissimo». За годы работы обрёл
+                            верных гостей, служа им с любовью и преданностью.</p>
+                        <div class="s-pull">«Каждое блюдо — страница нашего национального наследия. Мы никогда не
+                            забываем своих корней.»</div>
+                        <p>Сегодня под именем ILDIZ открывается новая страница. ILDIZ означает «корень» — основу блюд,
+                            фундамент традиций, начало всего.</p>
+                        <p>Семейная атмосфера, аутентичная национальная кухня и тёплый приём — философия ILDIZ.</p>
+                    </div>
+                    <div data-l="en">
+                        <p>ILDIZ Milliy Taomlari began its journey in 2014 as "Bellissimo" restaurant. Over the years it
+                            found its loyal guests, serving them with love and dedication.</p>
+                        <div class="s-pull">"Each dish is a page of our national heritage. We never forget our roots."
+                        </div>
+                        <p>Today under the name ILDIZ, a new chapter opens. ILDIZ means "root" — the foundation of our
+                            dishes, the bedrock of traditions, the beginning of everything.</p>
+                        <p>Family atmosphere, authentic national cuisine and warm hospitality — this is the ILDIZ
+                            philosophy.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="s-right r d2">
+                <div class="s-stack">
+                    <div class="s-yr"><span class="s-yr-n">2014</span><span class="s-yr-l"><span data-l="uz"
+                                class="on">Asos</span><span data-l="ru">Основан</span><span
+                                data-l="en">Founded</span></span></div>
+                    <div class="s-big"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=85"
+                            alt="ILDIZ" loading="lazy"></div>
+                    <div class="s-small"><img
+                            src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80" alt="Food"
+                            loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="s-stats-wrap r">
+            <div class="s-stats">
+                <div class="stat">
+                    <div class="stat-n">11<span>+</span></div>
+                    <div class="stat-d"><span data-l="uz" class="on">Yillik tajriba</span><span data-l="ru">Лет
+                            опыта</span><span data-l="en">Years of experience</span></div>
+                </div>
+                <div class="stat">
+                    <div class="stat-n">08<span>–01</span></div>
+                    <div class="stat-d"><span data-l="uz" class="on">Har kuni ochiq</span><span data-l="ru">Открыто
+                            каждый день</span><span data-l="en">Open every day</span></div>
+                </div>
+                <div class="stat">
+                    <div class="stat-n">30<span>+</span></div>
+                    <div class="stat-d"><span data-l="uz" class="on">Milliy taomlar</span><span data-l="ru">Национальных
+                            блюд</span><span data-l="en">National dishes</span></div>
+                </div>
+                <div class="stat">
+                    <div class="stat-n">100<span>%</span></div>
+                    <div class="stat-d"><span data-l="uz" class="on">Authentic retseptlar</span><span
+                            data-l="ru">Аутентичные рецепты</span><span data-l="en">Authentic recipes</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="s-spacer"></div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="tl">
+        <div class="tl-head r">
+            <div class="eyebrow tl-eyebrow"><span data-l="uz" class="on">Bizning Yo'l</span><span data-l="ru">Наш
+                    Путь</span><span data-l="en">Our Journey</span></div>
+            <h2 class="tl-h2"><span data-l="uz" class="on">Tarix <em>Sahifalari</em></span><span data-l="ru">Страницы
+                    <em>Истории</em></span><span data-l="en">Pages of <em>History</em></span></h2>
+        </div>
+        <div class="tl-grid">
+            <div class="tl-col">
+                <div class="tl-e">
+                    <div class="tl-ey">2014</div>
+                    <div class="tl-et"><span data-l="uz" class="on">Bellissimo Ochilyapti</span><span
+                            data-l="ru">Открытие Bellissimo</span><span data-l="en">Bellissimo Opens</span></div>
+                    <div class="tl-ep"><span data-l="uz" class="on">«Bellissimo» restorani sifatida faoliyat boshlandi.
+                            Dastlabki qadamlar, birinchi mehmonlar.</span><span data-l="ru">Начало деятельности как
+                            ресторан «Bellissimo». Первые шаги, первые гости.</span><span data-l="en">Activity begins as
+                            "Bellissimo". First steps, first guests.</span></div>
+                    <div class="tl-tag"><span data-l="uz" class="on">Boshlanish</span><span
+                            data-l="ru">Начало</span><span data-l="en">Beginning</span></div>
+                </div>
+                <div class="tl-e">
+                    <div class="tl-ey">2022</div>
+                    <div class="tl-et"><span data-l="uz" class="on">Yangi Konsept</span><span data-l="ru">Новая
+                            Концепция</span><span data-l="en">New Concept</span></div>
+                    <div class="tl-ep"><span data-l="uz" class="on">Oilaviy restoran formatiga o'tish. Yangi interyer,
+                            yangi atmosfera — milliy ruh bilan.</span><span data-l="ru">Переход в формат семейного
+                            ресторана. Новый интерьер с национальным духом.</span><span data-l="en">Transition to family
+                            restaurant. New interior with national spirit.</span></div>
+                    <div class="tl-tag"><span data-l="uz" class="on">O'zgarish</span><span
+                            data-l="ru">Преобразование</span><span data-l="en">Transformation</span></div>
+                </div>
+            </div>
+            <div class="tl-ax"></div>
+            <div class="tl-col r">
+                <div class="tl-e">
+                    <div class="tl-ey">2019</div>
+                    <div class="tl-et"><span data-l="uz" class="on">O'sish va Rivojlanish</span><span data-l="ru">Рост и
+                            Развитие</span><span data-l="en">Growth & Development</span></div>
+                    <div class="tl-ep"><span data-l="uz" class="on">Doimiy mijozlar bazasi shakllanadi. Menyu kengayadi,
+                            milliy taomlar asosiy yo'nalishga aylanadi.</span><span data-l="ru">Формируется база гостей.
+                            Меню расширяется, национальная кухня становится главным.</span><span data-l="en">Loyal guest
+                            base forms. Menu expands, national cuisine takes center stage.</span></div>
+                    <div class="tl-tag"><span data-l="uz" class="on">Rivojlanish</span><span
+                            data-l="ru">Развитие</span><span data-l="en">Growth</span></div>
+                </div>
+                <div class="tl-e">
+                    <div class="tl-ey">2025</div>
+                    <div class="tl-et"><span data-l="uz" class="on">ILDIZ Tug'ildi</span><span data-l="ru">Рождение
+                            ILDIZ</span><span data-l="en">ILDIZ is Born</span></div>
+                    <div class="tl-ep"><span data-l="uz" class="on">Yangi nom, yangi brend. ILDIZ — ildizlarga qaytish,
+                            an'analarga hurmat va kelajakka dadil qadam.</span><span data-l="ru">Новое имя, новый бренд.
+                            ILDIZ — возврат к корням и смелый шаг в будущее.</span><span data-l="en">New name, new
+                            brand. ILDIZ — a return to roots and a bold step forward.</span></div>
+                    <div class="tl-tag now"><span data-l="uz" class="on">Bugun</span><span
+                            data-l="ru">Сегодня</span><span data-l="en">Today</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALUES -->
+    <section id="vals">
+        <div class="vals-inner">
+            <div class="vals-top r">
+                <h2 class="vals-h2"><span data-l="uz" class="on">Nima Uchun<br><em>Biz?</em></span><span
+                        data-l="ru">Почему<br><em>Мы?</em></span><span data-l="en">Why<br><em>Choose Us?</em></span>
+                </h2>
+                <p class="vals-intro"><span data-l="uz" class="on">Har bir mehmon bizda o'zini maxsus his qiladi.
+                        Taomlarimiz — bu shunchaki ovqat emas, bu hissiyot, xotira, uyga qaytish.</span><span
+                        data-l="ru">Каждый гость чувствует себя особенным. Наши блюда — не просто еда: это эмоция,
+                        память, возвращение домой.</span><span data-l="en">Every guest feels special here. Our dishes
+                        are not just food — they're an emotion, a memory, a return home.</span></p>
+            </div>
+            <div class="vals-grid">
+                <div class="val r">
+                    <span class="val-n">01</span>
+                    <div class="val-ico"><svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+                            <path
+                                d="M17 3C20 7 23 12 21 17C25 19 27 25 23 29C21 33 18 35 17 33C16 35 13 33 11 29C7 25 9 19 13 17C11 12 14 7 17 3Z"
+                                stroke="#FAA954" stroke-width="1" fill="none" />
+                            <circle cx="17" cy="17" r="3" fill="#FAA954" opacity="0.4" />
+                        </svg></div>
+                    <div class="val-t"><span data-l="uz" class="on">Authentic Ta'm</span><span data-l="ru">Аутентичный
+                            Вкус</span><span data-l="en">Authentic Taste</span></div>
+                    <p class="val-p"><span data-l="uz" class="on">An'anaviy retseptlar, mahalliy ingredientlar. Bitta
+                            ta'm — minglab xotira.</span><span data-l="ru">Традиционные рецепты, местные ингредиенты.
+                            Один вкус — тысячи воспоминаний.</span><span data-l="en">Traditional recipes, local
+                            ingredients. One taste — a thousand memories.</span></p>
+                </div>
+                <div class="val r d1">
+                    <span class="val-n">02</span>
+                    <div class="val-ico"><svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+                            <path d="M4 17 C4 25 10 31 17 31 C24 31 30 25 30 17 C30 9 24 3 17 3" stroke="#FAA954"
+                                stroke-width="1" fill="none" stroke-linecap="round" />
+                            <path d="M17 3 C13 3 9 5 6 9" stroke="#FAA954" stroke-width="1" fill="none"
+                                stroke-linecap="round" />
+                            <circle cx="17" cy="17" r="5" stroke="#FAA954" stroke-width="1" fill="none" />
+                        </svg></div>
+                    <div class="val-t"><span data-l="uz" class="on">Oilaviy Muhit</span><span data-l="ru">Семейная
+                            Атмосфера</span><span data-l="en">Family Atmosphere</span></div>
+                    <p class="val-p"><span data-l="uz" class="on">Bu shunchaki restoran emas — katta oilaning
+                            dasturxoni. Har kim bu yerda uyda his qiladi o'zini.</span><span data-l="ru">Не просто
+                            ресторан — дастархан большой семьи. Здесь каждый чувствует себя как дома.</span><span
+                            data-l="en">Not just a restaurant — a family's dastarkhan. Everyone feels at home
+                            here.</span></p>
+                </div>
+                <div class="val r d2">
+                    <span class="val-n">03</span>
+                    <div class="val-ico"><svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+                            <path d="M7 27 L17 5 L27 27" stroke="#FAA954" stroke-width="1" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M10 21 L24 21" stroke="#FAA954" stroke-width="1" stroke-linecap="round" />
+                        </svg></div>
+                    <div class="val-t"><span data-l="uz" class="on">Sifat Kafolati</span><span data-l="ru">Гарантия
+                            Качества</span><span data-l="en">Quality Guarantee</span></div>
+                    <p class="val-p"><span data-l="uz" class="on">Har kuni yangi mahsulotlar. Sifat nazorati — bizning
+                            asosiy qoidamiz, murosasiz.</span><span data-l="ru">Каждый день свежие продукты. Контроль
+                            качества — наше главное правило, без компромиссов.</span><span data-l="en">Fresh products
+                            daily. Quality control — our absolute rule, no compromises.</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <!-- INTERIOR -->
+    <section id="gallery" class="gal-section">
+        <div class="gal-head r">
+            <div>
+                <div class="eyebrow"><span data-l="uz" class="on">Interyer</span><span data-l="ru">Интерьер</span><span
+                        data-l="en">Interior</span></div>
+                <h2 class="gal-h2"><span data-l="uz" class="on">Bizning<br><em>Makanimiz</em></span><span
+                        data-l="ru">Наше<br><em>Пространство</em></span><span data-l="en">Our<br><em>Space</em></span>
+                </h2>
+            </div>
+            <div class="gal-sub"><span data-l="uz" class="on">Restoran · Interyer · Dizayn</span><span
+                    data-l="ru">Ресторан · Интерьер · Дизайн</span><span data-l="en">Restaurant · Interior ·
+                    Design</span></div>
+        </div>
+        <div class="gg">
+            <div class="gi"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&q=85"
+                    alt="ILDIZ restoran ichki ko'rinishi" loading="lazy"></div>
+            <div class="gi"><img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=600&q=85"
+                    alt="Restoran zali" loading="lazy"></div>
+            <div class="gi"><img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=600&q=85"
+                    alt="Restoran stoli" loading="lazy"></div>
+            <div class="gi"><img src="https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?w=600&q=85"
+                    alt="Restoran dekor" loading="lazy"></div>
+            <div class="gi"><img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=600&q=85"
+                    alt="Restoran yoritish" loading="lazy"></div>
+        </div>
+    </section>
+
+    <!-- ATMOSPHERE -->
+    <section id="atmosphere" class="gal-section">
+        <div class="gal-head r">
+            <div>
+                <div class="eyebrow"><span data-l="uz" class="on">Atmosfera</span><span
+                        data-l="ru">Атмосфера</span><span data-l="en">Atmosphere</span></div>
+                <h2 class="gal-h2"><span data-l="uz" class="on">Jonli<br><em>Lahzalar</em></span><span
+                        data-l="ru">Живые<br><em>Моменты</em></span><span data-l="en">Living<br><em>Moments</em></span>
+                </h2>
+            </div>
+            <div class="gal-sub"><span data-l="uz" class="on">Mehmonlar · Oila · Taassurotlar</span><span
+                    data-l="ru">Гости · Семья · Впечатления</span><span data-l="en">Guests · Family ·
+                    Impressions</span></div>
+        </div>
+        <div class="gg">
+            <div class="gi"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85"
+                    alt="Restoran atmosferasi" loading="lazy"></div>
+            <div class="gi"><img src="https://images.unsplash.com/photo-1529543544282-ea57407bc2e3?w=600&q=85"
+                    alt="Oilaviy ovqatlanish" loading="lazy"></div>
+            <div class="gi"><img src="https://images.unsplash.com/photo-1543353071-873f17a7a088?w=600&q=85"
+                    alt="Mehmonlar" loading="lazy"></div>
+            <div class="gi"><img src="https://images.unsplash.com/photo-1600891964599-f94d51f5bde3?w=600&q=85"
+                    alt="Do'stlar davrasida" loading="lazy"></div>
+            <div class="gi"><img src="https://images.unsplash.com/photo-1515669097368-22e68427d265?w=600&q=85"
+                    alt="Restoranda oila" loading="lazy"></div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="con-split">
+            <div class="con-l r">
+                <div class="con-l-bg"></div>
+                <div class="con-ey"><span data-l="uz" class="on">Bizga Tashrif Buyuring</span><span data-l="ru">Посетите
+                        Нас</span><span data-l="en">Visit Us</span></div>
+                <h2 class="con-h2"><span data-l="uz" class="on">Sizi<br><em>Kutamiz</em></span><span
+                        data-l="ru">Ждём<br><em>Вас</em></span><span data-l="en">We Await<br><em>You</em></span></h2>
+                <div>
+                    <a href="tel:+998972030220" class="con-phone">+99897 203 02 20</a>
+                    <div class="con-addr">
+                        <span data-l="uz" class="on">Urganch, Abu al-G'oziy Bahodirxon ko'chasi, 80-uy</span>
+                        <span data-l="ru">Ургенч, ул. Абу л-Гази Бахадур-хана, дом 80</span>
+                        <span data-l="en">Urganch, Abu al-Ghazi Bahadur Khan st., 80</span>
+                    </div>
+                </div>
+            </div>
+            <div class="con-r r d1">
+                <div>
+                    <h3><span data-l="uz" class="on">Biz Bilan<br><em>Bog'laning</em></span><span
+                            data-l="ru">Свяжитесь<br><em>С Нами</em></span><span data-l="en">Get
+                            In<br><em>Touch</em></span></h3>
+                    <div class="con-items">
+                        <div class="ci">
+                            <div class="ci-ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <circle cx="8" cy="8" r="6" stroke="#FAA954" stroke-width="0.8" />
+                                    <path d="M8 4V8L10.5 9.5" stroke="#FAA954" stroke-width="0.8"
+                                        stroke-linecap="round" />
+                                </svg></div>
+                            <div>
+                                <div class="ci-l"><span data-l="uz" class="on">Ish Vaqti</span><span data-l="ru">Часы
+                                        Работы</span><span data-l="en">Working Hours</span></div>
+                                <div class="ci-v">11:00 — 23:00</div>
+                            </div>
+                        </div>
+                        <div class="ci">
+                            <div class="ci-ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path
+                                        d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6C3.5 9.5 8 14.5 8 14.5C8 14.5 12.5 9.5 12.5 6C12.5 3.5 10.5 1.5 8 1.5ZM8 7.5C7.2 7.5 6.5 6.8 6.5 6C6.5 5.2 7.2 4.5 8 4.5C8.8 4.5 9.5 5.2 9.5 6C9.5 6.8 8.8 7.5 8 7.5Z"
+                                        stroke="#FAA954" stroke-width="0.8" fill="none" />
+                                </svg></div>
+                            <div>
+                                <div class="ci-l"><span data-l="uz" class="on">Manzil</span><span
+                                        data-l="ru">Адрес</span><span data-l="en">Address</span></div>
+                                <div class="ci-v">
+                                    <span data-l="uz" class="on">Urganch, Abu al-G'oziy Bahodirxon ko'chasi,
+                                        80-uy</span>
+                                    <span data-l="ru">Ургенч, ул. Абу л-Гази Бахадур-хана, дом 80</span>
+                                    <span data-l="en">Urganch, Abu al-Ghazi Bahadur Khan st., 80</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ci">
+                            <div class="ci-ic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <rect x="2" y="2" width="12" height="12" rx="3.5" stroke="#FAA954"
+                                        stroke-width="0.8" />
+                                    <circle cx="8" cy="8" r="2.5" stroke="#FAA954" stroke-width="0.8" />
+                                    <circle cx="11.5" cy="4.5" r="0.8" fill="#FAA954" />
+                                </svg></div>
+                            <div>
+                                <div class="ci-l">Instagram</div>
+                                <div class="ci-v"><a href="https://www.instagram.com/ildiz_milliy_taomlar/"
+                                        target="_blank" rel="noopener">@ildiz_milliy_taomlar</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="con-bot"><a href="menu.html"><span data-l="uz" class="on">Menyuni Ko'rish →</span><span
+                            data-l="ru">Открыть Меню →</span><span data-l="en">View Menu →</span></a></div>
+            </div>
+        </div>
+        <div class="cta-bar r">
+            <div class="cta-bar-txt"><span data-l="uz" class="on">Bugun Bizga <em>Tashrif Buyuring</em></span><span
+                    data-l="ru">Посетите Нас <em>Сегодня</em></span><span data-l="en">Visit Us <em>Today</em></span>
+            </div>
+            <a href="menu.html" class="btn-g"><span data-l="uz" class="on">Menyuni
+                    Ko'rish</span><span data-l="ru">Открыть Меню</span><span data-l="en">View Menu</span> <svg
+                    width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M2 7H12M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+                </svg></a>
+        </div>
+    </section>
+
+    <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+        aria-label="Scroll to top">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M9 14V4M4 8l5-5 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+    </button>
+
+    <footer>
+        <a href="index.html" class="ft-logo">ILDIZ</a>
+        <p class="ft-copy">© <span id="ft-yr">2025</span> <span data-l="uz" class="on">ILDIZ Milliy Taomlari · Urganch</span><span data-l="ru">ILDIZ Национальная Кухня · Ургенч</span><span data-l="en">ILDIZ National Cuisine · Urgench</span></p>
+        <div class="ft-lnk">
+            <a href="https://www.instagram.com/ildiz_milliy_taomlar/" target="_blank" rel="noopener">Instagram</a>
+            <a href="tel:+998972030220">+99897 203 02 20</a>
+            <a href="menu.html"><span data-l="uz" class="on">Menyu</span><span data-l="ru">Меню</span><span
+                    data-l="en">Menu</span></a>
+        </div>
+    </footer>
+
+    <!-- LIGHTBOX -->
+    <div class="lbox" id="lbox">
+        <button class="lbox-x" onclick="closeLbox()" aria-label="Close">×</button>
+        <button class="lbox-nav lbox-prev" onclick="navLbox(-1)" aria-label="Previous">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M11 4l-5 5 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </button>
+        <img class="lbox-img" id="lbox-img" src="" alt="">
+        <button class="lbox-nav lbox-next" onclick="navLbox(1)" aria-label="Next">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </button>
+        <div class="lbox-counter" id="lbox-counter"></div>
+    </div>
+
+    <!-- CURSOR -->
+    <div id="c"></div>
+    <div id="cr"></div>
+
+    <script src="shared.js"></script>
+    <script>
+        document.getElementById('ft-yr').textContent = new Date().getFullYear();
+        window.addEventListener('scroll', () => {
+            document.getElementById('nav').classList.toggle('stuck', scrollY > 80);
+            document.getElementById('scrollTop').classList.toggle('vis', scrollY > 600);
+        });
+        const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }); }, { threshold: 0.07, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.r,.tl-e,.val').forEach(el => obs.observe(el));
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => { const t = document.querySelector(a.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); } });
+        });
+
+        // LIGHTBOX
+        const lbox = document.getElementById('lbox');
+        const lboxImg = document.getElementById('lbox-img');
+        const lboxCounter = document.getElementById('lbox-counter');
+        let lboxItems = [];
+        let lboxIdx = 0;
+
+        document.querySelectorAll('.gi').forEach(gi => {
+            gi.addEventListener('click', () => {
+                const section = gi.closest('.gal-section');
+                lboxItems = [...section.querySelectorAll('.gi img')].map(img => img.src.replace(/w=\d+/, 'w=1400'));
+                lboxIdx = [...section.querySelectorAll('.gi img')].indexOf(gi.querySelector('img'));
+                showLbox();
+            });
+        });
+
+        function showLbox() {
+            lboxImg.src = lboxItems[lboxIdx];
+            lboxCounter.textContent = (lboxIdx + 1) + ' / ' + lboxItems.length;
+            lbox.classList.add('on');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLbox() {
+            lbox.classList.remove('on');
+            document.body.style.overflow = '';
+        }
+
+        function navLbox(dir) {
+            lboxIdx = (lboxIdx + dir + lboxItems.length) % lboxItems.length;
+            lboxImg.style.opacity = '0';
+            lboxImg.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                lboxImg.src = lboxItems[lboxIdx];
+                lboxCounter.textContent = (lboxIdx + 1) + ' / ' + lboxItems.length;
+                lboxImg.style.opacity = '1';
+                lboxImg.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        lbox.addEventListener('click', e => { if (e.target === lbox) closeLbox(); });
+        document.addEventListener('keydown', e => {
+            if (!lbox.classList.contains('on')) return;
+            if (e.key === 'Escape') closeLbox();
+            if (e.key === 'ArrowLeft') navLbox(-1);
+            if (e.key === 'ArrowRight') navLbox(1);
+        });
+
+        let touchX = 0;
+        lbox.addEventListener('touchstart', e => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+        lbox.addEventListener('touchend', e => {
+            const dx = e.changedTouches[0].clientX - touchX;
+            if (Math.abs(dx) > 50) navLbox(dx < 0 ? 1 : -1);
+        });
+    </script>
+</body>
+
+</html>
