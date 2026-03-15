@@ -132,7 +132,7 @@ textarea {
 }
 
 .ld-tree {
-    width: clamp(48px, 10vw, 80px);
+    width: clamp(90px, 18vw, 120px);
     height: auto;
     opacity: 0;
     filter: drop-shadow(0 0 0px rgba(250, 169, 84, 0));
@@ -162,8 +162,8 @@ textarea {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -60%);
-    width: clamp(120px, 30vw, 200px);
-    height: clamp(120px, 30vw, 200px);
+    width: clamp(220px, 50vw, 340px);
+    height: clamp(220px, 50vw, 340px);
     background: radial-gradient(circle, rgba(250, 169, 84, 0.08) 0%, transparent 70%);
     border-radius: 50%;
     opacity: 0;
@@ -179,7 +179,7 @@ textarea {
 
 .ld-clip {
     overflow: hidden;
-    margin-top: clamp(12px, 3vw, 20px);
+    margin-top: clamp(16px, 3vw, 24px);
 }
 
 .ld-big {
@@ -189,7 +189,7 @@ textarea {
 }
 
 .ld-big img {
-    height: clamp(40px, 12vw, 100px);
+    height: clamp(72px, 18vw, 140px);
     width: auto;
     max-width: 100%;
 }
@@ -201,13 +201,13 @@ textarea {
 }
 
 .ld-small {
-    font-size: clamp(7px, 2.5vw, 10px);
-    letter-spacing: clamp(3px, 1.5vw, 7px);
+    font-size: clamp(10px, 3vw, 14px);
+    letter-spacing: clamp(5px, 2.5vw, 9px);
     color: var(--gold);
     text-transform: uppercase;
     opacity: 0;
     animation: ldFi 0.6s ease 1.2s forwards;
-    margin-top: clamp(14px, 3vw, 22px);
+    margin-top: clamp(22px, 5vw, 32px);
 }
 
 @keyframes ldFi {
@@ -216,10 +216,10 @@ textarea {
 
 .ld-bar {
     position: relative;
-    width: clamp(120px, 40vw, 220px);
+    width: clamp(180px, 55vw, 280px);
     height: 1px;
     background: rgba(250, 169, 84, 0.12);
-    margin: clamp(18px, 4vw, 30px) auto 0;
+    margin: clamp(22px, 5vw, 36px) auto 0;
     overflow: hidden;
     border-radius: 1px;
 }
@@ -237,10 +237,10 @@ textarea {
 
 .ld-pct {
     font-family: 'Montserrat', sans-serif;
-    font-size: clamp(8px, 2vw, 11px);
-    letter-spacing: 3px;
+    font-size: clamp(11px, 3vw, 14px);
+    letter-spacing: 5px;
     color: rgba(250, 169, 84, 0.4);
-    margin-top: clamp(10px, 2.5vw, 16px);
+    margin-top: clamp(14px, 3vw, 20px);
     opacity: 0;
     animation: ldFi 0.4s ease 0.8s forwards;
 }
@@ -325,37 +325,37 @@ textarea {
 
 @media(max-width:480px) {
     .ld-tree {
-        width: 44px;
+        width: 84px;
     }
 
     .ld-big img {
-        height: 36px;
+        height: 66px;
     }
 
     .ld-clip {
-        margin-top: 10px;
+        margin-top: 18px;
     }
 
     .ld-small {
-        font-size: 7px;
-        letter-spacing: 3px;
-        margin-top: 12px;
+        font-size: 10px;
+        letter-spacing: 5px;
+        margin-top: 20px;
     }
 
     .ld-bar {
-        width: 100px;
-        margin-top: 16px;
+        width: 170px;
+        margin-top: 24px;
     }
 
     .ld-pct {
-        font-size: 8px;
-        letter-spacing: 2px;
-        margin-top: 8px;
+        font-size: 10px;
+        letter-spacing: 4px;
+        margin-top: 14px;
     }
 
     .ld-glow {
-        width: 100px;
-        height: 100px;
+        width: 200px;
+        height: 200px;
     }
 
     .mqw {
@@ -374,73 +374,73 @@ textarea {
 
 @media(max-width:375px) {
     .ld-tree {
-        width: 40px;
+        width: 80px;
     }
 
     .ld-big img {
-        height: 32px;
+        height: 60px;
     }
 
     .ld-clip {
-        margin-top: 8px;
+        margin-top: 16px;
     }
 
     .ld-small {
-        font-size: 6.5px;
-        letter-spacing: 2.5px;
-        margin-top: 10px;
+        font-size: 9.5px;
+        letter-spacing: 4px;
+        margin-top: 18px;
     }
 
     .ld-bar {
-        width: 90px;
-        margin-top: 14px;
+        width: 160px;
+        margin-top: 22px;
     }
 
     .ld-pct {
-        font-size: 7px;
-        letter-spacing: 2px;
-        margin-top: 7px;
+        font-size: 10px;
+        letter-spacing: 3px;
+        margin-top: 12px;
     }
 
     .ld-glow {
-        width: 90px;
-        height: 90px;
+        width: 180px;
+        height: 180px;
     }
 }
 
 @media(max-width:320px) {
     .ld-tree {
-        width: 36px;
+        width: 76px;
     }
 
     .ld-big img {
-        height: 28px;
+        height: 56px;
     }
 
     .ld-clip {
-        margin-top: 7px;
+        margin-top: 14px;
     }
 
     .ld-small {
-        font-size: 6px;
-        letter-spacing: 2px;
-        margin-top: 8px;
+        font-size: 9px;
+        letter-spacing: 3.5px;
+        margin-top: 16px;
     }
 
     .ld-bar {
-        width: 80px;
-        margin-top: 12px;
+        width: 150px;
+        margin-top: 20px;
     }
 
     .ld-pct {
-        font-size: 7px;
-        letter-spacing: 1.5px;
-        margin-top: 6px;
+        font-size: 9px;
+        letter-spacing: 3px;
+        margin-top: 12px;
     }
 
     .ld-glow {
-        width: 80px;
-        height: 80px;
+        width: 170px;
+        height: 170px;
     }
 
     .mqw {

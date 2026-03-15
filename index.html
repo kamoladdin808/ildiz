@@ -4,6 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ILDIZ — Milliy taomlari restoran Urganchda. Oilaviy restoran, milliy taomlar, autentik retseptlar. 2014-yildan beri.">
+    <meta name="keywords" content="ILDIZ, ildiz, restoran, Urganch, milliy taomlar, ozbek oshxonasi, oilaviy restoran, national cuisine, Urgench">
+    <meta name="author" content="ILDIZ Milliy Taomlari">
+    <meta name="theme-color" content="#2E1A0E">
+    <meta name="color-scheme" content="dark">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ILDIZ — Milliy Taomlari | Urganch">
+    <meta property="og:description" content="Oilaviy restoran Urganchda. Milliy taomlar, autentik retseptlar, yangi mahsulotlar. 2014-yildan beri.">
+    <meta property="og:url" content="https://kamoladdin808.github.io/ildiz/">
+    <meta property="og:site_name" content="ILDIZ">
+    <meta property="og:locale" content="uz_UZ">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ILDIZ — Milliy Taomlari | Urganch">
+    <meta name="twitter:description" content="Oilaviy restoran Urganchda. Milliy taomlar, autentik retseptlar.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="ildiz-tree.png">
+    <link rel="apple-touch-icon" href="ildiz-tree.png">
+
     <title>ILDIZ — Milliy Taomlari</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
@@ -53,7 +77,7 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 36px 64px;
+            padding: 22px 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -62,7 +86,7 @@
         }
 
         nav.stuck {
-            padding: 18px 64px;
+            padding: 16px 64px;
             background: rgba(46, 26, 14, 0.94);
             -webkit-backdrop-filter: blur(24px);
             backdrop-filter: blur(24px);
@@ -1458,7 +1482,7 @@
         /* ══ 800px ══ */
         @media(max-width:800px) {
             nav {
-                padding: 18px 24px
+                padding: 16px 24px
             }
 
             nav.stuck {
@@ -1674,6 +1698,12 @@
 
         /* ══ 600px ══ */
         @media(max-width:600px) {
+            #hero {
+                height: 100vh;
+                height: 100dvh;
+                min-height: 0;
+            }
+
             .nav-mid {
                 gap: 16px
             }
@@ -1681,10 +1711,6 @@
             .nav-mid a {
                 font-size: 7px;
                 letter-spacing: 1.5px
-            }
-
-            #hero {
-                min-height: 580px
             }
 
             .h-tree {
@@ -1903,29 +1929,41 @@
             }
 
             .h-tree {
-                height: clamp(52px, 7vw, 68px);
-                margin-bottom: 10px
+                height: 90px;
+                margin-bottom: 16px
             }
 
             .h-title img {
-                height: clamp(44px, 11vw, 70px)
+                height: 72px
             }
 
             .h-meta {
-                gap: 10px;
-                margin-bottom: 18px
+                gap: 12px;
+                margin-bottom: 22px
+            }
+
+            .h-meta-txt {
+                font-size: 10px;
+                letter-spacing: 5px
+            }
+
+            .h-sub {
+                display: block;
+                font-size: 10px;
+                letter-spacing: 3.5px;
+                margin-top: 20px
             }
 
             .h-btns {
-                margin-top: 30px;
-                gap: 10px
+                margin-top: 40px;
+                gap: 14px
             }
 
             .btn-g,
             .btn-o {
-                padding: 15px 24px;
-                font-size: 8px;
-                letter-spacing: 3px
+                padding: 20px 40px;
+                font-size: 10px;
+                letter-spacing: 4px
             }
 
             #story,
@@ -2064,11 +2102,11 @@
         /* ══ 425px ══ */
         @media(max-width:425px) {
             nav {
-                padding: 14px 16px
+                padding: 13px 18px
             }
 
             nav.stuck {
-                padding: 11px 16px
+                padding: 10px 18px
             }
 
             .nav-logo-txt img {
@@ -2152,11 +2190,11 @@
         /* ══ 375px ══ */
         @media(max-width:375px) {
             nav {
-                padding: 14px 16px
+                padding: 12px 16px
             }
 
             nav.stuck {
-                padding: 11px 16px
+                padding: 10px 16px
             }
 
             .nav-logo-txt img {
@@ -2176,35 +2214,35 @@
             }
 
             .h-tree {
-                height: 64px;
-                margin-bottom: 10px
+                height: 86px;
+                margin-bottom: 14px
             }
 
             .h-title img {
-                height: 52px
+                height: 68px
             }
 
             .h-meta-txt {
-                font-size: 8px;
-                letter-spacing: 4px
+                font-size: 9.5px;
+                letter-spacing: 4.5px
             }
 
             .h-btns {
-                margin-top: 32px;
-                gap: 10px
+                margin-top: 38px;
+                gap: 13px
             }
 
             .btn-g,
             .btn-o {
-                padding: 16px 28px;
-                font-size: 9px;
-                letter-spacing: 3px
+                padding: 19px 38px;
+                font-size: 10px;
+                letter-spacing: 3.5px
             }
 
             .h-sub {
-                font-size: 8px;
-                letter-spacing: 2.5px;
-                margin-top: 16px
+                font-size: 9.5px;
+                letter-spacing: 3px;
+                margin-top: 20px
             }
 
             #story,
@@ -2320,11 +2358,11 @@
         /* ══ 320px ══ */
         @media(max-width:320px) {
             nav {
-                padding: 12px 14px
+                padding: 10px 14px
             }
 
             nav.stuck {
-                padding: 10px 14px
+                padding: 8px 14px
             }
 
             .nav-logo-txt img {
@@ -2344,39 +2382,39 @@
             }
 
             .h-tree {
-                height: 56px;
-                margin-bottom: 8px
+                height: 80px;
+                margin-bottom: 12px
             }
 
             .h-title img {
-                height: 46px
+                height: 60px
             }
 
             .h-meta-txt {
-                font-size: 7.5px;
-                letter-spacing: 3px
+                font-size: 9px;
+                letter-spacing: 4px
             }
 
             .h-meta-line {
-                width: 20px
+                width: 24px
             }
 
             .h-sub {
-                font-size: 7px;
-                letter-spacing: 2px;
-                margin-top: 14px
+                font-size: 9px;
+                letter-spacing: 2.5px;
+                margin-top: 18px
             }
 
             .h-btns {
-                margin-top: 24px;
-                gap: 9px
+                margin-top: 36px;
+                gap: 12px
             }
 
             .btn-g,
             .btn-o {
-                padding: 15px 24px;
-                font-size: 8.5px;
-                letter-spacing: 2.5px
+                padding: 18px 36px;
+                font-size: 9.5px;
+                letter-spacing: 3px
             }
 
             #story,
@@ -2651,8 +2689,12 @@
             <div class="ld-glow"></div>
             <img src="ildiz-tree.png" alt="" class="ld-tree">
             <div class="ld-clip"><span class="ld-big"><img src="ildiz_logo.png" alt="ildiz"></span></div>
-            <div class="ld-small"><span data-l="uz" class="on">Milliy Taomlari · Urganch</span><span data-l="ru">Национальная Кухня · Ургенч</span><span data-l="en">National Cuisine · Urgench</span></div>
-            <div class="ld-bar"><div class="ld-bar-fill" id="ldFill"></div></div>
+            <div class="ld-small"><span data-l="uz" class="on">Milliy Taomlari · Urganch</span><span
+                    data-l="ru">Национальная Кухня · Ургенч</span><span data-l="en">National Cuisine · Urgench</span>
+            </div>
+            <div class="ld-bar">
+                <div class="ld-bar-fill" id="ldFill"></div>
+            </div>
             <div class="ld-pct" id="ldPct">0%</div>
         </div>
     </div>
@@ -3094,7 +3136,9 @@
 
     <footer>
         <a href="index.html" class="ft-logo">ILDIZ</a>
-        <p class="ft-copy">© <span id="ft-yr">2025</span> <span data-l="uz" class="on">ILDIZ Milliy Taomlari · Urganch</span><span data-l="ru">ILDIZ Национальная Кухня · Ургенч</span><span data-l="en">ILDIZ National Cuisine · Urgench</span></p>
+        <p class="ft-copy">© <span id="ft-yr">2025</span> <span data-l="uz" class="on">ILDIZ Milliy Taomlari ·
+                Urganch</span><span data-l="ru">ILDIZ Национальная Кухня · Ургенч</span><span data-l="en">ILDIZ National
+                Cuisine · Urgench</span></p>
         <div class="ft-lnk">
             <a href="https://www.instagram.com/ildiz_milliy_taomlar/" target="_blank" rel="noopener">Instagram</a>
             <a href="tel:+998972030220">+99897 203 02 20</a>
