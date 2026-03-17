@@ -605,6 +605,7 @@
             display: flex;
             align-items: stretch;
             justify-content: center;
+            flex-wrap: nowrap;
             overflow-x: auto;
             scrollbar-width: none;
             max-width: 1400px;
@@ -625,10 +626,11 @@
             background: none;
             border: none;
             cursor: none;
-            flex-shrink: 0;
             position: relative;
             transition: all 0.3s;
-            white-space: nowrap;
+            min-width: 0;
+            flex: 1 1 0;
+            overflow: hidden;
         }
 
         .cat-btn::after {
@@ -668,6 +670,10 @@
             text-transform: uppercase;
             color: rgba(251, 248, 243, 0.4);
             font-weight: 500;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             transition: color 0.3s;
         }
 
@@ -1054,15 +1060,14 @@
 
 
             .cat-scr {
-                padding: 0 10px;
+                padding: 0 6px;
                 justify-content: center;
-                flex-wrap: wrap;
-                overflow-x: visible
+                overflow-x: hidden
             }
 
             .cat-btn {
-                padding: 12px 14px;
-                gap: 5px
+                padding: 10px 8px;
+                gap: 4px
             }
 
             .m-hero {
@@ -1122,20 +1127,19 @@
 
 
             .cat-scr {
-                padding: 0 8px;
+                padding: 0 4px;
                 justify-content: center;
-                flex-wrap: wrap;
-                overflow-x: visible
+                overflow-x: hidden
             }
 
             .cat-btn {
-                padding: 11px 12px;
-                gap: 5px
+                padding: 9px 6px;
+                gap: 4px
             }
 
             .cat-lbl {
-                font-size: 7.5px;
-                letter-spacing: 2px
+                font-size: 7px;
+                letter-spacing: 1px
             }
 
             .m-hero {
@@ -1253,24 +1257,24 @@
 
 
             .cat-scr {
-                padding: 0 4px;
+                padding: 0 2px;
                 justify-content: center;
-                flex-wrap: wrap
+                overflow-x: hidden
             }
 
             .cat-btn {
-                padding: 10px 10px;
-                gap: 4px
+                padding: 8px 5px;
+                gap: 3px
             }
 
             .cat-ico svg {
-                width: 18px;
-                height: 18px
+                width: 16px;
+                height: 16px
             }
 
             .cat-lbl {
-                font-size: 7px;
-                letter-spacing: 1.5px
+                font-size: 6px;
+                letter-spacing: 0.5px
             }
 
             .m-hero {
@@ -1424,24 +1428,24 @@
 
 
             .cat-scr {
-                padding: 0 2px;
+                padding: 0;
                 justify-content: center;
-                flex-wrap: wrap
+                overflow-x: hidden
             }
 
             .cat-btn {
-                padding: 9px 8px;
-                gap: 3px
+                padding: 7px 4px;
+                gap: 2px
             }
 
             .cat-ico svg {
-                width: 16px;
-                height: 16px
+                width: 14px;
+                height: 14px
             }
 
             .cat-lbl {
-                font-size: 6.5px;
-                letter-spacing: 1px
+                font-size: 5.5px;
+                letter-spacing: 0
             }
 
             .m-hero {
@@ -1576,24 +1580,24 @@
 
 
             .cat-scr {
-                padding: 0 0;
+                padding: 0;
                 justify-content: center;
-                flex-wrap: wrap
+                overflow-x: hidden
             }
 
             .cat-btn {
-                padding: 9px 7px;
-                gap: 3px
+                padding: 6px 3px;
+                gap: 2px
             }
 
             .cat-ico svg {
-                width: 15px;
-                height: 15px
+                width: 13px;
+                height: 13px
             }
 
             .cat-lbl {
-                font-size: 6.5px;
-                letter-spacing: 0.5px
+                font-size: 5px;
+                letter-spacing: 0
             }
 
             .m-hero {
