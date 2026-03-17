@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ILDIZ menyu — salatlar, sho'rvalar, asosiy taomlar, kaboblar, ichimliklar, shirinliklar. Onlayn buyurtma bering.">
-    <meta name="keywords" content="ILDIZ menyu, restoran menyu, Urganch, milliy taomlar, salatlar, kaboblar, shirinliklar">
+    <meta name="description"
+        content="ILDIZ menyu — salatlar, sho'rvalar, asosiy taomlar, kaboblar, ichimliklar, shirinliklar. Onlayn buyurtma bering.">
+    <meta name="keywords"
+        content="ILDIZ menyu, restoran menyu, Urganch, milliy taomlar, salatlar, kaboblar, shirinliklar">
     <meta name="author" content="ILDIZ Milliy Taomlari">
     <meta name="theme-color" content="#2E1A0E">
     <meta name="color-scheme" content="dark">
@@ -14,7 +16,8 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="ILDIZ — Menyu">
-    <meta property="og:description" content="ILDIZ restoran menyusi. Salatlar, sho'rvalar, asosiy taomlar, kaboblar, ichimliklar, shirinliklar.">
+    <meta property="og:description"
+        content="ILDIZ restoran menyusi. Salatlar, sho'rvalar, asosiy taomlar, kaboblar, ichimliklar, shirinliklar.">
     <meta property="og:url" content="https://kamoladdin808.github.io/ildiz/menu.html">
     <meta property="og:site_name" content="ILDIZ">
 
@@ -30,7 +33,7 @@
     <title>ILDIZ — Menyu</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Pacifico&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Pacifico&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
         rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/moret" rel="stylesheet">
     <link rel="stylesheet" href="shared.css">
@@ -74,6 +77,7 @@
                 opacity: 0;
                 transform: scale(1.1);
             }
+
             to {
                 opacity: 0.1;
                 transform: scale(1);
@@ -184,8 +188,6 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.4s;
-            -webkit-backdrop-filter: blur(6px);
-            backdrop-filter: blur(6px);
         }
 
         .cart-ov.on {
@@ -220,7 +222,7 @@
         }
 
         .cart-hd-left>span {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 26px;
             font-weight: 300;
             letter-spacing: 2px;
@@ -274,7 +276,7 @@
         }
 
         .cart-empty p {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 18px;
             letter-spacing: 2px;
             color: rgba(245, 234, 216, 0.3);
@@ -325,7 +327,7 @@
         }
 
         .ci-name {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 16px;
             font-weight: 400;
             color: var(--warm);
@@ -423,7 +425,7 @@
         }
 
         .cart-total-v {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 32px;
             font-weight: 300;
             color: var(--warm);
@@ -537,7 +539,7 @@
         }
 
         .m-hero-h1 {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(60px, 10vw, 110px);
             font-weight: 300;
             color: var(--warm);
@@ -575,57 +577,6 @@
         }
 
         /* MARQUEE */
-        .mqw {
-            background: var(--ink3);
-            border-top: 1px solid rgba(250, 169, 84, 0.1);
-            border-bottom: 1px solid rgba(250, 169, 84, 0.1);
-            padding: 16px 0;
-            overflow: hidden;
-            opacity: 0;
-            animation: fadeUp 0.6s ease 3.8s forwards;
-        }
-
-        .mqt {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            white-space: nowrap;
-            flex-shrink: 0;
-            padding-right: 40px;
-        }
-
-        .mqr {
-            display: flex;
-            width: max-content;
-            animation: mq 30s linear infinite;
-        }
-
-        @keyframes mq {
-            from {
-                transform: translateX(0)
-            }
-
-            to {
-                transform: translateX(-50%)
-            }
-        }
-
-        .mqi {
-            font-family: 'Moret', serif;
-            font-size: 15px;
-            font-weight: 300;
-            letter-spacing: 4px;
-            color: rgba(250, 169, 84, 0.4);
-            font-style: italic;
-            flex-shrink: 0;
-        }
-
-        .mqd {
-            color: var(--gold);
-            font-size: 6px;
-            vertical-align: middle;
-            margin: 0 -30px;
-        }
 
         /* CAT BAR */
         .cat-bar {
@@ -638,6 +589,16 @@
             border-bottom: 1px solid rgba(250, 169, 84, 0.1);
             opacity: 0;
             animation: fadeUp 0.6s ease 4s forwards;
+        }
+
+        .cat-bar::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: #2E1A0E;
         }
 
         .cat-scr {
@@ -738,6 +699,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: none;
@@ -754,7 +716,7 @@
         }
 
         .m-sec-title {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(40px, 5.5vw, 64px);
             font-weight: 300;
             color: var(--warm);
@@ -869,17 +831,17 @@
         }
 
         .m-card-name {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 24px;
             font-weight: 400;
-            color: var(--warm);
+            color: #FFF8F0;
             line-height: 1.2;
             margin-bottom: 6px;
         }
 
         .m-card-alt {
             font-size: 10px;
-            color: var(--gold);
+            color: #FBBA6A;
             letter-spacing: 3px;
             text-transform: uppercase;
             margin-bottom: 16px;
@@ -890,7 +852,7 @@
         .m-card-desc {
             font-size: 12.5px;
             line-height: 1.8;
-            color: rgba(245, 234, 216, 0.7);
+            color: rgba(245, 234, 216, 0.9);
             font-weight: 300;
             margin-bottom: 24px;
         }
@@ -904,16 +866,16 @@
         }
 
         .m-card-price {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 22px;
             font-weight: 300;
-            color: var(--warm);
+            color: #FFF8F0;
         }
 
         .m-card-price span {
             font-size: 10px;
             font-family: 'Montserrat', sans-serif;
-            color: var(--gold);
+            color: #FBBA6A;
             letter-spacing: 1px;
             margin-left: 3px;
         }
@@ -924,9 +886,9 @@
             gap: 8px;
             padding: 12px 20px;
             border-radius: 8px;
-            background: rgba(250, 169, 84, 0.12);
-            border: 1px solid rgba(250, 169, 84, 0.25);
-            color: var(--gold);
+            background: rgba(250, 169, 84, 0.18);
+            border: 1px solid rgba(250, 169, 84, 0.4);
+            color: #FBBA6A;
             font-family: 'Montserrat', sans-serif;
             font-size: 9px;
             letter-spacing: 2px;
@@ -1092,12 +1054,15 @@
 
 
             .cat-scr {
-                padding: 0 20px
+                padding: 0 10px;
+                justify-content: center;
+                flex-wrap: wrap;
+                overflow-x: visible
             }
 
             .cat-btn {
-                padding: 18px 20px;
-                gap: 7px
+                padding: 12px 14px;
+                gap: 5px
             }
 
             .m-hero {
@@ -1157,17 +1122,20 @@
 
 
             .cat-scr {
-                padding: 0 16px
+                padding: 0 8px;
+                justify-content: center;
+                flex-wrap: wrap;
+                overflow-x: visible
             }
 
             .cat-btn {
-                padding: 16px 18px;
-                gap: 6px
+                padding: 11px 12px;
+                gap: 5px
             }
 
             .cat-lbl {
-                font-size: 8px;
-                letter-spacing: 2.5px
+                font-size: 7.5px;
+                letter-spacing: 2px
             }
 
             .m-hero {
@@ -1252,7 +1220,12 @@
         /* ── 480px ── */
         @media(max-width:480px) {
             nav {
-                padding: 13px 18px
+                padding: 13px 18px;
+                background: #2E1A0E
+            }
+
+            .cat-bar {
+                background: #2E1A0E
             }
 
             .nav-logo-txt img {
@@ -1276,40 +1249,28 @@
                 height: 16px
             }
 
-            .mqi {
-                font-size: 11px;
-                letter-spacing: 3px
-            }
-
-            .mqw {
-                padding: 12px 0
-            }
-
-            .mqd {
-                margin: 0 -20px
-            }
 
 
 
             .cat-scr {
-                padding: 0 14px;
-                justify-content: flex-start
+                padding: 0 4px;
+                justify-content: center;
+                flex-wrap: wrap
             }
 
             .cat-btn {
-                padding: 15px 16px;
-                gap: 6px;
-                flex-shrink: 0
+                padding: 10px 10px;
+                gap: 4px
             }
 
             .cat-ico svg {
-                width: 20px;
-                height: 20px
+                width: 18px;
+                height: 18px
             }
 
             .cat-lbl {
-                font-size: 8px;
-                letter-spacing: 2px
+                font-size: 7px;
+                letter-spacing: 1.5px
             }
 
             .m-hero {
@@ -1394,7 +1355,7 @@
                 padding: 18px 22px 24px
             }
 
-            .cart-hd-left h3 {
+            .cart-hd-left>span {
                 font-size: 26px
             }
 
@@ -1459,38 +1420,28 @@
                 height: 15px
             }
 
-            .mqi {
-                font-size: 10px;
-                letter-spacing: 2px
-            }
-
-            .mqw {
-                padding: 10px 0
-            }
-
-            .mqd {
-                margin: 0 -16px
-            }
 
 
 
             .cat-scr {
-                padding: 0 12px
+                padding: 0 2px;
+                justify-content: center;
+                flex-wrap: wrap
             }
 
             .cat-btn {
-                padding: 14px 14px;
-                gap: 5px
+                padding: 9px 8px;
+                gap: 3px
             }
 
             .cat-ico svg {
-                width: 18px;
-                height: 18px
+                width: 16px;
+                height: 16px
             }
 
             .cat-lbl {
-                font-size: 7px;
-                letter-spacing: 1.5px
+                font-size: 6.5px;
+                letter-spacing: 1px
             }
 
             .m-hero {
@@ -1551,7 +1502,7 @@
                 padding: 16px 18px 22px
             }
 
-            .cart-hd-left h3 {
+            .cart-hd-left>span {
                 font-size: 24px
             }
 
@@ -1621,39 +1572,28 @@
                 height: 14px
             }
 
-            .mqi {
-                font-size: 9px;
-                letter-spacing: 1.5px
-            }
-
-            .mqw {
-                padding: 8px 0
-            }
-
-            .mqd {
-                margin: 0 -12px;
-                font-size: 5px
-            }
 
 
 
             .cat-scr {
-                padding: 0 8px
+                padding: 0 0;
+                justify-content: center;
+                flex-wrap: wrap
             }
 
             .cat-btn {
-                padding: 12px 10px;
-                gap: 4px
+                padding: 9px 7px;
+                gap: 3px
             }
 
             .cat-ico svg {
-                width: 16px;
-                height: 16px
+                width: 15px;
+                height: 15px
             }
 
             .cat-lbl {
-                font-size: 7px;
-                letter-spacing: 1px
+                font-size: 6.5px;
+                letter-spacing: 0.5px
             }
 
             .m-hero {
@@ -1730,7 +1670,7 @@
                 padding: 14px 16px 20px
             }
 
-            .cart-hd-left h3 {
+            .cart-hd-left>span {
                 font-size: 22px
             }
 
@@ -1803,9 +1743,9 @@
             <span class="nav-logo-txt"><img src="ildiz_logo.png" alt="ildiz"></span>
         </a>
         <div class="nav-r">
-            <button class="lb on" onclick="sL('uz')">UZ</button>
-            <button class="lb" onclick="sL('ru')">RU</button>
-            <button class="lb" onclick="sL('en')">EN</button>
+            <button class="lb on" onclick="sL('uz')" aria-label="O'zbek tili">UZ</button>
+            <button class="lb" onclick="sL('ru')" aria-label="Русский язык">RU</button>
+            <button class="lb" onclick="sL('en')" aria-label="English language">EN</button>
             <a href="index.html" class="nav-back" aria-label="Back to home">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--warm)" stroke-width="1.5"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -1824,7 +1764,7 @@
                 <span><span data-l="uz" class="on">Savatcha</span><span data-l="ru">Корзина</span><span data-l="en">Your
                         Cart</span></span>
             </div>
-            <button class="cart-x" onclick="closeCart()">×</button>
+            <button class="cart-x" onclick="closeCart()" aria-label="Close cart">×</button>
         </div>
         <div class="cart-body" id="cartBody">
             <div class="cart-empty" id="cartEmpty">
@@ -1878,48 +1818,6 @@
                     продукты</span><span data-l="en">National cuisine · Authentic recipes · Fresh ingredients</span></p>
         </div>
     </div>
-
-    <div class="mqw">
-        <div class="mqr" id="mqr">
-            <div class="mqt">
-                <span class="mqi"><span data-l="uz" class="on">Salatlar</span><span data-l="ru">Салаты</span><span
-                        data-l="en">Salads</span></span><span class="mqd">◆</span>
-                <span class="mqi"><span data-l="uz" class="on">Sho'rvalar</span><span data-l="ru">Супы</span><span
-                        data-l="en">Soups</span></span><span class="mqd">◆</span>
-                <span class="mqi"><span data-l="uz" class="on">Asosiy Taomlar</span><span data-l="ru">Основные
-                        блюда</span><span data-l="en">Main Courses</span></span><span class="mqd">◆</span>
-                <span class="mqi"><span data-l="uz" class="on">Kaboblar</span><span data-l="ru">Кебабы</span><span
-                        data-l="en">Kebabs</span></span><span class="mqd">◆</span>
-                <span class="mqi"><span data-l="uz" class="on">Ichimliklar</span><span data-l="ru">Напитки</span><span
-                        data-l="en">Drinks</span></span><span class="mqd">◆</span>
-                <span class="mqi"><span data-l="uz" class="on">Shirinliklar</span><span data-l="ru">Десерты</span><span
-                        data-l="en">Desserts</span></span><span class="mqd">◆</span>
-                <span class="mqi"><span data-l="uz" class="on">Milliy Taomlari</span><span data-l="ru">Национальная
-                        кухня</span><span data-l="en">National Cuisine</span></span><span class="mqd">◆</span>
-            </div>
-        </div>
-    </div>
-    <script>
-        (function () {
-            const r = document.getElementById('mqr'), t = r.querySelector('.mqt');
-            const tW = t.offsetWidth;
-            const copies = Math.ceil(window.innerWidth / tW) + 2;
-            for (let i = 0; i < copies; i++) r.appendChild(t.cloneNode(true));
-            r.style.animation = 'none';
-            const ss = document.styleSheets;
-            for (let s of ss) {
-                try {
-                    for (let i = 0; i < s.cssRules.length; i++) {
-                        if (s.cssRules[i].name === 'mq') { s.deleteRule(i); break; }
-                    }
-                } catch (e) { }
-            }
-            const style = document.createElement('style');
-            style.textContent = `@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-${tW}px)}}`;
-            document.head.appendChild(style);
-            r.style.animation = 'mq 20s linear infinite';
-        })();
-    </script>
 
     <!-- CAT BAR -->
     <div class="cat-bar">
@@ -2212,9 +2110,12 @@
         (function syncCatBarTop() {
             const nav = document.querySelector('nav');
             const bar = document.querySelector('.cat-bar');
-            function set() { bar.style.top = nav.offsetHeight + 'px'; }
+            function set() {
+                bar.style.top = (nav.offsetHeight - 2) + 'px';
+            }
             set();
             window.addEventListener('resize', set);
+            setTimeout(set, 3200);
         })();
     </script>
 </body>

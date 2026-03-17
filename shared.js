@@ -8,7 +8,10 @@ document.body.style.overflow = 'hidden';
     const fill = document.getElementById('ldFill');
     const pct = document.getElementById('ldPct');
     const loader = document.getElementById('loader');
-    if (!fill || !pct || !loader) return;
+    if (!fill || !pct || !loader) {
+        document.body.style.overflow = '';
+        return;
+    }
 
     let progress = 0;
     const duration = 2200;
@@ -52,50 +55,52 @@ document.body.style.overflow = 'hidden';
 /* Custom cursor */
 const C = document.getElementById('c'),
     CR = document.getElementById('cr');
-let mx = 0, my = 0, rx = 0, ry = 0;
 
-document.addEventListener('mousemove', e => {
-    mx = e.clientX;
-    my = e.clientY;
-    C.style.left = mx + 'px';
-    C.style.top = my + 'px';
-});
+if (C && CR) {
+    let mx = 0, my = 0, rx = 0, ry = 0;
 
-(function tick() {
-    rx += (mx - rx) * 0.1;
-    ry += (my - ry) * 0.1;
-    CR.style.left = rx + 'px';
-    CR.style.top = ry + 'px';
-    requestAnimationFrame(tick);
-})();
-
-function cursorBig() {
-    CR.style.width = '60px';
-    CR.style.height = '60px';
-    CR.style.borderColor = 'rgba(250, 169, 84, 0.9)';
-}
-
-function cursorSmall() {
-    CR.style.width = '40px';
-    CR.style.height = '40px';
-    CR.style.borderColor = 'rgba(250, 169, 84, 0.5)';
-}
-
-function bindCursorHovers(root) {
-    (root || document).querySelectorAll('a,button,.m-card,.h-card,.gallery-img').forEach(el => {
-        el.addEventListener('mouseenter', cursorBig);
-        el.addEventListener('mouseleave', cursorSmall);
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX;
+        my = e.clientY;
+        C.style.left = mx + 'px';
+        C.style.top = my + 'px';
     });
-}
 
-bindCursorHovers();
+    (function tick() {
+        rx += (mx - rx) * 0.1;
+        ry += (my - ry) * 0.1;
+        CR.style.left = rx + 'px';
+        CR.style.top = ry + 'px';
+        requestAnimationFrame(tick);
+    })();
 
-/* Disable custom cursor on touch devices */
-if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-    document.body.style.cursor = '';
-    document.querySelectorAll('a,button,input,textarea').forEach(el => el.style.cursor = '');
-    C.style.display = 'none';
-    CR.style.display = 'none';
+    function cursorBig() {
+        CR.style.width = '60px';
+        CR.style.height = '60px';
+        CR.style.borderColor = 'rgba(250, 169, 84, 0.9)';
+    }
+
+    function cursorSmall() {
+        CR.style.width = '40px';
+        CR.style.height = '40px';
+        CR.style.borderColor = 'rgba(250, 169, 84, 0.5)';
+    }
+
+    window.bindCursorHovers = function(root) {
+        (root || document).querySelectorAll('a,button,.m-card,.h-card,.gallery-img').forEach(el => {
+            el.addEventListener('mouseenter', cursorBig);
+            el.addEventListener('mouseleave', cursorSmall);
+        });
+    };
+
+    bindCursorHovers();
+
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        document.body.style.cursor = '';
+        document.querySelectorAll('a,button,input,textarea').forEach(el => el.style.cursor = '');
+        C.style.display = 'none';
+        CR.style.display = 'none';
+    }
 }
 
 /* Language switching */
@@ -110,6 +115,7 @@ function sL(l) {
     document.querySelectorAll('.lb').forEach((b, i) =>
         b.classList.toggle('on', ['uz', 'ru', 'en'][i] === l)
     );
+    document.documentElement.classList.toggle('lang-ru', l === 'ru');
     if (typeof onLangChange === 'function') onLangChange(l);
 }
 

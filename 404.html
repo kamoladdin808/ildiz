@@ -15,7 +15,7 @@
 
     <title>404 — ILDIZ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/moret" rel="stylesheet">
     <style>
         :root {
@@ -24,6 +24,11 @@
             --ink2: #3A2215;
             --warm: #F5EAD8;
             --muted: rgba(237, 224, 212, 0.55);
+            --serif: 'Moret', serif;
+        }
+
+        html.lang-ru {
+            --serif: 'Playfair Display', serif;
         }
 
         * {
@@ -89,7 +94,7 @@
         }
 
         .code {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(72px, 18vw, 140px);
             font-weight: 300;
             letter-spacing: 8px;
@@ -105,7 +110,7 @@
         .code-shadow {
             position: absolute;
             inset: 0;
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(72px, 18vw, 140px);
             font-weight: 300;
             letter-spacing: 8px;
@@ -456,6 +461,7 @@
             document.querySelectorAll('.lb').forEach((b, i) =>
                 b.classList.toggle('on', ['uz', 'ru', 'en'][i] === l)
             );
+            document.documentElement.classList.toggle('lang-ru', l === 'ru');
         }
         const saved = localStorage.getItem('ildiz-lang');
         if (saved && saved !== 'uz') sL(saved);

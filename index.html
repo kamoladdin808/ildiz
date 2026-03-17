@@ -31,7 +31,7 @@
     <title>ILDIZ — Milliy Taomlari</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Pacifico&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Pacifico&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
         rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/moret" rel="stylesheet">
     <link rel="stylesheet" href="shared.css">
@@ -182,22 +182,6 @@
             background: linear-gradient(to right, rgba(46, 26, 14, 0.94) 0%, rgba(46, 26, 14, 0.25) 55%, rgba(46, 26, 14, 0.65) 100%), linear-gradient(to top, rgba(46, 26, 14, 0.99) 0%, transparent 55%);
         }
 
-        .h-vline {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: linear-gradient(to bottom, transparent 8%, rgba(250, 169, 84, 0.18) 50%, transparent 92%);
-        }
-
-        .h-vline.l {
-            left: 64px;
-        }
-
-        .h-vline.r {
-            right: 64px;
-        }
-
         .h-cont {
             position: relative;
             z-index: 3;
@@ -327,37 +311,6 @@
             color: var(--gold);
         }
 
-        .h-right {
-            text-align: right;
-            opacity: 0;
-            animation: fadeUp 0.7s ease 3.5s forwards;
-            padding-bottom: 8px;
-        }
-
-        .h-info {
-            margin-bottom: 28px;
-        }
-
-        .h-info:last-child {
-            margin-bottom: 0;
-        }
-
-        .h-info-l {
-            font-size: 8px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 6px;
-        }
-
-        .h-info-v {
-            font-family: 'Moret', serif;
-            font-size: 15px;
-            font-weight: 300;
-            color: var(--warm);
-            letter-spacing: 1px;
-        }
-
         .h-scroll {
             position: absolute;
             bottom: 48px;
@@ -431,7 +384,7 @@
         }
 
         .mqi {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 16px;
             font-weight: 300;
             letter-spacing: 4px;
@@ -468,7 +421,7 @@
             position: absolute;
             right: -0.04em;
             top: -0.15em;
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(220px, 30vw, 420px);
             font-weight: 300;
             color: rgba(250, 169, 84, 0.035);
@@ -508,7 +461,7 @@
         }
 
         .s-h2 {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(52px, 7vw, 96px);
             font-weight: 300;
             line-height: 0.97;
@@ -540,7 +493,7 @@
 
         .s-pull {
             margin: 48px 0;
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(22px, 2.5vw, 30px);
             font-style: italic;
             font-weight: 300;
@@ -614,7 +567,7 @@
         }
 
         .s-yr-n {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 38px;
             font-weight: 500;
             line-height: 1;
@@ -667,7 +620,7 @@
         }
 
         .stat-n {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 68px;
             font-weight: 300;
             color: var(--warm);
@@ -703,7 +656,7 @@
         }
 
         .tl-h2 {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(48px, 7vw, 88px);
             font-weight: 300;
             color: var(--warm);
@@ -748,7 +701,7 @@
         }
 
         .tl-ey {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 80px;
             font-weight: 300;
             color: rgba(250, 169, 84, 0.13);
@@ -757,7 +710,7 @@
         }
 
         .tl-et {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 26px;
             font-weight: 400;
             color: var(--warm);
@@ -810,7 +763,7 @@
         }
 
         .vals-h2 {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(52px, 7vw, 96px);
             font-weight: 300;
             color: var(--warm);
@@ -859,7 +812,7 @@
         }
 
         .val-n {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 110px;
             font-weight: 300;
             color: rgba(250, 169, 84, 0.07);
@@ -873,7 +826,7 @@
         }
 
         .val-t {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 26px;
             font-weight: 400;
             color: var(--warm);
@@ -908,7 +861,7 @@
         }
 
         .gal-h2 {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(48px, 6vw, 80px);
             font-weight: 300;
             color: var(--warm);
@@ -1177,7 +1130,7 @@
         }
 
         .con-h2 {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(64px, 9vw, 120px);
             font-weight: 300;
             line-height: 0.9;
@@ -1191,7 +1144,7 @@
         }
 
         .con-phone {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(26px, 3.2vw, 42px);
             font-weight: 400;
             color: var(--ink);
@@ -1224,7 +1177,7 @@
         }
 
         .con-r h3 {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(30px, 3.5vw, 48px);
             font-weight: 300;
             color: var(--warm);
@@ -1269,7 +1222,7 @@
         }
 
         .ci-v {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 19px;
             font-weight: 300;
             color: var(--warm);
@@ -1307,7 +1260,7 @@
         }
 
         .cta-bar-txt {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: clamp(30px, 4vw, 52px);
             font-weight: 300;
             color: var(--warm);
@@ -1328,7 +1281,7 @@
         }
 
         .ft-logo {
-            font-family: 'Moret', serif;
+            font-family: var(--serif);
             font-size: 17px;
             font-weight: 300;
             letter-spacing: 9px;
@@ -1508,13 +1461,6 @@
                 padding: 0 24px
             }
 
-            .h-right {
-                display: none
-            }
-
-            .h-vline {
-                display: none
-            }
 
             .s-small {
                 left: -16px;
@@ -2716,9 +2662,9 @@
                         data-l="en">Contact</span></a></li>
         </ul>
         <div class="nav-r">
-            <button class="lb on" onclick="sL('uz')">UZ</button>
-            <button class="lb" onclick="sL('ru')">RU</button>
-            <button class="lb" onclick="sL('en')">EN</button>
+            <button class="lb on" onclick="sL('uz')" aria-label="O'zbek tili">UZ</button>
+            <button class="lb" onclick="sL('ru')" aria-label="Русский язык">RU</button>
+            <button class="lb" onclick="sL('en')" aria-label="English language">EN</button>
         </div>
     </nav>
 

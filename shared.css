@@ -9,8 +9,13 @@
     --warm: #F5EAD8;
     --muted: rgba(237, 224, 212, 0.85);
     --muted2: rgba(237, 224, 212, 0.22);
-    --card: #5A3A20;
+    --card: #3E2510;
     --card2: #4A2E18;
+    --serif: 'Moret', serif;
+}
+
+html.lang-ru {
+    --serif: 'Playfair Display', serif;
 }
 
 * {
