@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description"
         content="ILDIZ menyu — salatlar, sho'rvalar, asosiy taomlar, kaboblar, ichimliklar, shirinliklar. Onlayn buyurtma bering.">
     <meta name="keywords"
@@ -201,12 +201,16 @@
             right: -480px;
             width: 440px;
             height: 100vh;
+            height: 100dvh;
+            max-height: 100dvh;
+            padding-top: env(safe-area-inset-top, 0px);
             background: linear-gradient(180deg, var(--ink) 0%, var(--ink2) 100%);
             z-index: 1200;
             transition: right 0.45s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             border-left: 1px solid rgba(250, 169, 84, 0.1);
+            box-sizing: border-box;
         }
 
         .cart-panel.on {
@@ -404,7 +408,7 @@
         }
 
         .cart-ft {
-            padding: 24px 36px 32px;
+            padding: 24px 36px calc(32px + env(safe-area-inset-bottom, 0px));
             border-top: 1px solid rgba(250, 169, 84, 0.1);
         }
 
@@ -578,7 +582,7 @@
 
         /* MARQUEE */
 
-        /* CAT BAR */
+        /* CAT BAR — в ритме nav / героя: ink, золото, подчёркивание активного */
         .cat-bar {
             position: sticky;
             top: 68px;
@@ -586,7 +590,7 @@
             background: rgba(46, 26, 14, 0.95);
             -webkit-backdrop-filter: blur(24px);
             backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(250, 169, 84, 0.1);
+            border-bottom: 1px solid rgba(250, 169, 84, 0.12);
             opacity: 0;
             animation: fadeUp 0.6s ease 4s forwards;
         }
@@ -598,19 +602,98 @@
             left: 0;
             right: 0;
             height: 6px;
-            background: #2E1A0E;
+            background: var(--ink);
+        }
+
+        .cat-scr-wrap {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 14px 0 16px;
+            position: relative;
+        }
+
+        .cat-scr-wrap::before,
+        .cat-scr-wrap::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 56px;
+            z-index: 2;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .cat-scr-wrap::before {
+            left: 0;
+            background: linear-gradient(90deg, rgba(46, 26, 14, 1) 0%, rgba(46, 26, 14, 0.6) 40%, transparent 100%);
+        }
+
+        .cat-scr-wrap::after {
+            right: 0;
+            background: linear-gradient(-90deg, rgba(46, 26, 14, 1) 0%, rgba(46, 26, 14, 0.6) 40%, transparent 100%);
+        }
+
+        /* Arrow navigation buttons */
+        .cat-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 5;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(250, 169, 84, 0.3);
+            background: rgba(46, 26, 14, 0.9);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            color: var(--gold);
+            cursor: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .cat-arrow.vis {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .cat-arrow:hover {
+            background: rgba(250, 169, 84, 0.15);
+            border-color: var(--gold);
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .cat-arrow--l {
+            left: -56px;
+        }
+
+        .cat-arrow--r {
+            right: -56px;
+        }
+
+        @media (max-width: 768px) {
+            .cat-arrow {
+                display: none !important;
+            }
         }
 
         .cat-scr {
             display: flex;
             align-items: stretch;
-            justify-content: center;
             flex-wrap: nowrap;
+            gap: 8px;
             overflow-x: auto;
+            overflow-y: hidden;
             scrollbar-width: none;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 64px;
+            padding: 0 48px;
+            scroll-behavior: smooth;
+            overscroll-behavior-x: contain;
+            -webkit-overflow-scrolling: touch;
         }
 
         .cat-scr::-webkit-scrollbar {
@@ -618,68 +701,110 @@
         }
 
         .cat-btn {
-            display: flex;
-            flex-direction: column;
+            display: inline-flex;
+            flex-direction: row;
             align-items: center;
-            gap: 8px;
-            padding: 22px 32px;
-            background: none;
-            border: none;
+            gap: 9px;
+            padding: 9px 16px 9px 12px;
+            background: rgba(250, 169, 84, 0.04);
+            border: 1px solid rgba(250, 169, 84, 0.22);
+            border-radius: 999px;
             cursor: none;
             position: relative;
-            transition: all 0.3s;
-            min-width: 0;
-            flex: 1 1 0;
-            overflow: hidden;
+            transition: background 0.35s, border-color 0.35s, color 0.35s, transform 0.25s;
+            flex: 0 0 auto;
+            max-width: min(280px, 85vw);
         }
 
         .cat-btn::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
             background: var(--gold);
-            transform: scaleX(0);
-            transition: transform 0.3s;
+            box-shadow: 0 0 8px rgba(250, 169, 84, 0.5);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+            opacity: 0;
         }
 
-        .cat-btn.on::after,
-        .cat-btn:hover::after {
-            transform: scaleX(1);
+        .cat-btn:hover {
+            background: rgba(250, 169, 84, 0.07);
+            border-color: rgba(250, 169, 84, 0.38);
+        }
+
+        .cat-btn.on {
+            background: rgba(250, 169, 84, 0.13);
+            border-color: rgba(250, 169, 84, 0.6);
+            box-shadow: 0 0 20px rgba(250, 169, 84, 0.08);
+        }
+
+        .cat-btn.on::after {
+            transform: translateX(-50%) scale(1);
+            opacity: 1;
         }
 
         .cat-ico {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: rgba(251, 248, 243, 0.4);
-            transition: transform 0.3s, color 0.3s;
+            flex-shrink: 0;
+            width: auto;
+            height: auto;
+            padding: 0;
+            border-radius: 0;
+            background: none;
+            color: var(--muted);
+            opacity: 0.85;
+            transition: color 0.3s, opacity 0.3s;
         }
 
-        .cat-btn:hover .cat-ico,
         .cat-btn.on .cat-ico {
-            transform: scale(1.1);
             color: var(--gold);
+            opacity: 1;
+        }
+
+        .cat-btn:hover .cat-ico {
+            color: var(--gold);
+            opacity: 1;
         }
 
         .cat-lbl {
-            font-size: 9px;
+            display: block;
+            font-size: 10px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: rgba(251, 248, 243, 0.4);
+            color: var(--muted);
             font-weight: 500;
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            line-height: 1.4;
+            text-align: left;
+            white-space: normal;
+            overflow: visible;
+            max-width: 14rem;
             transition: color 0.3s;
         }
 
-        .cat-btn.on .cat-lbl,
+        .cat-lbl [data-l] {
+            display: none;
+        }
+
+        .cat-lbl [data-l].on {
+            display: block;
+        }
+
+        .cat-btn.on .cat-lbl {
+            color: var(--warm);
+        }
+
         .cat-btn:hover .cat-lbl {
-            color: var(--gold);
+            color: var(--warm);
+        }
+
+        .cat-btn.on:hover .cat-lbl {
+            color: var(--warm);
         }
 
         /* MENU AREA */
@@ -1006,7 +1131,7 @@
         /* ── 900px TABLET ── */
         @media(max-width:900px) {
             nav {
-                padding: 16px 24px
+                padding: 16px max(20px, env(safe-area-inset-right, 0px)) 16px max(20px, env(safe-area-inset-left, 0px))
             }
 
             .nav-tree {
@@ -1018,18 +1143,19 @@
                 display: none
             }
 
-
-
             .cat-scr {
-                padding: 0 24px
+                padding: 0 max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px));
+                justify-content: flex-start
             }
 
             .cat-btn {
-                padding: 20px 24px
+                padding: 10px 16px 10px 12px;
+                gap: 8px;
+                min-height: 44px
             }
 
             .m-sec {
-                padding: 64px 24px 0
+                padding: 64px max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px))
             }
 
             .m-grid {
@@ -1043,31 +1169,41 @@
             }
 
             .menu-area {
-                padding-bottom: 110px
+                padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px))
             }
         }
 
         /* ── 768px ── */
         @media(max-width:768px) {
             nav {
-                padding: 15px 22px
+                padding: 15px max(16px, env(safe-area-inset-right, 0px)) 15px max(16px, env(safe-area-inset-left, 0px))
             }
 
             .nav-logo-txt img {
                 height: 24px
             }
 
-
-
             .cat-scr {
-                padding: 0 6px;
-                justify-content: center;
-                overflow-x: hidden
+                padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px));
+                justify-content: flex-start;
+                overflow-x: auto
+            }
+
+            .cat-scr-wrap::before,
+            .cat-scr-wrap::after {
+                width: 28px
             }
 
             .cat-btn {
-                padding: 10px 8px;
-                gap: 4px
+                padding: 10px 14px 10px 11px;
+                gap: 8px;
+                min-height: 44px
+            }
+
+            .cat-lbl {
+                font-size: 9px;
+                letter-spacing: 2px;
+                max-width: 12rem
             }
 
             .m-hero {
@@ -1082,13 +1218,15 @@
             }
 
             .m-sec {
-                padding: 56px 20px 0
+                padding: 56px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px))
             }
 
             .m-sec-hd {
                 margin-bottom: 40px;
                 padding-bottom: 20px;
-                gap: 16px
+                gap: 16px;
+                flex-wrap: wrap;
+                align-items: baseline
             }
 
             .m-grid {
@@ -1102,44 +1240,61 @@
 
             .cart-panel {
                 width: 100%;
-                right: -100%
+                right: -100%;
+                border-left: none
+            }
+
+            .cart-hd {
+                padding-left: max(28px, env(safe-area-inset-left, 0px));
+                padding-right: max(28px, env(safe-area-inset-right, 0px))
+            }
+
+            .cart-body {
+                padding-left: max(28px, env(safe-area-inset-left, 0px));
+                padding-right: max(28px, env(safe-area-inset-right, 0px))
+            }
+
+            .cart-ft {
+                padding-left: max(28px, env(safe-area-inset-left, 0px));
+                padding-right: max(28px, env(safe-area-inset-right, 0px));
+                padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px))
             }
 
             .cart-fab {
-                bottom: 28px;
-                right: 24px;
+                bottom: max(22px, calc(14px + env(safe-area-inset-bottom, 0px)));
+                right: max(20px, calc(12px + env(safe-area-inset-right, 0px)));
                 width: 58px;
                 height: 58px
             }
 
             .toast {
-                right: 24px;
-                bottom: 106px
+                right: max(20px, env(safe-area-inset-right, 0px));
+                bottom: calc(106px + env(safe-area-inset-bottom, 0px))
             }
         }
 
         /* ── 600px ── */
         @media(max-width:600px) {
             nav {
-                padding: 14px 20px
+                padding: 14px max(16px, env(safe-area-inset-right, 0px)) 14px max(16px, env(safe-area-inset-left, 0px))
             }
 
-
-
             .cat-scr {
-                padding: 0 4px;
-                justify-content: center;
-                overflow-x: hidden
+                padding: 0 max(14px, env(safe-area-inset-right, 0px)) 0 max(14px, env(safe-area-inset-left, 0px));
+                justify-content: flex-start;
+                overflow-x: auto
             }
 
             .cat-btn {
-                padding: 9px 6px;
-                gap: 4px
+                padding: 9px 13px 9px 10px;
+                gap: 7px;
+                min-height: 44px
             }
 
             .cat-lbl {
-                font-size: 7px;
-                letter-spacing: 1px
+                font-size: 9px;
+                letter-spacing: 1.5px;
+                max-width: 11rem
             }
 
             .m-hero {
@@ -1158,7 +1313,7 @@
             }
 
             .m-sec {
-                padding: 48px 18px 0
+                padding: 48px max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px))
             }
 
             .m-grid {
@@ -1183,8 +1338,15 @@
                 font-size: 21px
             }
 
+            .m-card-ft {
+                flex-wrap: wrap;
+                gap: 12px;
+                align-items: center
+            }
+
             .add-btn {
-                padding: 11px 16px
+                padding: 11px 16px;
+                min-height: 44px
             }
 
             .cart-panel {
@@ -1193,43 +1355,43 @@
             }
 
             .cart-hd {
-                padding: 18px 28px
+                padding: 18px max(22px, env(safe-area-inset-right, 0px)) 18px max(22px, env(safe-area-inset-left, 0px))
             }
 
             .cart-body {
-                padding: 24px 28px
+                padding: 24px max(22px, env(safe-area-inset-right, 0px)) 24px max(22px, env(safe-area-inset-left, 0px))
             }
 
             .cart-ft {
-                padding: 20px 28px 28px
+                padding: 20px max(22px, env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) max(22px, env(safe-area-inset-left, 0px))
             }
 
             .cart-fab {
-                bottom: 24px;
-                right: 20px;
+                bottom: max(20px, calc(12px + env(safe-area-inset-bottom, 0px)));
+                right: max(16px, calc(10px + env(safe-area-inset-right, 0px)));
                 width: 56px;
                 height: 56px
             }
 
             .toast {
-                right: 18px;
-                bottom: 100px
+                right: max(16px, env(safe-area-inset-right, 0px));
+                bottom: calc(100px + env(safe-area-inset-bottom, 0px))
             }
 
             .menu-area {
-                padding-bottom: 106px
+                padding-bottom: calc(106px + env(safe-area-inset-bottom, 0px))
             }
         }
 
         /* ── 480px ── */
         @media(max-width:480px) {
             nav {
-                padding: 13px 18px;
-                background: #2E1A0E
+                padding: 13px max(14px, env(safe-area-inset-right, 0px)) 13px max(14px, env(safe-area-inset-left, 0px));
+                background: var(--ink)
             }
 
             .cat-bar {
-                background: #2E1A0E
+                background: rgba(46, 26, 14, 0.95)
             }
 
             .nav-logo-txt img {
@@ -1253,28 +1415,28 @@
                 height: 16px
             }
 
-
-
-
             .cat-scr {
-                padding: 0 2px;
-                justify-content: center;
-                overflow-x: hidden
+                padding: 0 max(12px, env(safe-area-inset-right, 0px)) 0 max(12px, env(safe-area-inset-left, 0px));
+                justify-content: flex-start;
+                overflow-x: auto;
+                gap: 5px
             }
 
             .cat-btn {
-                padding: 8px 5px;
-                gap: 3px
+                padding: 6px 10px 6px 8px;
+                gap: 6px;
+                min-height: 36px
             }
 
             .cat-ico svg {
-                width: 16px;
-                height: 16px
+                width: 14px;
+                height: 14px
             }
 
             .cat-lbl {
-                font-size: 6px;
-                letter-spacing: 0.5px
+                font-size: 8px;
+                letter-spacing: 1px;
+                max-width: 10rem
             }
 
             .m-hero {
@@ -1301,7 +1463,7 @@
             }
 
             .m-sec {
-                padding: 44px 14px 0
+                padding: 44px max(14px, env(safe-area-inset-right, 0px)) 0 max(14px, env(safe-area-inset-left, 0px))
             }
 
             .m-sec-hd {
@@ -1344,19 +1506,20 @@
             .add-btn {
                 padding: 10px 14px;
                 font-size: 8px;
-                gap: 6px
+                gap: 6px;
+                min-height: 44px
             }
 
             .cart-hd {
-                padding: 16px 22px
+                padding: 16px max(20px, env(safe-area-inset-right, 0px)) 16px max(20px, env(safe-area-inset-left, 0px))
             }
 
             .cart-body {
-                padding: 20px 22px
+                padding: 20px max(20px, env(safe-area-inset-right, 0px)) 20px max(20px, env(safe-area-inset-left, 0px))
             }
 
             .cart-ft {
-                padding: 18px 22px 24px
+                padding: 18px max(20px, env(safe-area-inset-right, 0px)) calc(22px + env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px))
             }
 
             .cart-hd-left>span {
@@ -1373,21 +1536,22 @@
             }
 
             .cart-fab {
-                bottom: 22px;
-                right: 18px;
+                bottom: max(18px, calc(10px + env(safe-area-inset-bottom, 0px)));
+                right: max(14px, calc(8px + env(safe-area-inset-right, 0px)));
                 width: 54px;
                 height: 54px
             }
 
             .toast {
-                right: 14px;
-                bottom: 96px;
+                right: max(14px, env(safe-area-inset-right, 0px));
+                bottom: calc(96px + env(safe-area-inset-bottom, 0px));
                 font-size: 10px;
-                padding: 12px 18px
+                padding: 12px 18px;
+                max-width: calc(100vw - 28px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px))
             }
 
             .menu-area {
-                padding-bottom: 100px
+                padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px))
             }
 
         }
@@ -1395,7 +1559,7 @@
         /* ── 375px ── */
         @media(max-width:375px) {
             nav {
-                padding: 12px 16px
+                padding: 12px max(12px, env(safe-area-inset-right, 0px)) 12px max(12px, env(safe-area-inset-left, 0px))
             }
 
             .nav-logo-txt img {
@@ -1424,28 +1588,28 @@
                 height: 15px
             }
 
-
-
-
             .cat-scr {
-                padding: 0;
-                justify-content: center;
-                overflow-x: hidden
+                padding: 0 max(10px, env(safe-area-inset-right, 0px)) 0 max(10px, env(safe-area-inset-left, 0px));
+                justify-content: flex-start;
+                overflow-x: auto;
+                gap: 4px
             }
 
             .cat-btn {
-                padding: 7px 4px;
-                gap: 2px
+                padding: 5px 8px 5px 6px;
+                gap: 5px;
+                min-height: 32px
             }
 
             .cat-ico svg {
-                width: 14px;
-                height: 14px
+                width: 13px;
+                height: 13px
             }
 
             .cat-lbl {
-                font-size: 5.5px;
-                letter-spacing: 0
+                font-size: 8px;
+                letter-spacing: 0.8px;
+                max-width: 9rem
             }
 
             .m-hero {
@@ -1464,7 +1628,7 @@
             }
 
             .m-sec {
-                padding: 38px 12px 0
+                padding: 38px max(12px, env(safe-area-inset-right, 0px)) 0 max(12px, env(safe-area-inset-left, 0px))
             }
 
             .m-sec-hd {
@@ -1491,19 +1655,20 @@
 
             .add-btn {
                 padding: 10px 12px;
-                font-size: 8px
+                font-size: 8px;
+                min-height: 44px
             }
 
             .cart-hd {
-                padding: 14px 18px
+                padding: 14px max(18px, env(safe-area-inset-right, 0px)) 14px max(18px, env(safe-area-inset-left, 0px))
             }
 
             .cart-body {
-                padding: 16px 18px
+                padding: 16px max(18px, env(safe-area-inset-right, 0px)) 16px max(18px, env(safe-area-inset-left, 0px))
             }
 
             .cart-ft {
-                padding: 16px 18px 22px
+                padding: 16px max(18px, env(safe-area-inset-right, 0px)) calc(20px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px))
             }
 
             .cart-hd-left>span {
@@ -1520,8 +1685,8 @@
             }
 
             .cart-fab {
-                bottom: 20px;
-                right: 16px;
+                bottom: max(16px, calc(8px + env(safe-area-inset-bottom, 0px)));
+                right: max(12px, calc(6px + env(safe-area-inset-right, 0px)));
                 width: 52px;
                 height: 52px
             }
@@ -1532,14 +1697,14 @@
             }
 
             .toast {
-                right: 12px;
-                bottom: 90px;
+                right: max(12px, env(safe-area-inset-right, 0px));
+                bottom: calc(90px + env(safe-area-inset-bottom, 0px));
                 font-size: 10px;
                 padding: 10px 16px
             }
 
             .menu-area {
-                padding-bottom: 92px
+                padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px))
             }
 
         }
@@ -1547,7 +1712,7 @@
         /* ── 320px ── */
         @media(max-width:320px) {
             nav {
-                padding: 10px 14px
+                padding: 10px max(10px, env(safe-area-inset-right, 0px)) 10px max(10px, env(safe-area-inset-left, 0px))
             }
 
             .nav-logo-txt img {
@@ -1576,28 +1741,28 @@
                 height: 14px
             }
 
-
-
-
             .cat-scr {
-                padding: 0;
-                justify-content: center;
-                overflow-x: hidden
+                padding: 0 max(8px, env(safe-area-inset-right, 0px)) 0 max(8px, env(safe-area-inset-left, 0px));
+                justify-content: flex-start;
+                overflow-x: auto;
+                gap: 4px
             }
 
             .cat-btn {
-                padding: 6px 3px;
-                gap: 2px
+                padding: 4px 6px 4px 6px;
+                gap: 4px;
+                min-height: 28px
             }
 
             .cat-ico svg {
-                width: 13px;
-                height: 13px
+                width: 12px;
+                height: 12px
             }
 
             .cat-lbl {
-                font-size: 5px;
-                letter-spacing: 0
+                font-size: 7px;
+                letter-spacing: 0.5px;
+                max-width: 8rem
             }
 
             .m-hero {
@@ -1616,7 +1781,7 @@
             }
 
             .m-sec {
-                padding: 32px 10px 0
+                padding: 32px max(10px, env(safe-area-inset-right, 0px)) 0 max(10px, env(safe-area-inset-left, 0px))
             }
 
             .m-sec-hd {
@@ -1659,19 +1824,20 @@
             .add-btn {
                 padding: 9px 10px;
                 font-size: 8px;
-                letter-spacing: 1.5px
+                letter-spacing: 1.5px;
+                min-height: 44px
             }
 
             .cart-hd {
-                padding: 12px 16px
+                padding: 12px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px))
             }
 
             .cart-body {
-                padding: 14px 16px
+                padding: 14px max(16px, env(safe-area-inset-right, 0px)) 14px max(16px, env(safe-area-inset-left, 0px))
             }
 
             .cart-ft {
-                padding: 14px 16px 20px
+                padding: 14px max(16px, env(safe-area-inset-right, 0px)) calc(18px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px))
             }
 
             .cart-hd-left>span {
@@ -1692,8 +1858,8 @@
             }
 
             .cart-fab {
-                bottom: 16px;
-                right: 12px;
+                bottom: max(12px, calc(6px + env(safe-area-inset-bottom, 0px)));
+                right: max(10px, calc(4px + env(safe-area-inset-right, 0px)));
                 width: 48px;
                 height: 48px
             }
@@ -1704,14 +1870,14 @@
             }
 
             .toast {
-                right: 10px;
-                bottom: 80px;
+                right: max(10px, env(safe-area-inset-right, 0px));
+                bottom: calc(80px + env(safe-area-inset-bottom, 0px));
                 font-size: 9px;
                 padding: 9px 14px
             }
 
             .menu-area {
-                padding-bottom: 84px
+                padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px))
             }
 
         }
@@ -1823,193 +1989,125 @@
         </div>
     </div>
 
-    <!-- CAT BAR -->
+    <!-- CAT BAR + MENU — категории из MENU_MYRESTO_EXPORT.md (menu-data.js) -->
     <div class="cat-bar">
-        <div class="cat-scr" id="catBar">
-            <button class="cat-btn on" onclick="showCat('salad',this)">
-                <span class="cat-ico"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
-                        stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path
-                            d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.4 19 2c1 2 2 4.1 2 6.5A7.5 7.5 0 0 1 13.5 16c-1 0-2-.5-3-1 1-2 1-4 1-4" />
-                    </svg></span>
-                <span class="cat-lbl"><span data-l="uz" class="on">Salatlar</span><span data-l="ru">Салаты</span><span
-                        data-l="en">Salads</span></span>
+        <div class="cat-scr-wrap">
+            <button class="cat-arrow cat-arrow--l" id="catArrL" aria-label="Scroll left" onclick="scrollCat(-1)">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
             </button>
-            <button class="cat-btn" onclick="showCat('soup',this)">
-                <span class="cat-ico"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
-                        stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 14a8 8 0 0 0 16 0H4z"></path>
-                        <path d="M8 10V6"></path>
-                        <path d="M12 10V4"></path>
-                        <path d="M16 10V7"></path>
-                        <path d="M2 14h20"></path>
-                    </svg></span>
-                <span class="cat-lbl"><span data-l="uz" class="on">Sho'rvalar</span><span data-l="ru">Супы</span><span
-                        data-l="en">Soups</span></span>
-            </button>
-            <button class="cat-btn" onclick="showCat('main',this)">
-                <span class="cat-ico"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
-                        stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 15h18a1 1 0 001-1 9 9 0 00-18 0 1 1 0 001 1z"></path>
-                        <path d="M12 5v-2"></path>
-                        <path d="M10 2h4"></path>
-                        <path d="M2 18h20"></path>
-                    </svg></span>
-                <span class="cat-lbl"><span data-l="uz" class="on">Asosiy</span><span data-l="ru">Основные</span><span
-                        data-l="en">Main</span></span>
-            </button>
-            <button class="cat-btn" onclick="showCat('kebab',this)">
-                <span class="cat-ico"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
-                        stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path
-                            d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z">
-                        </path>
-                    </svg></span>
-                <span class="cat-lbl"><span data-l="uz" class="on">Kaboblar</span><span data-l="ru">Кебабы</span><span
-                        data-l="en">Kebabs</span></span>
-            </button>
-            <button class="cat-btn" onclick="showCat('drink',this)">
-                <span class="cat-ico"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
-                        stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
-                        <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
-                        <line x1="6" y1="2" x2="6" y2="4"></line>
-                        <line x1="10" y1="2" x2="10" y2="4"></line>
-                        <line x1="14" y1="2" x2="14" y2="4"></line>
-                    </svg></span>
-                <span class="cat-lbl"><span data-l="uz" class="on">Ichimliklar</span><span
-                        data-l="ru">Напитки</span><span data-l="en">Drinks</span></span>
-            </button>
-            <button class="cat-btn" onclick="showCat('dessert',this)">
-                <span class="cat-ico"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
-                        stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"></path>
-                        <path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2 1 2 1"></path>
-                        <path d="M2 21h20"></path>
-                        <path d="M7 8v3"></path>
-                        <path d="M12 8v3"></path>
-                        <path d="M17 8v3"></path>
-                        <path d="M7 4h.01"></path>
-                        <path d="M12 4h.01"></path>
-                        <path d="M17 4h.01"></path>
-                    </svg></span>
-                <span class="cat-lbl"><span data-l="uz" class="on">Shirinliklar</span><span
-                        data-l="ru">Десерты</span><span data-l="en">Desserts</span></span>
+            <div class="cat-scr" id="catBar"></div>
+            <button class="cat-arrow cat-arrow--r" id="catArrR" aria-label="Scroll right" onclick="scrollCat(1)">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M5 2l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
             </button>
         </div>
     </div>
-
-    <!-- MENU -->
-    <div class="menu-area">
-        <div class="m-sec on" id="sec-salad">
-            <div class="m-sec-hd">
-                <h2 class="m-sec-title"><span data-l="uz" class="on"><em>Salatlar</em></span><span
-                        data-l="ru"><em>Салаты</em></span><span data-l="en"><em>Salads</em></span></h2><span
-                    class="m-sec-count">4</span>
-            </div>
-            <div class="m-grid" id="g-salad"></div>
-        </div>
-        <div class="m-sec" id="sec-soup">
-            <div class="m-sec-hd">
-                <h2 class="m-sec-title"><span data-l="uz" class="on"><em>Sho'rvalar</em></span><span
-                        data-l="ru"><em>Супы</em></span><span data-l="en"><em>Soups</em></span></h2><span
-                    class="m-sec-count">4</span>
-            </div>
-            <div class="m-grid" id="g-soup"></div>
-        </div>
-        <div class="m-sec" id="sec-main">
-            <div class="m-sec-hd">
-                <h2 class="m-sec-title"><span data-l="uz" class="on"><em>Asosiy Taomlar</em></span><span
-                        data-l="ru"><em>Основные Блюда</em></span><span data-l="en"><em>Main Dishes</em></span></h2>
-                <span class="m-sec-count">5</span>
-            </div>
-            <div class="m-grid" id="g-main"></div>
-        </div>
-        <div class="m-sec" id="sec-kebab">
-            <div class="m-sec-hd">
-                <h2 class="m-sec-title"><span data-l="uz" class="on"><em>Kaboblar</em></span><span
-                        data-l="ru"><em>Кебабы</em></span><span data-l="en"><em>Kebabs</em></span></h2><span
-                    class="m-sec-count">4</span>
-            </div>
-            <div class="m-grid" id="g-kebab"></div>
-        </div>
-        <div class="m-sec" id="sec-drink">
-            <div class="m-sec-hd">
-                <h2 class="m-sec-title"><span data-l="uz" class="on"><em>Ichimliklar</em></span><span
-                        data-l="ru"><em>Напитки</em></span><span data-l="en"><em>Drinks</em></span></h2><span
-                    class="m-sec-count">4</span>
-            </div>
-            <div class="m-grid" id="g-drink"></div>
-        </div>
-        <div class="m-sec" id="sec-dessert">
-            <div class="m-sec-hd">
-                <h2 class="m-sec-title"><span data-l="uz" class="on"><em>Shirinliklar</em></span><span
-                        data-l="ru"><em>Десерты</em></span><span data-l="en"><em>Desserts</em></span></h2><span
-                    class="m-sec-count">4</span>
-            </div>
-            <div class="m-grid" id="g-dessert"></div>
-        </div>
-    </div>
+    <div class="menu-area" id="menuArea"></div>
 
     <script src="shared.js"></script>
+    <script src="menu-data.js"></script>
     <script>
         let lang = ildizLang;
         function onLangChange(l) { lang = l; render(); updateCart(); }
 
-        // CATEGORY
-        function showCat(cat, btn) {
-            document.querySelectorAll('.m-sec').forEach(s => s.classList.remove('on'));
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('on'));
-            document.getElementById('sec-' + cat).classList.add('on');
-            btn.classList.add('on');
-            btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            window.scrollTo({ top: document.querySelector('.cat-bar').offsetTop - 68, behavior: 'smooth' });
+        const D = window.MENU_DATA || {};
+        const CAT_ORDER = window.MENU_CAT_ORDER || [];
+        const MENU_LABELS = window.MENU_CAT_LABELS || {};
+
+        function escapeHtml(t) {
+            return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
 
-        // DATA
-        const D = {
-            salad: [
-                { id: 's1', name: { uz: 'Toshkent Salati', ru: 'Ташкентский Салат', en: 'Tashkent Salad' }, sub: { uz: 'Toshkent usuli', ru: 'По-ташкентски', en: 'Tashkent style' }, desc: { uz: 'Yangi sabzavotlar, mol go\'shti va limon sousi bilan', ru: 'Свежие овощи, говядина и лимонный соус', en: 'Fresh vegetables, beef and lemon sauce' }, price: 35000, img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80', badge: { uz: 'Mashhur', ru: 'Хит', en: 'Popular' } },
-                { id: 's2', name: { uz: 'Achichuk', ru: 'Ачичук', en: 'Achichuk' }, sub: { uz: 'An\'anaviy', ru: 'Традиционный', en: 'Traditional' }, desc: { uz: 'Pomidor, piyoz va o\'tkir qalampir bilan', ru: 'Помидоры, лук и острый перец', en: 'Tomatoes, onion and hot pepper' }, price: 25000, img: 'https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=600&q=80', badge: { uz: 'Milliy', ru: 'Нац.', en: 'National' } },
-                { id: 's3', name: { uz: 'Vinegret', ru: 'Винегрет', en: 'Vinaigrette' }, sub: { uz: 'Aralash salat', ru: 'Смешанный', en: 'Mixed salad' }, desc: { uz: 'Lavlagi, kartoshka, sabzi, loviya bilan', ru: 'Свёкла, картошка, морковь, фасоль', en: 'Beetroot, potato, carrot, beans' }, price: 28000, img: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&q=80' },
-                { id: 's4', name: { uz: 'Ko\'k Salat', ru: 'Зелёный Салат', en: 'Green Salad' }, sub: { uz: 'Yengil', ru: 'Лёгкий', en: 'Light' }, desc: { uz: 'Yangi yashil sabzavotlar, zeytun moyi bilan', ru: 'Свежая зелень с оливковым маслом', en: 'Fresh greens with olive oil' }, price: 22000, img: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&q=80' },
-            ],
-            soup: [
-                { id: 'sp1', name: { uz: 'Mastava', ru: 'Мастава', en: 'Mastava' }, sub: { uz: 'O\'zbek milliy sho\'rvasi', ru: 'Национальный суп', en: 'National soup' }, desc: { uz: 'Go\'sht, guruch va sabzavotlar bilan milliy sho\'rva', ru: 'Национальный суп с мясом, рисом и овощами', en: 'National soup with meat, rice and vegetables' }, price: 45000, img: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&q=80', badge: { uz: 'An\'anaviy', ru: 'Классика', en: 'Classic' } },
-                { id: 'sp2', name: { uz: 'Lag\'mon', ru: 'Лагман', en: 'Lagman' }, sub: { uz: 'Qo\'l zig\'ir uni', ru: 'Ручная лапша', en: 'Hand-pulled noodles' }, desc: { uz: 'Cho\'zilgan qo\'l zig\'ir uni, mol go\'shti va sabzavotlar', ru: 'Тянутая лапша с говядиной и овощами', en: 'Hand-pulled noodles with beef and vegetables' }, price: 50000, img: 'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&q=80', badge: { uz: 'Mashhur', ru: 'Хит', en: 'Popular' } },
-                { id: 'sp3', name: { uz: 'Shurva', ru: 'Шурпа', en: 'Shurpa' }, sub: { uz: 'Qo\'y go\'shti', ru: 'Из баранины', en: 'Lamb broth' }, desc: { uz: 'Qo\'y go\'shti, sabzi, kartoshka va ziravorlar', ru: 'Баранина с морковью, картошкой и специями', en: 'Lamb with carrot, potato and spices' }, price: 48000, img: 'https://images.unsplash.com/photo-1563978748-3f5b6e80ac2e?w=600&q=80' },
-                { id: 'sp4', name: { uz: 'Ugra Sho\'rva', ru: 'Суп с Лапшой', en: 'Noodle Soup' }, sub: { uz: 'Uy qo\'li', ru: 'Домашняя', en: 'Homestyle' }, desc: { uz: 'Uy qo\'li zig\'ir uni, tovuq va sabzavotlar bilan', ru: 'Домашняя лапша с курицей и овощами', en: 'Homemade noodles with chicken and vegetables' }, price: 42000, img: 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=600&q=80' },
-            ],
-            main: [
-                { id: 'm1', name: { uz: 'Palov', ru: 'Плов', en: 'Plov' }, sub: { uz: 'O\'zbek milliy taomi', ru: 'Узбекский плов', en: 'Uzbek pilaf' }, desc: { uz: 'Guruch, qo\'y go\'shti, sabzi va ziravorlar bilan', ru: 'Рис, баранина, морковь и специи', en: 'Rice, lamb, carrot and spices' }, price: 65000, img: 'https://images.unsplash.com/photo-1596560548464-f010549b84d7?w=600&q=80', badge: { uz: '#1 Mashhur', ru: '#1 Хит', en: '#1 Hit' } },
-                { id: 'm2', name: { uz: 'Dimlama', ru: 'Димлама', en: 'Dimlama' }, sub: { uz: 'Qozon taomi', ru: 'Казанное блюдо', en: 'Cauldron dish' }, desc: { uz: 'Go\'sht, sabzavotlar va ziravorlar bilan dum qilingan', ru: 'Тушёное мясо с овощами и специями в казане', en: 'Slow-cooked meat with vegetables and spices' }, price: 70000, img: 'https://images.unsplash.com/photo-1608835291093-394b0c943a75?w=600&q=80' },
-                { id: 'm3', name: { uz: 'Norin', ru: 'Нарын', en: 'Norin' }, sub: { uz: 'Fergona usuli', ru: 'По-ферг.', en: 'Fergana style' }, desc: { uz: 'Qaynatilgan go\'sht va qo\'l zig\'ir uni', ru: 'Отварное мясо с домашней лапшой', en: 'Boiled meat with homemade noodles' }, price: 60000, img: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=600&q=80' },
-                { id: 'm4', name: { uz: 'Manti', ru: 'Манты', en: 'Manti' }, sub: { uz: 'Bug\'da pishirilgan', ru: 'На пару', en: 'Steamed' }, desc: { uz: 'Bug\'da pishirilgan yirik qiyma go\'sht bilan', ru: 'Паровые пельмени с фаршем', en: 'Steamed large dumplings with minced meat' }, price: 55000, img: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=600&q=80', badge: { uz: 'Sevimli', ru: 'Любимое', en: 'Favorite' } },
-                { id: 'm5', name: { uz: 'Somsa', ru: 'Самса', en: 'Samsa' }, sub: { uz: 'Tandirda', ru: 'Тандырная', en: 'Tandoor-baked' }, desc: { uz: 'Tandirda pishirilgan qiyma go\'sht bilan', ru: 'Тандырная самса с фаршем и луком', en: 'Tandoor-baked with minced meat and onion' }, price: 18000, img: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&q=80' },
-            ],
-            kebab: [
-                { id: 'k1', name: { uz: 'Jigar Kabob', ru: 'Печёночный', en: 'Liver Kebab' }, sub: { uz: 'Ko\'mirda', ru: 'На углях', en: 'Charcoal grilled' }, desc: { uz: 'Mol jigari ziravorlar bilan ko\'mirda', ru: 'Говяжья печень на углях со специями', en: 'Beef liver on charcoal with spices' }, price: 55000, img: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=600&q=80' },
-                { id: 'k2', name: { uz: 'Go\'sht Kabob', ru: 'Мясной Кебаб', en: 'Meat Kebab' }, sub: { uz: 'Qo\'y go\'shti', ru: 'Из баранины', en: 'Lamb' }, desc: { uz: 'Qo\'y go\'shti va piyoz bilan ko\'mirda', ru: 'Шашлык из баранины с луком на углях', en: 'Lamb and onion shashlik on charcoal' }, price: 65000, img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&q=80', badge: { uz: 'Mashhur', ru: 'Хит', en: 'Popular' } },
-                { id: 'k3', name: { uz: 'Tovuq Kabob', ru: 'Куриный Кебаб', en: 'Chicken Kebab' }, sub: { uz: 'Limon marinadi', ru: 'Лимонный маринад', en: 'Lemon marinade' }, desc: { uz: 'Tovuq filesi limon va ziravorlar marinadi bilan', ru: 'Куриное филе в лимонном маринаде', en: 'Chicken fillet in lemon and spice marinade' }, price: 58000, img: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80' },
-                { id: 'k4', name: { uz: 'Lula Kabob', ru: 'Люля Кебаб', en: 'Lula Kebab' }, sub: { uz: 'Shampurda', ru: 'На шампуре', en: 'On skewer' }, desc: { uz: 'Maydalangan qo\'y go\'shti ziravorlar bilan', ru: 'Рубленая баранина со специями на шампуре', en: 'Minced lamb with spices on a skewer' }, price: 60000, img: 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=600&q=80' },
-            ],
-            drink: [
-                { id: 'd1', name: { uz: 'Ko\'k Choy', ru: 'Зелёный Чай', en: 'Green Tea' }, sub: { uz: 'Samarqand', ru: 'Самаркандский', en: 'Samarkand' }, desc: { uz: 'Samarqand ko\'k choyi, toza va sog\'lom', ru: 'Самаркандский зелёный чай, чистый и полезный', en: 'Samarkand green tea, pure and healthy' }, price: 12000, img: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600&q=80', badge: { uz: 'Sevimli', ru: 'Любимый', en: 'Favorite' } },
-                { id: 'd2', name: { uz: 'Qora Choy', ru: 'Чёрный Чай', en: 'Black Tea' }, sub: { uz: 'Limon bilan', ru: 'С лимоном', en: 'With lemon' }, desc: { uz: 'To\'q qora choy, limon va shakar bilan', ru: 'Крепкий чёрный чай с лимоном и сахаром', en: 'Strong black tea with lemon and sugar' }, price: 12000, img: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80' },
-                { id: 'd3', name: { uz: 'Kompot', ru: 'Компот', en: 'Compote' }, sub: { uz: 'Milliy ichimlik', ru: 'Нац. напиток', en: 'National drink' }, desc: { uz: 'Quritilgan meva va shaftolidan milliy ichimlik', ru: 'Национальный напиток из сухофруктов и персика', en: 'National beverage from dried fruits and peach' }, price: 15000, img: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=600&q=80' },
-                { id: 'd4', name: { uz: 'Limonad', ru: 'Лимонад', en: 'Lemonade' }, sub: { uz: 'Uy limonadi', ru: 'Домашний', en: 'Homemade' }, desc: { uz: 'Yangi limon va nane bilan uy limonadi', ru: 'Домашний лимонад со свежим лимоном и мятой', en: 'Homemade lemonade with fresh lemon and mint' }, price: 20000, img: 'https://images.unsplash.com/photo-1523677011781-c91d1bbe2f9e?w=600&q=80' },
-            ],
-            dessert: [
-                { id: 'ds1', name: { uz: 'Halva', ru: 'Халва', en: 'Halva' }, sub: { uz: 'An\'anaviy', ru: 'Традиционная', en: 'Traditional' }, desc: { uz: 'Un va yog\' bilan tayyorlangan an\'anaviy o\'zbek halva', ru: 'Традиционная узбекская халва с мукой и маслом', en: 'Traditional Uzbek halva with flour and oil' }, price: 30000, img: 'https://images.unsplash.com/photo-1548365328-8c6db3220e4c?w=600&q=80', badge: { uz: 'An\'anaviy', ru: 'Классика', en: 'Classic' } },
-                { id: 'ds2', name: { uz: 'Nisholda', ru: 'Нишалда', en: 'Nisholda' }, sub: { uz: 'Ko\'pikli', ru: 'Воздушная', en: 'Light & airy' }, desc: { uz: 'Savash ildizi va limon bilan oppoq ko\'pikli shirin', ru: 'Воздушный белый десерт с корнем мыльнянки', en: 'Light white dessert with soapwort root and lemon' }, price: 25000, img: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80' },
-                { id: 'ds3', name: { uz: 'Chak-chak', ru: 'Чак-чак', en: 'Chak-chak' }, sub: { uz: 'Asal bilan', ru: 'С мёдом', en: 'With honey' }, desc: { uz: 'Asal va yong\'oq bilan qovurilgan xamir klmpasi', ru: 'Жаренное тесто с мёдом и орехами', en: 'Fried dough with honey and walnuts' }, price: 28000, img: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=600&q=80' },
-                { id: 'ds4', name: { uz: 'Qatlama', ru: 'Катлама', en: 'Qatlama' }, sub: { uz: 'Ko\'p qatlamli', ru: 'Многослойная', en: 'Multilayer' }, desc: { uz: 'Ko\'p qatlamli taom, qovoq yoki boshqa to\'ldirish bilan', ru: 'Многослойное блюдо с тыквой или начинкой', en: 'Multilayer dish with pumpkin or other filling' }, price: 22000, img: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=600&q=80' },
-            ]
+        function syncMenuLangClasses() {
+            document.querySelectorAll('#catBar [data-l], #menuArea [data-l]').forEach(el =>
+                el.classList.toggle('on', el.dataset.l === ildizLang));
+        }
+
+        const _ic = (paths) => '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + '</svg>';
+        const CAT_ICONS = {
+            salaty: _ic('<path d="M12 3c-3 4-6 7-6 11a6 6 0 0012 0c0-4-3-7-6-11z"/><path d="M12 14v4"/>'),
+            'kholodnye-zakuski': _ic('<rect x="4" y="6" width="16" height="12" rx="2"/><path d="M8 10h8M8 14h5"/>'),
+            supy: _ic('<path d="M5 11h14v1a6 6 0 01-6 6H11a6 6 0 01-6-6v-1z"/><path d="M5 11V9a4 4 0 014-4h6a4 4 0 014 4v2"/><line x1="8" y1="15" x2="8.01" y2="15"/>'),
+            khamir: _ic('<ellipse cx="12" cy="12" rx="7" ry="4"/><path d="M5 12c2-2 5-3 7-3s5 1 7 3"/>'),
+            'goriachie-bliuda': _ic('<path d="M5 10h14v2a6 6 0 01-6 6H11a6 6 0 01-6-6v-2z"/><path d="M9 10V8a3 3 0 016 0v2"/><path d="M3 20h18"/>'),
+            tandyr: _ic('<path d="M7 20h10"/><path d="M8 20V10a4 4 0 018 0v10"/><path d="M10 6c0-2 1.5-4 4-4s4 2 4 4"/>'),
+            shashlyki: _ic('<path d="M8 5l8 14"/><circle cx="7" cy="4" r="1.5" fill="currentColor" stroke="none"/><circle cx="10" cy="9" r="1.5" fill="currentColor" stroke="none"/><circle cx="13" cy="14" r="1.5" fill="currentColor" stroke="none"/>'),
+            sushi: _ic('<rect x="5" y="10" width="14" height="6" rx="1"/><path d="M8 10V8a4 4 0 018 0v2"/>'),
+            ryba: _ic('<path d="M4 12c3-2 6-3 9-3s4 1 5 3c-1 2-2 3-5 3s-6-1-9-3z"/><path d="M17 12l3-2v4l-3-2"/><circle cx="8" cy="11" r=".8" fill="currentColor" stroke="none"/>'),
+            'banketnoe-meniu': _ic('<path d="M5 10h14l-1 8H6L5 10z"/><path d="M12 10V6"/><ellipse cx="12" cy="5" rx="4" ry="1"/>'),
+            'garniry-i-sousy': _ic('<path d="M6 8h12v8a2 2 0 01-2 2H8a2 2 0 01-2-2V8z"/><path d="M10 12h4"/>'),
+            khleb: _ic('<path d="M6 16c0-4 2-8 6-8s6 4 6 8"/><path d="M9 11c2-1 4-1 6 0"/>'),
+            chai: _ic('<path d="M5 9h10a2 2 0 012 2v2a3 3 0 01-3 3H8a3 3 0 01-3-3v-2a2 2 0 012-2z"/><path d="M7 9V8a5 5 0 0110 0v1"/><path d="M17 11h1.5a1 1 0 011 1v0a1 1 0 01-1 1H17"/>'),
+            'avtorskii-chai': _ic('<path d="M14 3l.5 2 2 .5-2 .5-.5 2-.5-2-2-.5 2-.5.5-2z"/><path d="M5 17h8a2 2 0 002-2v-3"/>'),
+            kofe: _ic('<path d="M6 8h10v6a3 3 0 01-3 3H9a3 3 0 01-3-3V8z"/><path d="M16 10h1.5A1.5 1.5 0 0119 11v0a1.5 1.5 0 01-1.5 1.5H16"/><path d="M8 5c0-1 1-2 2-2h0"/>'),
+            limonady: _ic('<path d="M10 4l-1 6h6L14 4"/><circle cx="12" cy="15" r="4"/><path d="M12 13v4"/>'),
+            napitki: _ic('<path d="M9 3h6l-1 14a2 2 0 01-2 2h0a2 2 0 01-2-2L9 3z"/><line x1="7" y1="7" x2="17" y2="7"/>'),
+            'banochnye-napitki': _ic('<path d="M8 4h8v3H8zM7 7h10v13a2 2 0 01-2 2H9a2 2 0 01-2-2V7z"/>'),
+            'pivo-banochnoe': _ic('<path d="M6 6h10v11a2 2 0 01-2 2H8a2 2 0 01-2-2V6z"/><path d="M8 6V4a2 2 0 014 0v2"/><path d="M5 9h12"/>'),
+            vino: _ic('<path d="M8 2h8l-1 10a4 4 0 01-6 0L8 2z"/><path d="M10 14v6"/><path d="M8 20h8"/>'),
+            shampanskoe: _ic('<path d="M7 4h10l-1 9a3 3 0 01-8 0L7 4z"/><circle cx="12" cy="6" r=".8" fill="currentColor" stroke="none"/><path d="M9 16v4"/><path d="M7 20h10"/>'),
+            kokteil: _ic('<path d="M5 4l7 8v7"/><path d="M12 12l7-8H5"/><line x1="9" y1="20" x2="15" y2="20"/>'),
+            alkogol: _ic('<path d="M9 3h6v4l2 10H7L9 7V3z"/><path d="M8 20h8"/>'),
+            bar: _ic('<path d="M6 3h12l-8 9v6"/><path d="M8 18h8"/><path d="M10 12h4"/>'),
+            deserty: _ic('<path d="M5 18h14"/><path d="M7 18V10l5-4 5 4v8"/><circle cx="9" cy="12" r=".8" fill="currentColor" stroke="none"/>'),
+            sukhofrukty: _ic('<circle cx="9" cy="10" r="3"/><circle cx="15" cy="11" r="2.5"/><path d="M6 18c2-3 5-4 8-4s6 1 8 4"/>'),
+            'svezhie-frukty': _ic('<path d="M15 5c0 3-2 6-5 7-1-4 0-8 3-10 2 1 2 3 2 3z"/><path d="M10 12c-2 4-1 8 2 10 4-2 5-7 3-10"/>'),
+            'shokolad-orbit': _ic('<rect x="5" y="7" width="14" height="10" rx="1"/><path d="M8 7V6a2 2 0 014 0v1M8 12h8"/>'),
+            _default: _ic('<circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/>')
         };
+        function catIconFor(slug) {
+            return CAT_ICONS[slug] || CAT_ICONS._default;
+        }
+
+        function buildMenuShell() {
+            const bar = document.getElementById('catBar');
+            const area = document.getElementById('menuArea');
+            if (!bar || !area || !CAT_ORDER.length) return;
+            bar.innerHTML = '';
+            area.innerHTML = '';
+            const first = CAT_ORDER[0];
+            CAT_ORDER.forEach(cat => {
+                const L = MENU_LABELS[cat] || { uz: cat, ru: cat, en: cat };
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'cat-btn' + (cat === first ? ' on' : '');
+                btn.setAttribute('aria-pressed', cat === first ? 'true' : 'false');
+                btn.innerHTML = '<span class="cat-ico">' + catIconFor(cat) + '</span><span class="cat-lbl"><span data-l="uz">' + escapeHtml(L.uz) + '</span><span data-l="ru">' + escapeHtml(L.ru) + '</span><span data-l="en">' + escapeHtml(L.en) + '</span></span>';
+                btn.addEventListener('click', () => showCat(cat, btn));
+                bar.appendChild(btn);
+                const n = (D[cat] || []).length;
+                const sec = document.createElement('div');
+                sec.className = 'm-sec' + (cat === first ? ' on' : '');
+                sec.id = 'sec-' + cat;
+                sec.innerHTML = '<div class="m-sec-hd"><h2 class="m-sec-title"><span data-l="uz"><em>' + escapeHtml(L.uz) + '</em></span><span data-l="ru"><em>' + escapeHtml(L.ru) + '</em></span><span data-l="en"><em>' + escapeHtml(L.en) + '</em></span></h2><span class="m-sec-count">' + n + '</span></div><div class="m-grid" id="g-' + cat + '"></div>';
+                area.appendChild(sec);
+            });
+            syncMenuLangClasses();
+        }
+
+        function showCat(cat, btn) {
+            document.querySelectorAll('.m-sec').forEach(s => s.classList.remove('on'));
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.classList.remove('on');
+                b.setAttribute('aria-pressed', 'false');
+            });
+            const sec = document.getElementById('sec-' + cat);
+            if (sec) sec.classList.add('on');
+            btn.classList.add('on');
+            btn.setAttribute('aria-pressed', 'true');
+            btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            const cbar = document.querySelector('.cat-bar');
+            if (cbar) window.scrollTo({ top: cbar.offsetTop - 68, behavior: 'smooth' });
+        }
 
         // RENDER
         function render() {
-            Object.keys(D).forEach(cat => {
+            CAT_ORDER.forEach(cat => {
                 const g = document.getElementById('g-' + cat);
                 if (!g) return;
                 g.innerHTML = D[cat].map(item => {
@@ -2090,11 +2188,12 @@
         function placeOrder() {
             const items = Object.values(cart); if (!items.length) return;
             const total = items.reduce((s, i) => s + i.price * i.qty, 0);
-            const lines = items.map(i => `${i.qty}x ${i.name.uz} — ${(i.price * i.qty).toLocaleString()} UZS`);
+            const nm = i => i.name[lang] || i.name.uz || i.name.ru;
+            const lines = items.map(i => `${i.qty}x ${nm(i)} — ${(i.price * i.qty).toLocaleString()} UZS`);
             const locs = {
-                uz: "Urganch, Abu al-G'oziy Bahodirxon ko'chasi, 80-uy",
-                ru: "Ургенч, ул. Абу л-Гази Бахадур-хана, дом 80",
-                en: "Urganch, Abu al-Ghazi Bahadur Khan st., 80"
+                uz: "Urganch, Abu al-G'oziy Bahodirxon ko'chasi, 180/1-uy",
+                ru: "Ургенч, ул. Абу л-Гази Бахадур-хана, дом 180/1",
+                en: "Urganch, Abu al-Ghazi Bahadur Khan st., 180/1"
             };
             const msg = `🌿 *ILDIZ Milliy Taomlari*\n\n${lines.join('\n')}\n\n*Jami: ${total.toLocaleString()} UZS*\n\n${locs[lang]}`;
             window.open(`https://wa.me/998972030220?text=${encodeURIComponent(msg)}`, '_blank');
@@ -2108,7 +2207,9 @@
         }
 
         // INIT
-        render(); updateCart();
+        buildMenuShell();
+        render();
+        updateCart();
         bindCursorHovers();
 
         (function syncCatBarTop() {
@@ -2120,6 +2221,33 @@
             set();
             window.addEventListener('resize', set);
             setTimeout(set, 3200);
+        })();
+
+        // Arrow navigation for category bar
+        function scrollCat(dir) {
+            const scr = document.getElementById('catBar');
+            if (!scr) return;
+            const amount = scr.offsetWidth * 0.55;
+            scr.scrollBy({ left: dir * amount, behavior: 'smooth' });
+        }
+
+        (function initCatArrows() {
+            const scr = document.getElementById('catBar');
+            const arrL = document.getElementById('catArrL');
+            const arrR = document.getElementById('catArrR');
+            if (!scr || !arrL || !arrR) return;
+
+            function updateArrows() {
+                const sl = scr.scrollLeft;
+                const maxSl = scr.scrollWidth - scr.clientWidth;
+                arrL.classList.toggle('vis', sl > 8);
+                arrR.classList.toggle('vis', sl < maxSl - 8);
+            }
+
+            scr.addEventListener('scroll', updateArrows, { passive: true });
+            window.addEventListener('resize', updateArrows);
+            setTimeout(updateArrows, 4200);
+            setTimeout(updateArrows, 5000);
         })();
     </script>
 </body>
