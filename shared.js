@@ -35,10 +35,6 @@ document.body.style.overflow = 'hidden';
     requestAnimationFrame(tick);
 
     window.addEventListener('load', () => {
-        // Prepare audio
-        window.welcomeAudio = new Audio();
-        window.welcomeAudio.volume = 0.8;
-        
         setTimeout(() => {
             fill.style.width = '100%';
             pct.textContent = '100%';
@@ -49,10 +45,6 @@ document.body.style.overflow = 'hidden';
         setTimeout(() => {
             loader.classList.add('reveal');
             document.body.style.overflow = '';
-            // Attempt to play audio on homepage only, not on menu page
-            if (typeof playWelcomeVoice === 'function' && window.location.pathname.indexOf('menu.html') === -1) {
-                playWelcomeVoice(localStorage.getItem('ildiz-lang') || 'uz');
-            }
         }, 2900);
         setTimeout(() => {
             loader.classList.add('done');
@@ -94,7 +86,7 @@ if (C && CR) {
         CR.style.borderColor = 'rgba(250, 169, 84, 0.5)';
     }
 
-    window.bindCursorHovers = function(root) {
+    window.bindCursorHovers = function (root) {
         (root || document).querySelectorAll('a,button,.m-card,.h-card,.gallery-img').forEach(el => {
             el.addEventListener('mouseenter', cursorBig);
             el.addEventListener('mouseleave', cursorSmall);
@@ -111,33 +103,8 @@ if (C && CR) {
     }
 }
 
-/* Language switching and Audio */
+/* Language switching */
 let ildizLang = localStorage.getItem('ildiz-lang') || 'uz';
-
-window.playWelcomeVoice = function(l) {
-    if (!window.welcomeAudio) {
-        window.welcomeAudio = new Audio();
-        window.welcomeAudio.volume = 0.8;
-    }
-    
-    // Stop current audio if playing
-    window.welcomeAudio.pause();
-    window.welcomeAudio.currentTime = 0;
-    
-    // Set correct source
-    if (l === 'ru') {
-        window.welcomeAudio.src = 'voice_rus.mp3';
-    } else if (l === 'en') {
-        window.welcomeAudio.src = 'voice_en.mp3';
-    } else {
-        window.welcomeAudio.src = 'voice_uzb.mp3'; // Default to UZ
-    }
-    
-    // Play with catch for autoplay restrictions
-    window.welcomeAudio.play().catch(e => {
-        console.log("Autoplay blocked by browser. User interaction needed.", e);
-    });
-};
 
 function sL(l) {
     ildizLang = l;
@@ -149,7 +116,7 @@ function sL(l) {
         b.classList.toggle('on', ['uz', 'ru', 'en'][i] === l)
     );
     document.documentElement.classList.toggle('lang-ru', l === 'ru');
-    
+
     if (typeof onLangChange === 'function') onLangChange(l);
 }
 
