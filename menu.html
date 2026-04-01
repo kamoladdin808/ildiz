@@ -72,18 +72,6 @@
             }
         }
 
-        @keyframes heroImgIn {
-            from {
-                opacity: 0;
-                transform: scale(1.1);
-            }
-
-            to {
-                opacity: 0.1;
-                transform: scale(1);
-            }
-        }
-
         .nav-back {
             display: flex;
             align-items: center;
@@ -509,21 +497,6 @@
             position: absolute;
             inset: 0;
             background: radial-gradient(ellipse 70% 80% at 40% 50%, rgba(127, 85, 57, 0.22) 0%, transparent 70%);
-        }
-
-        .m-hero-img {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-        }
-
-        .m-hero-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            animation: heroImgIn 1.5s ease 2.9s forwards;
-            filter: sepia(0.3);
         }
 
         .m-hero-cont {
@@ -1975,9 +1948,6 @@
     <!-- HERO -->
     <div class="m-hero">
         <div class="m-hero-bg"></div>
-        <div class="m-hero-img"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=80" alt=""
-                fetchpriority="high" decoding="async">
-        </div>
         <div class="m-hero-cont">
             <p class="m-hero-ey"><span data-l="uz" class="on">Ildiz Milliy Taomlari</span><span data-l="ru">ILDIZ
                     Национальная Кухня</span><span data-l="en">Ildiz National Cuisine</span></p>
@@ -1989,7 +1959,7 @@
         </div>
     </div>
 
-    <!-- CAT BAR + MENU — категории из MENU_MYRESTO_EXPORT.md (menu-data.js) -->
+    <!-- CAT BAR + MENU — порядок/раскладка: scripts/menu-print-layout.json → node scripts/build-menu-data.mjs → menu-data.js -->
     <div class="cat-bar">
         <div class="cat-scr-wrap">
             <button class="cat-arrow cat-arrow--l" id="catArrL" aria-label="Scroll left" onclick="scrollCat(-1)">
@@ -2031,10 +2001,12 @@
         const _ic = (paths) => '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + '</svg>';
         const CAT_ICONS = {
             salaty: _ic('<path d="M12 3c-3 4-6 7-6 11a6 6 0 0012 0c0-4-3-7-6-11z"/><path d="M12 14v4"/>'),
+            soleniya: _ic('<rect x="6" y="5" width="12" height="14" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/><path d="M8 19h8"/>'),
             'kholodnye-zakuski': _ic('<rect x="4" y="6" width="16" height="12" rx="2"/><path d="M8 10h8M8 14h5"/>'),
             supy: _ic('<path d="M5 11h14v1a6 6 0 01-6 6H11a6 6 0 01-6-6v-1z"/><path d="M5 11V9a4 4 0 014-4h6a4 4 0 014 4v2"/><line x1="8" y1="15" x2="8.01" y2="15"/>'),
             khamir: _ic('<ellipse cx="12" cy="12" rx="7" ry="4"/><path d="M5 12c2-2 5-3 7-3s5 1 7 3"/>'),
             'goriachie-bliuda': _ic('<path d="M5 10h14v2a6 6 0 01-6 6H11a6 6 0 01-6-6v-2z"/><path d="M9 10V8a3 3 0 016 0v2"/><path d="M3 20h18"/>'),
+            pasta: _ic('<path d="M4 14c2-5 5-8 8-8s6 3 8 8"/><path d="M6 16c1.5-3 3-4.5 6-4.5s4.5 1.5 6 4.5"/><path d="M8 18c1-2 2-3 4-3s3 1 4 3"/>'),
             tandyr: _ic('<path d="M7 20h10"/><path d="M8 20V10a4 4 0 018 0v10"/><path d="M10 6c0-2 1.5-4 4-4s4 2 4 4"/>'),
             shashlyki: _ic('<path d="M8 5l8 14"/><circle cx="7" cy="4" r="1.5" fill="currentColor" stroke="none"/><circle cx="10" cy="9" r="1.5" fill="currentColor" stroke="none"/><circle cx="13" cy="14" r="1.5" fill="currentColor" stroke="none"/>'),
             sushi: _ic('<rect x="5" y="10" width="14" height="6" rx="1"/><path d="M8 10V8a4 4 0 018 0v2"/>'),
@@ -2110,7 +2082,9 @@
             CAT_ORDER.forEach(cat => {
                 const g = document.getElementById('g-' + cat);
                 if (!g) return;
-                g.innerHTML = D[cat].map(item => {
+                const rows = D[cat];
+                if (!Array.isArray(rows)) return;
+                g.innerHTML = rows.map(item => {
                     const inCart = cart[item.id];
                     const qtyCtrl = inCart
                         ? `<div class="card-qty">
@@ -2125,7 +2099,7 @@
                     return `
       <div class="m-card">
         <div class="m-card-img">
-          <img src="${item.img}" alt="${item.name[lang] || item.name.uz}" loading="lazy">
+          <img src="${item.img}" alt="${item.name[lang] || item.name.uz}" width="800" height="600" loading="lazy" decoding="async" sizes="(max-width: 900px) 50vw, 33vw">
           ${item.badge ? `<div class="m-badge">${item.badge[lang] || item.badge.uz}</div>` : ''}
         </div>
         <div class="m-card-body">
@@ -2146,7 +2120,9 @@
         // CART
         let cart = {};
         function add(id, cat) {
-            const item = D[cat].find(i => i.id === id); if (!item) return;
+            const list = D[cat];
+            const item = Array.isArray(list) ? list.find(i => i.id === id) : null;
+            if (!item) return;
             cart[id] ? cart[id].qty++ : (cart[id] = { ...item, qty: 1, cat });
             updateCart(); render();
             showToast(lang === 'uz' ? 'Savatchaga qo\'shildi ✓' : lang === 'ru' ? 'Добавлено в корзину ✓' : 'Added to cart ✓');
@@ -2160,19 +2136,24 @@
             const total = items.reduce((s, i) => s + i.price * i.qty, 0);
             const count = items.reduce((s, i) => s + i.qty, 0);
             const badge = document.getElementById('fab-badge');
-            badge.textContent = count; badge.classList.toggle('on', count > 0);
+            if (badge) {
+                badge.textContent = count;
+                badge.classList.toggle('on', count > 0);
+            }
             const empty = document.getElementById('cartEmpty');
             const ft = document.getElementById('cartFt');
+            const cartTot = document.getElementById('cartTot');
+            const body = document.getElementById('cartBody');
+            if (!empty || !ft || !cartTot || !body) return;
             empty.style.display = items.length ? 'none' : 'flex';
             ft.classList.toggle('cart-ft--hidden', !items.length);
-            document.getElementById('cartTot').innerHTML = `${total.toLocaleString()} <span>UZS</span>`;
-            const body = document.getElementById('cartBody');
+            cartTot.innerHTML = `${total.toLocaleString()} <span>UZS</span>`;
             body.querySelectorAll('.cart-item').forEach(e => e.remove());
             items.forEach(item => {
                 const d = document.createElement('div');
                 d.className = 'cart-item';
                 d.innerHTML = `
-      <img class="ci-img" src="${item.img}" alt="">
+      <img class="ci-img" src="${item.img}" alt="" width="112" height="112" loading="lazy" decoding="async" sizes="56px">
       <div class="ci-info"><div class="ci-name">${item.name[lang] || item.name.uz}</div><div class="ci-price">${(item.price * item.qty).toLocaleString()} UZS</div></div>
       <div class="ci-ctrl">
         <button class="qty-b" onclick="qty('${item.id}',-1)">−</button>
@@ -2195,14 +2176,25 @@
                 ru: "Ургенч, ул. Абу л-Гази Бахадур-хана, дом 180/1",
                 en: "Urganch, Abu al-Ghazi Bahadur Khan st., 180/1"
             };
-            const msg = `🌿 *ILDIZ Milliy Taomlari*\n\n${lines.join('\n')}\n\n*Jami: ${total.toLocaleString()} UZS*\n\n${locs[lang]}`;
+            const L = lang === 'ru' ? 'ru' : lang === 'en' ? 'en' : 'uz';
+            const headers = {
+                uz: '🌿 *ILDIZ Milliy Taomlari*',
+                ru: '🌿 *ILDIZ — национальная кухня*',
+                en: '🌿 *ILDIZ National Cuisine*'
+            };
+            const totalLbl = { uz: 'Jami', ru: 'Итого', en: 'Total' };
+            const addr = locs[L] || locs.uz;
+            const msg = `${headers[L]}\n\n${lines.join('\n')}\n\n*${totalLbl[L]}: ${total.toLocaleString()} UZS*\n\n${addr}`;
             window.open(`https://wa.me/998972030220?text=${encodeURIComponent(msg)}`, '_blank');
         }
         function openCart() { document.getElementById('cartPanel').classList.add('on'); document.getElementById('cartOv').classList.add('on'); document.body.style.overflow = 'hidden'; }
         function closeCart() { document.getElementById('cartPanel').classList.remove('on'); document.getElementById('cartOv').classList.remove('on'); document.body.style.overflow = ''; }
         let tt;
         function showToast(msg) {
-            const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('on');
+            const t = document.getElementById('toast');
+            if (!t) return;
+            t.textContent = msg;
+            t.classList.add('on');
             clearTimeout(tt); tt = setTimeout(() => t.classList.remove('on'), 2200);
         }
 
