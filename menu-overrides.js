@@ -18,11 +18,15 @@
     'Шурпа': 'ildiz_menu/osma_shorva.webp',
     'Мастава': 'ildiz_menu/no-photo.webp',
     'Плов 1,5порц.': 'ildiz_menu/plov.webp',
-    'Плов 50': 'ildiz_menu/plov.webp',
-    'Плов 1порц.': 'ildiz_menu/plov.webp',
-    'Плов двойной 1,5порц.': 'ildiz_menu/plov.webp',
-    'Плов двойной': 'ildiz_menu/plov.webp'
+    'Плов 1порц.': 'ildiz_menu/plov.webp'
   };
+
+  const hiddenNames = window.MENU_HIDDEN_NAMES || [
+    'Медальон',
+    'Плов двойной 1,5порц.',
+    'Плов двойной',
+    'Плов 50'
+  ];
 
   const data = window.MENU_DATA;
   if (!data || typeof data !== 'object') return;
@@ -31,16 +35,24 @@
 
   Object.values(data).forEach((arr) => {
     if (!Array.isArray(arr)) return;
-    arr.forEach((item) => {
-      if (!item || !item.name) return;
+    for (let i = arr.length - 1; i >= 0; i--) {
+      const item = arr[i];
+      if (!item || !item.name) continue;
       const ru = item.name.ru;
       const uz = item.name.uz;
       const en = item.name.en;
+
+      if ((ru && hiddenNames.includes(ru)) || (uz && hiddenNames.includes(uz)) || (en && hiddenNames.includes(en))) {
+        arr.splice(i, 1);
+        continue;
+      }
+
       const key = (ru && overrides[ru]) ? ru : (uz && overrides[uz]) ? uz : (en && overrides[en]) ? en : null;
-      if (!key) return;
+      if (!key) continue;
       item.img = normPath(overrides[key]);
-    });
+    }
   });
 
   window.MENU_IMG_OVERRIDES = overrides;
+  window.MENU_HIDDEN_NAMES = hiddenNames;
 })();
