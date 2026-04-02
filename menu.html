@@ -1990,6 +1990,16 @@
         const CAT_ORDER = window.MENU_CAT_ORDER || [];
         const MENU_LABELS = window.MENU_CAT_LABELS || {};
 
+        function itemHasPhoto(item) {
+            if (!item || !item.img) return false;
+            return !String(item.img).includes('no-photo.webp');
+        }
+        function visibleItemsForCat(cat) {
+            const rows = D[cat];
+            return Array.isArray(rows) ? rows.filter(itemHasPhoto) : [];
+        }
+        const VISIBLE_CATS = CAT_ORDER.filter((c) => visibleItemsForCat(c).length > 0);
+
         function escapeHtml(t) {
             return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
@@ -2040,11 +2050,11 @@
         function buildMenuShell() {
             const bar = document.getElementById('catBar');
             const area = document.getElementById('menuArea');
-            if (!bar || !area || !CAT_ORDER.length) return;
+            if (!bar || !area || !VISIBLE_CATS.length) return;
             bar.innerHTML = '';
             area.innerHTML = '';
-            const first = CAT_ORDER[0];
-            CAT_ORDER.forEach(cat => {
+            const first = VISIBLE_CATS[0];
+            VISIBLE_CATS.forEach(cat => {
                 const L = MENU_LABELS[cat] || { uz: cat, ru: cat, en: cat };
                 const btn = document.createElement('button');
                 btn.type = 'button';
@@ -2053,7 +2063,7 @@
                 btn.innerHTML = '<span class="cat-ico">' + catIconFor(cat) + '</span><span class="cat-lbl"><span data-l="uz">' + escapeHtml(L.uz) + '</span><span data-l="ru">' + escapeHtml(L.ru) + '</span><span data-l="en">' + escapeHtml(L.en) + '</span></span>';
                 btn.addEventListener('click', () => showCat(cat, btn));
                 bar.appendChild(btn);
-                const n = (D[cat] || []).length;
+                const n = visibleItemsForCat(cat).length;
                 const sec = document.createElement('div');
                 sec.className = 'm-sec' + (cat === first ? ' on' : '');
                 sec.id = 'sec-' + cat;
@@ -2080,11 +2090,11 @@
 
         // RENDER
         function render() {
-            CAT_ORDER.forEach(cat => {
+            VISIBLE_CATS.forEach(cat => {
                 const g = document.getElementById('g-' + cat);
                 if (!g) return;
-                const rows = D[cat];
-                if (!Array.isArray(rows)) return;
+                const rows = visibleItemsForCat(cat);
+                if (!rows.length) return;
                 g.innerHTML = rows.map(item => {
                     const inCart = cart[item.id];
                     const qtyCtrl = inCart
