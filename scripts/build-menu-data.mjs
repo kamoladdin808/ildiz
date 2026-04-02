@@ -217,6 +217,7 @@ function translitVariantsForKey(key) {
     add(key.replace(/niy/g, 'nyy'));
     add(key.replace(/skiy/g, 'ski'));
     add(key.replace(/(^|-)ski(-|$)/g, (m, a, b) => `${a}skiy${b}`));
+    if (key.includes('zh')) add(key.replace(/zh/g, 'j'));
     return [...v];
 }
 
