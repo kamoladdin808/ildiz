@@ -7,7 +7,7 @@ const root = path.join(__dirname, '..');
 const menuPhotoDir = path.join(root, 'ildiz_menu');
 /** Без пула: только overrides и совпадение имени файла; иначе — плейсхолдер (нет «чужих» фото). Пул: MENU_PHOTO_POOL=1 */
 const usePhotoPool = process.env.MENU_PHOTO_POOL === '1';
-const menuImgPlaceholder = 'ildiz_menu/no-photo.svg';
+const menuImgPlaceholder = 'ildiz_menu/no-photo.webp';
 /** В папке есть, но не цепляем к позициям автоматически (stem/пул); в overrides можно явно */
 const unassignedMenuPhotoFiles = new Set([]);
 const md = fs.readFileSync(path.join(root, 'MENU_MYRESTO_EXPORT.md'), 'utf8');
