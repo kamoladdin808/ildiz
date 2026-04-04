@@ -1501,7 +1501,8 @@
             }
 
             .tl-grid {
-                grid-template-columns: 1fr
+                display: flex;
+                flex-direction: column;
             }
 
             .tl-ax {
@@ -1510,8 +1511,7 @@
 
             .tl-col,
             .tl-col.r {
-                padding: 0;
-                padding-top: 0
+                display: contents;
             }
 
             .vals-grid {
@@ -2813,7 +2813,7 @@
         </div>
         <div class="tl-grid">
             <div class="tl-col">
-                <div class="tl-e">
+                <div class="tl-e" style="order: 1">
                     <div class="tl-ey">2014</div>
                     <div class="tl-et"><span data-l="uz" class="on">Bellissimo Ochilyapti</span><span
                             data-l="ru">Открытие Bellissimo</span><span data-l="en">Bellissimo Opens</span></div>
@@ -2824,7 +2824,7 @@
                     <div class="tl-tag"><span data-l="uz" class="on">Boshlanish</span><span
                             data-l="ru">Начало</span><span data-l="en">Beginning</span></div>
                 </div>
-                <div class="tl-e">
+                <div class="tl-e" style="order: 3">
                     <div class="tl-ey">2022</div>
                     <div class="tl-et"><span data-l="uz" class="on">Yangi Konsept</span><span data-l="ru">Новая
                             Концепция</span><span data-l="en">New Concept</span></div>
@@ -2838,7 +2838,7 @@
             </div>
             <div class="tl-ax"></div>
             <div class="tl-col r">
-                <div class="tl-e">
+                <div class="tl-e" style="order: 2">
                     <div class="tl-ey">2019</div>
                     <div class="tl-et"><span data-l="uz" class="on">O'sish va Rivojlanish</span><span data-l="ru">Рост и
                             Развитие</span><span data-l="en">Growth & Development</span></div>
@@ -2849,7 +2849,7 @@
                     <div class="tl-tag"><span data-l="uz" class="on">Rivojlanish</span><span
                             data-l="ru">Развитие</span><span data-l="en">Growth</span></div>
                 </div>
-                <div class="tl-e">
+                <div class="tl-e" style="order: 4">
                     <div class="tl-ey">2025</div>
                     <div class="tl-et"><span data-l="uz" class="on">ILDIZ Tug'ildi</span><span data-l="ru">Рождение
                             ILDIZ</span><span data-l="en">ILDIZ is Born</span></div>
