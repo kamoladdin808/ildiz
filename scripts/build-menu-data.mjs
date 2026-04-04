@@ -9,7 +9,7 @@ const menuPhotoDir = path.join(root, 'ildiz_menu');
 const usePhotoPool = process.env.MENU_PHOTO_POOL === '1';
 const menuImgPlaceholder = 'ildiz_menu/no-photo.webp';
 /** В папке есть, но не цепляем к позициям автоматически (stem/пул); в overrides можно явно */
-const unassignedMenuPhotoFiles = new Set([]);
+const unassignedMenuPhotoFiles = new Set(['xorazm_kabob.webp', 'salat_tsezar.webp']);
 const md = fs.readFileSync(path.join(root, 'MENU_MYRESTO_EXPORT.md'), 'utf8');
 const lines = md.split(/\r?\n/);
 const raw = {};
@@ -322,15 +322,20 @@ function relPathMenuPhoto(f) {
     return 'ildiz_menu/' + f.replace(/\\/g, '/');
 }
 
+/** Файл по stem/пулу только в этой категории (печень «жигар» не должен цепляться к мангалу). */
+const stemPhotoOnlyInCategory = new Map([['jigar_kabob.webp', 'goriachie-bliuda']]);
+
 function assignAllMenuImages(rows, photos, overrides, stemMap) {
     const used = new Set(Object.values(overrides));
     const stats = { byOverride: 0, byStem: 0, byPool: 0, byPlaceholder: 0 };
     const imgById = new Map();
 
-    function takeNextPool() {
+    function takeNextPool(rowCat) {
         for (const f of photos) {
             if (unassignedMenuPhotoFiles.has(f)) continue;
             if (!used.has(f)) {
+                const onlyCat = stemPhotoOnlyInCategory.get(f);
+                if (onlyCat && rowCat !== onlyCat) continue;
                 used.add(f);
                 return f;
             }
@@ -355,10 +360,11 @@ function assignAllMenuImages(rows, photos, overrides, stemMap) {
         outer: for (const stemKey of dishNameKeys(row.cat, row.name)) {
             for (const vk of translitVariantsForKey(stemKey)) {
                 const f = stemMap.get(vk);
-                if (f && !used.has(f)) {
-                    hit = f;
-                    break outer;
-                }
+                if (!f || used.has(f)) continue;
+                const onlyCat = stemPhotoOnlyInCategory.get(f);
+                if (onlyCat && row.cat !== onlyCat) continue;
+                hit = f;
+                break outer;
             }
         }
         if (hit) {
@@ -371,7 +377,7 @@ function assignAllMenuImages(rows, photos, overrides, stemMap) {
     if (usePhotoPool) {
         for (const row of rows) {
             if (imgById.has(row.id)) continue;
-            const fb = takeNextPool();
+            const fb = takeNextPool(row.cat);
             if (fb) {
                 imgById.set(row.id, relPathMenuPhoto(fb));
                 stats.byPool++;
