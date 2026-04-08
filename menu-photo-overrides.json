@@ -28,6 +28,7 @@
   "banketnoe-meniu-2": "ildiz_asorti.webp",
   "goriachie-bliuda-3": "ildiz_gorachee.webp",
   "salaty-0": "ildiz_salat.webp",
+  "salaty-6": "tyopliy_say_s_kuritsey.webp",
   "avtorskii-chai-1": "imbirniy_chay.webp",
   "goriachie-bliuda-0": "jigar_kabob.webp",
   "goriachie-bliuda-6": "juja_kurinaya.webp",
@@ -59,6 +60,7 @@
   "soleniya-5": "ovoshnoy_salat.webp",
   "khamir-14": "pelmeni.webp",
   "tandyr-0": "pizza_peperoni_ildiz.webp",
+  "tandyr-2": "pide_peperoni.webp",
   "goriachie-bliuda-19": "plov.webp",
   "garniry-i-sousy-6": "pyure.webp",
   "ryba-3": "riba_s_sousom.webp",
@@ -104,5 +106,7 @@
   "salaty-13": "xrustashiy_baklajan_ildiz.webp",
   "salaty-10": "yaponskiy_salat.webp",
   "salaty-2": "mujskoy_kapriz.webp",
-  "goriachie-bliuda-1": "yazik_v_slivachnom_souse.webp"
+  "khamir-7": "kutir_barak.webp",
+  "goriachie-bliuda-1": "yazik_v_slivachnom_souse.webp",
+  "goriachie-bliuda-34": "shur_kabob.webp"
 }
