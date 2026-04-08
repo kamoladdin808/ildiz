@@ -2084,8 +2084,20 @@
             btn.classList.add('on');
             btn.setAttribute('aria-pressed', 'true');
             btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            const nav = document.querySelector('nav');
             const cbar = document.querySelector('.cat-bar');
-            if (cbar) window.scrollTo({ top: cbar.offsetTop - 68, behavior: 'smooth' });
+            const secEl = document.getElementById('sec-' + cat);
+            /* После смены вкладки документ пересчитывает высоту — сначала показываем блюда с начала, не с позиции скролла старой вкладки */
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    if (!secEl || !cbar) return;
+                    const navH = nav ? nav.offsetHeight : 0;
+                    const barH = cbar.offsetHeight;
+                    const pad = 6;
+                    const top = secEl.getBoundingClientRect().top + window.scrollY - navH - barH - pad;
+                    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+                });
+            });
         }
 
         // RENDER
