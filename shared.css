@@ -33,7 +33,7 @@ body {
     color: var(--warm);
     font-family: 'Montserrat', sans-serif;
     overflow-x: hidden;
-    cursor: none;
+    cursor: auto;
 }
 
 ::-webkit-scrollbar {
@@ -48,35 +48,21 @@ body {
     background: var(--gold);
 }
 
-/* CURSOR */
-#c {
-    position: fixed;
-    width: 6px;
-    height: 6px;
-    background: var(--gold-light);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-}
-
+/* CURSOR — кастомный кружок отключён (обычный курсор ОС); в shared.js: USE_CUSTOM_CURSOR */
+#c,
 #cr {
-    position: fixed;
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba(250, 169, 84, 0.5);
-    border-radius: 50%;
+    display: none !important;
     pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: width 0.3s, height 0.3s, border-color 0.3s;
 }
 
 a,
-button,
+button {
+    cursor: pointer;
+}
+
 input,
 textarea {
-    cursor: none;
+    cursor: auto;
 }
 
 /* LOADER */
@@ -302,7 +288,7 @@ textarea {
     font-size: 10px;
     letter-spacing: 3px;
     color: var(--muted);
-    cursor: none;
+    cursor: pointer;
     padding: 6px 10px;
     min-width: 44px;
     min-height: 44px;

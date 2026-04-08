@@ -52,11 +52,12 @@ document.body.style.overflow = 'hidden';
     });
 })();
 
-/* Custom cursor */
+/* Custom cursor (отключён — иначе при cursor:none на body курсор «пропадает» на скриншотах / части ПК) */
+const USE_CUSTOM_CURSOR = false;
 const C = document.getElementById('c'),
     CR = document.getElementById('cr');
 
-if (C && CR) {
+if (USE_CUSTOM_CURSOR && C && CR) {
     let mx = 0, my = 0, rx = 0, ry = 0;
 
     document.addEventListener('mousemove', e => {
