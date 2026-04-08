@@ -57,6 +57,9 @@ const USE_CUSTOM_CURSOR = false;
 const C = document.getElementById('c'),
     CR = document.getElementById('cr');
 
+/** menu.html / index вызывают после рендера; без заглушки ломается весь меню после первой категории */
+window.bindCursorHovers = function () {};
+
 if (USE_CUSTOM_CURSOR && C && CR) {
     let mx = 0, my = 0, rx = 0, ry = 0;
 
@@ -94,7 +97,7 @@ if (USE_CUSTOM_CURSOR && C && CR) {
         });
     };
 
-    bindCursorHovers();
+    window.bindCursorHovers();
 
     if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
         document.body.style.cursor = '';
