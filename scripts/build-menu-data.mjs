@@ -248,7 +248,34 @@ function buildStemToFileMap(photos) {
     return map;
 }
 
-function loadPhotoOverrides(photos) {
+/**
+ * Разбор ключа override. Поддерживаемые форматы:
+ *   "Имя"
+ *   "cat-slug/Имя"
+ *   "Имя@цена"
+ *   "cat-slug/Имя@цена"
+ */
+function parseOverrideKey(key) {
+    let cat = null;
+    let name = String(key);
+    const slash = name.indexOf('/');
+    if (slash !== -1) {
+        cat = name.slice(0, slash).trim();
+        name = name.slice(slash + 1);
+    }
+    let price = null;
+    const at = name.lastIndexOf('@');
+    if (at > 0) {
+        const pricePart = name.slice(at + 1).trim();
+        if (/^\d+$/.test(pricePart)) {
+            price = Number(pricePart);
+            name = name.slice(0, at);
+        }
+    }
+    return { cat, name: name.trim(), price };
+}
+
+function loadPhotoOverrides(photos, menuRows) {
     const p = path.join(root, 'menu-photo-overrides.json');
     if (!fs.existsSync(p)) return {};
     let data;
@@ -263,8 +290,14 @@ function loadPhotoOverrides(photos) {
         process.exit(1);
     }
     const lowerToCanon = new Map(photos.map((f) => [f.toLowerCase(), f]));
+    const rowsByName = new Map();
+    for (const row of menuRows) {
+        const k = normItemName(row.name);
+        if (!rowsByName.has(k)) rowsByName.set(k, []);
+        rowsByName.get(k).push(row);
+    }
     const resolved = {};
-    for (const [itemId, spec] of Object.entries(data)) {
+    for (const [rawKey, spec] of Object.entries(data)) {
         if (typeof spec !== 'string' || !spec.trim()) continue;
         const base = path.basename(spec.trim());
         const canon = lowerToCanon.get(base.toLowerCase());
@@ -272,7 +305,39 @@ function loadPhotoOverrides(photos) {
             console.error(`menu-photo-overrides.json: нет файла: ${base}`);
             process.exit(1);
         }
-        resolved[itemId] = canon;
+        const q = parseOverrideKey(rawKey);
+        const list = rowsByName.get(normItemName(q.name)) || [];
+        const candidates = list.filter((r) => {
+            if (q.cat && r.cat !== q.cat) return false;
+            if (q.price !== null && r.price !== q.price) return false;
+            return true;
+        });
+        if (candidates.length === 0) {
+            console.error(`menu-photo-overrides.json: не найдено блюдо по ключу «${rawKey}»`);
+            process.exit(1);
+        }
+        if (candidates.length > 1) {
+            /* Если все кандидаты по факту одинаковы (cat+name+price) — это реальный дубль в layout, безопасно берём первого. */
+            const sig = (c) => `${c.cat}|${normItemName(c.name)}|${c.price}`;
+            const allSame = candidates.every((c) => sig(c) === sig(candidates[0]));
+            if (!allSame) {
+                const hint = candidates
+                    .map((c) => `${c.cat}/${c.name}${c.price ? '@' + c.price : ''}`)
+                    .join(', ');
+                console.error(
+                    `menu-photo-overrides.json: ключ «${rawKey}» матчит ${candidates.length} разных блюд: ${hint}. Уточни cat-slug/ или @цена.`,
+                );
+                process.exit(1);
+            }
+        }
+        const row = candidates[0];
+        if (resolved[row.id]) {
+            console.error(
+                `menu-photo-overrides.json: для ${row.id} («${row.name}») уже задано фото ${resolved[row.id]}, повтор ключом «${rawKey}»`,
+            );
+            process.exit(1);
+        }
+        resolved[row.id] = canon;
     }
     return resolved;
 }
@@ -440,7 +505,7 @@ const menuRows = [];
 for (const key of finalOrder) {
     const items = raw[key] || [];
     items.forEach((it, i) => {
-        menuRows.push({ id: key + '-' + i, cat: key, name: it.name });
+        menuRows.push({ id: key + '-' + i, cat: key, name: it.name, price: it.price });
     });
 }
 
@@ -451,7 +516,7 @@ if (localPhotos.length === 0) {
     console.warn('ildiz_menu без изображений — все карточки с плейсхолдером.');
 }
 {
-    const overrides = loadPhotoOverrides(localPhotos);
+    const overrides = loadPhotoOverrides(localPhotos, menuRows);
     const ovVals = Object.values(overrides);
     if (ovVals.length !== new Set(ovVals).size) {
         console.error('menu-photo-overrides.json: повтор одного файла у разных id');
