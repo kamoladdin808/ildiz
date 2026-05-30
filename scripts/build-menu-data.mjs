@@ -517,11 +517,6 @@ if (localPhotos.length === 0) {
 }
 {
     const overrides = loadPhotoOverrides(localPhotos, menuRows);
-    const ovVals = Object.values(overrides);
-    if (ovVals.length !== new Set(ovVals).size) {
-        console.error('menu-photo-overrides.json: повтор одного файла у разных id');
-        process.exit(1);
-    }
     const stemFromFiles = buildStemToFileMap(
         localPhotos.filter((f) => !unassignedMenuPhotoFiles.has(f)),
     );

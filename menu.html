@@ -429,6 +429,50 @@
             color: var(--gold);
         }
 
+        .cart-service {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 12px;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .cart-service-v {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .cart-total-final {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(250, 169, 84, 0.08);
+        }
+
+        .cart-total-final-l {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--warm);
+            font-weight: 600;
+        }
+
+        .cart-total-final-v {
+            font-family: var(--serif);
+            font-size: 28px;
+            font-weight: 400;
+            color: var(--gold);
+        }
+
+        .cart-total-final-v span {
+            font-size: 11px;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--gold);
+        }
+
         .order-btn {
             width: 100%;
             padding: 17px;
@@ -1928,6 +1972,18 @@
                 <div class="cart-total-v" id="cartTot">0 <span>UZS</span></div>
             </div>
 
+            <div class="cart-service">
+                <span><span data-l="uz" class="on">Xizmat haqi (15%)</span><span data-l="ru">Услуга (15%)</span><span
+                        data-l="en">Service fee (15%)</span></span>
+                <div class="cart-service-v" id="cartService">0 <span>UZS</span></div>
+            </div>
+
+            <div class="cart-total-final">
+                <span class="cart-total-final-l"><span data-l="uz" class="on">Jami (xizmat bilan)</span><span data-l="ru">Итого (с услугой)</span><span
+                        data-l="en">Total (with service)</span></span>
+                <div class="cart-total-final-v" id="cartFinal">0 <span>UZS</span></div>
+            </div>
+
             <button class="clear-btn" onclick="clearCart()">
                 <span data-l="uz" class="on">Savatni tozalash</span>
                 <span data-l="ru">Очистить корзину</span>
@@ -2142,21 +2198,29 @@
 
         // CART
         let cart = {};
+        function saveCart() { localStorage.setItem('ildiz_cart', JSON.stringify(cart)); }
+        function loadCart() {
+            const saved = localStorage.getItem('ildiz_cart');
+            if (saved) try { cart = JSON.parse(saved); } catch (e) { cart = {}; }
+        }
+        loadCart();
         function add(id, cat) {
             const list = D[cat];
             const item = Array.isArray(list) ? list.find(i => i.id === id) : null;
             if (!item) return;
             cart[id] ? cart[id].qty++ : (cart[id] = { ...item, qty: 1, cat });
-            updateCart(); render();
+            saveCart(); updateCart(); render();
             showToast(lang === 'uz' ? 'Savatchaga qo\'shildi ✓' : lang === 'ru' ? 'Добавлено в корзину ✓' : 'Added to cart ✓');
         }
-        function rem(id) { delete cart[id]; updateCart(); render(); }
-        function qty(id, d) { if (!cart[id]) return; cart[id].qty += d; if (cart[id].qty <= 0) rem(id); else { updateCart(); render(); } }
-        function cQty(id, cat, d) { if (!cart[id]) return; cart[id].qty += d; if (cart[id].qty <= 0) { delete cart[id]; } updateCart(); render(); }
-        function clearCart() { cart = {}; updateCart(); render(); }
+        function rem(id) { delete cart[id]; saveCart(); updateCart(); render(); }
+        function qty(id, d) { if (!cart[id]) return; cart[id].qty += d; if (cart[id].qty <= 0) rem(id); else { saveCart(); updateCart(); render(); } }
+        function cQty(id, cat, d) { if (!cart[id]) return; cart[id].qty += d; if (cart[id].qty <= 0) { delete cart[id]; } saveCart(); updateCart(); render(); }
+        function clearCart() { cart = {}; saveCart(); updateCart(); render(); }
         function updateCart() {
             const items = Object.values(cart);
             const total = items.reduce((s, i) => s + i.price * i.qty, 0);
+            const serviceFee = Math.round(total * 0.15);
+            const finalTotal = total + serviceFee;
             const count = items.reduce((s, i) => s + i.qty, 0);
             const badge = document.getElementById('fab-badge');
             if (badge) {
@@ -2166,11 +2230,15 @@
             const empty = document.getElementById('cartEmpty');
             const ft = document.getElementById('cartFt');
             const cartTot = document.getElementById('cartTot');
+            const cartService = document.getElementById('cartService');
+            const cartFinal = document.getElementById('cartFinal');
             const body = document.getElementById('cartBody');
-            if (!empty || !ft || !cartTot || !body) return;
+            if (!empty || !ft || !cartTot || !cartService || !cartFinal || !body) return;
             empty.style.display = items.length ? 'none' : 'flex';
             ft.classList.toggle('cart-ft--hidden', !items.length);
             cartTot.innerHTML = `${total.toLocaleString()} <span>UZS</span>`;
+            cartService.innerHTML = `${serviceFee.toLocaleString()} <span>UZS</span>`;
+            cartFinal.innerHTML = `${finalTotal.toLocaleString()} <span>UZS</span>`;
             body.querySelectorAll('.cart-item').forEach(e => e.remove());
             items.forEach(item => {
                 const d = document.createElement('div');
@@ -2192,6 +2260,8 @@
         function placeOrder() {
             const items = Object.values(cart); if (!items.length) return;
             const total = items.reduce((s, i) => s + i.price * i.qty, 0);
+            const serviceFee = Math.round(total * 0.15);
+            const finalTotal = total + serviceFee;
             const nm = i => i.name[lang] || i.name.uz || i.name.ru;
             const lines = items.map(i => `${i.qty}x ${nm(i)} — ${(i.price * i.qty).toLocaleString()} UZS`);
             const locs = {
@@ -2206,8 +2276,10 @@
                 en: '🌿 *ILDIZ National Cuisine*'
             };
             const totalLbl = { uz: 'Jami', ru: 'Итого', en: 'Total' };
+            const serviceLbl = { uz: 'Xizmat haqi (15%)', ru: 'Услуга (15%)', en: 'Service fee (15%)' };
+            const finalLbl = { uz: 'Jami (xizmat bilan)', ru: 'Итого (с услугой)', en: 'Total (with service)' };
             const addr = locs[L] || locs.uz;
-            const msg = `${headers[L]}\n\n${lines.join('\n')}\n\n*${totalLbl[L]}: ${total.toLocaleString()} UZS*\n\n${addr}`;
+            const msg = `${headers[L]}\n\n${lines.join('\n')}\n\n*${totalLbl[L]}: ${total.toLocaleString()} UZS*\n*${serviceLbl[L]}: ${serviceFee.toLocaleString()} UZS*\n*${finalLbl[L]}: ${finalTotal.toLocaleString()} UZS*\n\n${addr}`;
             window.open(`https://wa.me/998972030220?text=${encodeURIComponent(msg)}`, '_blank');
         }
         function openCart() { document.getElementById('cartPanel').classList.add('on'); document.getElementById('cartOv').classList.add('on'); document.body.style.overflow = 'hidden'; }

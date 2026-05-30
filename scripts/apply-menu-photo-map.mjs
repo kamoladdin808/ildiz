@@ -15,41 +15,39 @@ const root = path.join(__dirname, '..');
 /** Каждый ключ — файл в ildiz_menu; значение — имя блюда (при дубле — с cat-slug/ или @цена). */
 const FILE_TO_NAME = {
     'achuchuk.webp': 'Аччик-чучук',
-    'adana_kebab.webp': 'Адана',
+    'adana_kebab.webp': 'Адана кебаб',
     'apelsinoviy_sok.webp': 'Апельсин фреш 0,5',
     'aydaxo.webp': 'Картошка по деревенски',
     'barak_asorti.webp': 'Барак Ассорти',
     'barak_asorti_bolshoy.webp': 'Большой Барак асс.',
     'bon_file.webp': 'Бон Филе 0,5кг',
     'borsh_ildiz.webp': 'Борщ',
-    'burger.webp': 'Бургер',
-    'chay_bardak.webp': 'Стакан турк чай',
+    'burger.webp': 'Бургер(+фри)',
     'chay_po_turetski.webp': 'Турецкий чай',
     'cheburek.webp': 'Гумма',
-    'chechevichniy_sup.webp': 'Чечевичный',
+    'chechevichniy_sup.webp': 'Чечевичный суп',
     'cheescake.webp': 'Чиз кейк сан себастиан',
     'chicken_roll.webp': 'Чикен Запеченный',
     'chorniy_xleb.webp': 'Черный Хлеб',
-    'dinya.webp': 'Ковун',
+    'dinya.webp': 'Арбуз и Дыня',
     'dumba.webp': 'Думба',
     'fituchino_alfredo.webp': 'Альфредо',
     'fruktoviy_chay.webp': 'Ягодный чай',
-    'frultoviy_asorti.webp': 'Фруктовое',
+    'frultoviy_asorti.webp': 'Фруктовое ассорти',
     'gok_barak.webp': 'Гук Барак',
     'gonkonskie_vafli.webp': 'Вафли',
-    'gribnoy_kremzo.webp': 'Грибной Крем Суп',
+    'gribnoy_kremzo.webp': 'Грибной крем-суп',
     'gusht_say_ildiz.webp': 'Гушт Сай',
-    'ijzhon_shashlik.webp': 'Ижжон шашлык',
-    'ikra.webp': 'Икра',
+    'ijzhon_shashlik.webp': 'Ижжон (местный)',
     'ildiz_asorti.webp': 'Илдиз Ассорти',
     'ildiz_gorachee.webp': 'Илдиз Горячее',
-    'ildiz_salat.webp': 'Илдиз Салат',
+    'ildiz_salat.webp': 'Салат "Илдиз"',
     'imbirniy_chay.webp': 'Имбирный чай',
     'jigar_kabob.webp': 'Жигар кабоб',
     'juja_kurinaya.webp': 'Жужа',
     'kadi_barak.webp': 'Кади Барак',
     'kapshirma.webp': 'Капширма',
-    'karbonara_s_kuritsey.webp': 'Карбонара',
+    'karbonara_s_kuritsey.webp': 'Карбонара с курицей',
     'kareyka.webp': 'Корейка',
     'kartoshka_bebi.webp': 'shashlyki/Картошка беби',
     'kartoshka_fri.webp': 'Картошка фри',
@@ -57,70 +55,69 @@ const FILE_TO_NAME = {
     'kofte_sirom.webp': 'Кофте с сыром',
     'kurinie_krilashki.webp': 'Куриные крылышки',
     'kutir_barak.webp': 'Кутир барак',
-    'lagman_jun.webp': 'Шурпа',
-    'lepeshka.webp': 'Лепешка',
+    'lagman_jun.webp': 'Лахмаджун',
+    'lepeshka.webp': 'Лепешки',
     'mangal_asorti.webp': 'Мангал Ассорти',
-    'manti.webp': 'Манты',
+    'manti.webp': 'Манты (4шт)',
     'molochniy_chay.webp': 'Чай с Молоком',
     'molotiy_shashlik.webp': 'Гиждувон',
-    'mujskoy_kapriz.webp': 'Мужской Каприз',
+    'mujskoy_kapriz.webp': 'Каприз',
     'myasnoy_asorti.webp': 'Мясное ассорти',
     'myasnoy_pide.webp': 'Пиде мясной',
-    'myasnoy_pizza.webp': 'Пицца мясной',
+    'myasnoy_pizza.webp': 'Пицца мясная',
     'napaleon.webp': 'Наполеон',
     'okroshka.webp': 'Окрошка',
-    'olivye.webp': 'Оливье',
-    'olot_somsa.webp': 'Олот Сомса',
-    'osma_shorva.webp': 'Мастава',
+    'olivye.webp': 'Оливье (с мясом)',
+    'olot_somsa.webp': ['Олот Сомса(1шт)', 'Олот сомса (4шт)'],
+    'osma_shorva.webp': 'Осма Шурпа',
     'ovoshi_na_grile.webp': 'garniry-i-sousy/Овощи на гриле',
-    'ovoshnoy_buket.webp': 'Овощное Ассорти',
+    'ovoshnoy_buket.webp': 'Овощное ассорти',
     'ovoshnoy_salat.webp': 'Свежий',
-    'pelmeni.webp': 'Ушак Барак',
+    'pelmeni.webp': 'Ушок барак',
     'pide_peperoni.webp': 'Пиде пепперони',
     'pizza_peperoni_ildiz.webp': 'Пицца пепперони',
-    'plov.webp': 'Плов 1,5порц.',
+    'plov.webp': 'Плов сузма',
     'pyure.webp': 'Пюре',
-    'riba_s_sousom.webp': 'Соус Балик',
+    'riba_s_sousom.webp': 'Сазан в Соусе',
     'ris.webp': 'Рис',
-    'rulet_iz_baklajanov.webp': 'Баклажан Рулет',
+    'rulet_iz_baklajanov.webp': 'Баклажановые рулетики',
     'salat_fransuski_ildiz.webp': 'Французский',
     'salat_grecheski.webp': 'Греческий',
     'salat_trend.webp': 'Салат Тренд',
-    'salat_tulum.webp': 'Тулум',
+    'salat_tulum.webp': 'Салат Тулум',
     'salat_vitaminka.webp': 'Витаминка',
     'salat_yazikom.webp': 'Салат с языком',
     'saryoga_tovuk.webp': 'Сарйога товук',
-    'sazan_jareniy.webp': 'Ковурилган Балик 1,0кг',
-    'seledka_po_ruski.webp': 'Селедка',
+    'sazan_jareniy.webp': 'Сазан Ковурилган (1кг)',
     'set_ildiz.webp': 'Сет Илдиз',
-    'setka_balik.webp': 'Сетка Балик',
+    'setka_balik.webp': 'Сазан Сетка (1кг)',
     'shashlik_govyadina_kuskovaya.webp': 'Кусковой шашлык',
     'shef_assorti.webp': 'Шеф Ассорти',
     'shipit_oshi.webp': 'Шивит Оши',
     'shur_kabob.webp': 'Шур кабоб',
     'sirniy_kotlet.webp': 'Сырная котлета',
     'sirniy_pide.webp': 'Пиде с сыром',
-    'sirnoe_asorti.webp': 'Сырное Ассорти',
-    'soloniy_asorti.webp': 'Соленое Ассорти',
+    'sirnoe_asorti.webp': 'Сырное ассорти',
+    'soloniy_asorti.webp': 'Солёное ассорти',
     'sousi.webp': 'Соусы',
-    'steyk_aribay.webp': 'Рибай',
+    'steyk_aribay.webp': 'Стейк рибай',
     'steyk_darlas.webp': 'Стейк Даллас',
-    'steyk_klassicheskiy.webp': 'Стейк классический',
-    'steyk_kuriniy.webp': 'Куриный стейк',
-    'sup_s_pelmenyami.webp': 'Суп с пельменями',
+    'steyk_klassicheskiy.webp': 'Стейк классика',
+    'steyk_kuriniy.webp': 'Стейк куриный',
+    'sup_s_pelmenyami.webp': 'Шурпа с пельменями',
     'syuzma.webp': 'Сузьма',
-    'tandir_shorva.webp': 'Тандир Шурва',
+    'tandir_shorva.webp': 'Тандир шурпа',
     'tsezar_salat.webp': 'Цезарь',
     'tushenka.webp': 'Тушеное мясо 1кг',
-    'tuxum_barak.webp': 'Тухум Барак',
-    'tyopliy_say_s_kuritsey.webp': 'Теплый сай с курицей',
-    'un_oshi.webp': 'Унаши',
+    'tuxum_barak.webp': 'Тухум барак',
+    'tyopliy_say_s_kuritsey.webp': 'Тёплый салат с курицей',
+    'un_oshi.webp': 'Ун оши',
     'vino_bagizagan.webp': 'Bagizagan',
     'xachapuri_po_adjarski.webp': 'Хачапури по Аджарски',
     'xachapuri_po_vengerski.webp': 'Хачапури по Мегрельски',
-    'xiva_ijan.webp': 'Хива Ижжон',
-    'xleb_xorezmskiy.webp': 'Хоразм Чорак',
-    'xrustashiy_baklajan_ildiz.webp': 'Хрустящий Баклажан',
+    'xiva_ijan.webp': 'Хива ижжон',
+    'xleb_xorezmskiy.webp': 'Хоразм Чурак',
+    'xrustashiy_baklajan_ildiz.webp': 'Хрустящий баклажан',
     'yaponskiy_salat.webp': 'Японский',
     'yazik_v_slivachnom_souse.webp': 'Язык в сливочном соусе',
 };
@@ -133,6 +130,9 @@ const UNASSIGNED_ON_DISK = new Set([
     'setka_kabob_0_5kg.webp',
     'manti_1sht.webp',
     'steyk.webp',
+    'ikra.webp',
+    'seledka_po_ruski.webp',
+    'chay_bardak.webp',
 ]);
 
 const menuDir = path.join(root, 'ildiz_menu');
@@ -154,18 +154,26 @@ for (const f of Object.keys(FILE_TO_NAME)) {
     }
 }
 
+// ... (верхняя часть файла и проверка onDisk остаются без изменений)
+
 const usedNames = new Set();
 const overrides = {};
 /* Ключи сортируем по значению (имени файла) — так diff остаётся стабильным и предсказуемым. */
 const sortedFiles = Object.keys(FILE_TO_NAME).sort();
 for (const file of sortedFiles) {
-    const name = FILE_TO_NAME[file];
-    if (usedNames.has(name)) {
-        console.error('Два файла на одно имя:', name);
-        process.exit(1);
+    const val = FILE_TO_NAME[file];
+
+    // Если значение — массив, используем его, иначе оборачиваем одиночную строку в массив
+    const names = Array.isArray(val) ? val : [val];
+
+    for (const name of names) {
+        if (usedNames.has(name)) {
+            console.error('Два файла на одно имя:', name);
+            process.exit(1);
+        }
+        usedNames.add(name);
+        overrides[name] = file;
     }
-    usedNames.add(name);
-    overrides[name] = file;
 }
 
 fs.writeFileSync(
